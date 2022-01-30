@@ -1,24 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button, Col, Container, Form, FormControl, Nav, Navbar, Row } from 'react-bootstrap';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import { LinkContainer } from 'react-router-bootstrap';
+import { useState, useEffect } from 'react'
+import { useHistory } from "react-router-dom";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+     <Navbar bg="primary"  variant="dark" expand="lg">
+    <LinkContainer to="/">
+    <Navbar.Brand>MyStudentLife</Navbar.Brand>
+    </LinkContainer>
+    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+    <Navbar.Collapse id="basic-navbar-nav">
+    <Nav className="mr-auto">
+    <LinkContainer to="/"> 
+    <Nav.Link>Your Profile {/* Routes to User Profile*/}</Nav.Link>
+    </LinkContainer>
+    <LinkContainer to="/mood"> 
+    <Nav.Link>Articles{/* Routes to Mood Tracker*/}</Nav.Link>
+    </LinkContainer>
+    <LinkContainer to="/articles"> 
+    <Nav.Link>Meditation {/*Routes to Articles */}</Nav.Link>
+    </LinkContainer>
+    <LinkContainer to="/assessment">
+    <Nav.Link>Assessment{/*Routes to Assessment */}</Nav.Link> 
+    </LinkContainer>
+    <LinkContainer to="/journals">
+    <Nav.Link>Journals{/*Routes to Journals */}</Nav.Link>
+    </LinkContainer>
+    <LinkContainer to="/clinics">
+    <Nav.Link>Search Clinic{/*Routes to Search Clinics */}</Nav.Link> 
+    </LinkContainer>
+    </Nav>
+    </Navbar.Collapse>
+    </Navbar>
+
+
+    
+    </>
   );
 }
 
