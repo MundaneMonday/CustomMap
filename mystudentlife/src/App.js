@@ -10,12 +10,16 @@ function App() {
     <>
      <Navbar bg="primary"  variant="dark" expand="lg">
     <LinkContainer to="/">
-    <Navbar.Brand>MyStudentLife</Navbar.Brand>
+    <Navbar.Brand><b>MyStudentLife</b></Navbar.Brand>
     </LinkContainer>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
     <Nav className="mr-auto">
     <LinkContainer to="/"> 
+    <Nav.Link>Home{/* Routes to Home*/}</Nav.Link>
+    </LinkContainer>
+
+    <LinkContainer to="/userprofile"> 
     <Nav.Link>Your Profile {/* Routes to User Profile*/}</Nav.Link>
     </LinkContainer>
     <LinkContainer to="/mood"> 
