@@ -5,6 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { useState, useEffect } from 'react'
 import { useHistory } from "react-router-dom";
 import Login from './components/Login'
+import Register from './components/Register'
 
 function App() {
   return (
@@ -64,7 +65,8 @@ function App() {
     <Route path = "/clinics"/>
     <Route path = "/login" element = {<Login/>}/>
      {/*Routes to Login Component */} 
-     <Route path = "/register"/>
+     <Route path = "/register" element = {<Register/>}/>
+     <Route path = "/forgot"/>
 
   </Routes>
 
