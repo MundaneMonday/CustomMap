@@ -6,7 +6,7 @@ function Login(){
 
     let history = useNavigate();
     return(
-        <div>
+        
             <Form>
   <Form.Group className="mb-3" controlId="formBasicEmail">
     <Form.Label>Username/Email address</Form.Label>
@@ -25,10 +25,12 @@ function Login(){
   <Button variant="primary" type="submit">
     Login
   </Button>
-  <Button onClick={()=> {history.push(`/register`)}}>Register{/* useHistory push to register page */}</Button> 
+  <Link to ="/register">
+        <Button>Register</Button> 
+        </Link>
 </Form>
 
-        </div>
+        
 
     );
 
