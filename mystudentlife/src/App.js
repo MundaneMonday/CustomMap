@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Nav, Navbar } from 'react-bootstrap';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Nav, Navbar,Container } from 'react-bootstrap';
+import { Redirect, Route,Routes } from "react-router-dom";
 import { LinkContainer } from 'react-router-bootstrap';
 import { useState, useEffect } from 'react'
 import { useHistory } from "react-router-dom";
@@ -17,33 +17,57 @@ function App() {
     <Navbar.Collapse id="basic-navbar-nav">
     <Nav className="mr-auto">
     <LinkContainer to="/"> 
-    <Nav.Link>Home{/* Routes to Home*/}</Nav.Link>
+    <Nav.Link>Home{/* Links to Home*/}</Nav.Link>
     </LinkContainer>
 
     <LinkContainer to="/userprofile"> 
-    <Nav.Link>Your Profile {/* Routes to User Profile*/}</Nav.Link>
+    <Nav.Link>Your Profile {/* Links to User Profile*/}</Nav.Link>
     </LinkContainer>
     <LinkContainer to="/mood"> 
-    <Nav.Link>Articles{/* Routes to Mood Tracker*/}</Nav.Link>
+    <Nav.Link>Articles{/* Links to Mood Tracker*/}</Nav.Link>
     </LinkContainer>
     <LinkContainer to="/articles"> 
-    <Nav.Link>Meditation {/*Routes to Articles */}</Nav.Link>
+    <Nav.Link>Meditation {/*Links to Articles */}</Nav.Link>
     </LinkContainer>
     <LinkContainer to="/assessment">
-    <Nav.Link>Assessment{/*Routes to Assessment */}</Nav.Link> 
+    <Nav.Link>Assessment{/*Links to Assessment */}</Nav.Link> 
     </LinkContainer>
     <LinkContainer to="/journals">
-    <Nav.Link>Journals{/*Routes to Journals */}</Nav.Link>
+    <Nav.Link>Journals{/*Links to Journals */}</Nav.Link>
     </LinkContainer>
     <LinkContainer to="/clinics">
-    <Nav.Link>Search Clinic{/*Routes to Search Clinics */}</Nav.Link> 
+    <Nav.Link>Search Clinic{/*Links to Search Clinics */}</Nav.Link> 
+    </LinkContainer>
+    <LinkContainer to="/login">
+    <Nav.Link>Login{/*Links to Login */}</Nav.Link> 
+    </LinkContainer>
+    <LinkContainer to="/register">
+    <Nav.Link>Register{/*Links to Register */}</Nav.Link> 
     </LinkContainer>
     </Nav>
     </Navbar.Collapse>
     </Navbar>
-{/* Uncomment Login Component to view Login*/ 
-    /*<Login></Login>*/
-}   
+
+
+
+  <Routes>
+    <Route exact path = "/"/>
+
+    
+    <Route exact path = "/userprofile"/>
+      
+    
+    <Route path = "/mood"/>
+    <Route path = "/articles"/>
+    <Route path = "/assessment"/>
+    <Route path = "/journals"/>
+    <Route path = "/clinics"/>
+    <Route path = "/login" element = {<Login/>}/>
+     {/*Routes to Login Component */} 
+     <Route path = "/register"/>
+
+  </Routes>
+
     </>
   );
 }
