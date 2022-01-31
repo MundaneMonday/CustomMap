@@ -1,9 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Col, Container, Form, FormControl, Nav, Navbar, Row } from 'react-bootstrap';
+import { Nav, Navbar } from 'react-bootstrap';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import { useState, useEffect } from 'react'
 import { useHistory } from "react-router-dom";
+import Login from './components/Login'
 
 function App() {
   return (
@@ -40,9 +41,9 @@ function App() {
     </Nav>
     </Navbar.Collapse>
     </Navbar>
-
-
-    
+{/* Uncomment Login Component to view Login*/ 
+    /*<Login></Login>*/
+}   
     </>
   );
 }
