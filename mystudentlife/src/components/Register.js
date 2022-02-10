@@ -44,7 +44,7 @@ function Register(){
         <Button variant="primary" type="submit">
           Register
         </Button>
-        <Link to ="/">
+        <Link to ="/login">
         <Button>Cancel</Button> 
         </Link>
         
