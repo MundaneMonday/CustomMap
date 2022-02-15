@@ -4,10 +4,13 @@ import { Redirect, Route,Routes } from "react-router-dom";
 import { LinkContainer } from 'react-router-bootstrap';
 import { useState, useEffect } from 'react'
 import { useHistory } from "react-router-dom";
-import Login from './components/Login'
-import Register from './components/Register'
+import Login from './components/login/Login'
+import Register from './components/register/Register'
+import { Auth, getUser } from "./components/login/auth";
 
 function App() {
+  
+  
   return (
     <>
      <Navbar bg="primary"  variant="dark" expand="lg">
@@ -42,15 +45,16 @@ function App() {
     <LinkContainer to="/login">
     <Nav.Link>Login{/*Links to Login */}</Nav.Link> 
     </LinkContainer>
+    <LinkContainer to="/logout">
+    <Nav.Link>Logout{/*Links to Logout */}</Nav.Link> 
+    </LinkContainer>
     <LinkContainer to="/register">
     <Nav.Link>Register{/*Links to Register */}</Nav.Link> 
     </LinkContainer>
     </Nav>
     </Navbar.Collapse>
     </Navbar>
-
-
-
+      
   <Routes>
     <Route exact path = "/"/>
 
@@ -64,6 +68,7 @@ function App() {
     <Route path = "/journals"/>
     <Route path = "/clinics"/>
     <Route path = "/login" element = {<Login/>}/>
+    <Route path = "/logout" element = {Auth.signOut()} />
      {/*Routes to Login Component */} 
      <Route path = "/register" element = {<Register/>}/>
      <Route path = "/forgot"/>
