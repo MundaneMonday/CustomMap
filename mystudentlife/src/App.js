@@ -43,7 +43,7 @@ function App() {
     <Nav.Link>Search Clinic{/*Links to Search Clinics */}</Nav.Link> 
     </LinkContainer>
     <LinkContainer to="/login">
-    <Nav.Link>Login{/*Links to Login */}</Nav.Link> 
+    <Nav.Link>Login {/*Links to Login */}</Nav.Link> 
     </LinkContainer>
     <LinkContainer to="/logout">
     <Nav.Link>Logout{/*Links to Logout */}</Nav.Link> 
@@ -76,7 +76,7 @@ function App() {
   </Routes>
 
     </>
-  );
+  )
 }
 
-export default App;
+export default App

@@ -27,8 +27,8 @@ Amplify.configure({
 
       // NOTE: these must match what you have specified in the Hosted UI
       // app settings for Callback and Redirect URLs (e.g., no trailing slash).
-      redirectSignIn: "http://localhost:1234",
-      redirectSignOut: "http://localhost:1234",
+      redirectSignIn: "http://localhost:3000",
+      redirectSignOut: "http://localhost:3000",
 
       // We're using the Access Code Grant flow (i.e., `code`)
       responseType: "code",
@@ -60,11 +60,7 @@ async function getUser() {
       currentAuthenticatedUser.signInUserSession.accessToken.jwtToken;
 
     // Return a simplified "user" object
-    return {
-      username,
-      idToken,
-      accessToken,
-    };
+    return currentAuthenticatedUser;
   } catch (err) {
     console.log(err);
     // Unable to get user, return `null` instead
