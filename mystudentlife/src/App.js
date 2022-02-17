@@ -8,6 +8,7 @@ import Login from './components/login/Login'
 import LogOut from './components/logout/logout'
 import Register from './components/register/Register'
 import { Auth } from "./components/login/auth"
+import { getUserFragments } from './components/login/api'
 
 function App() {
  
@@ -31,7 +32,7 @@ function App() {
   
       // If that didn't throw, we have a user object, and the user is authenticated
       console.log("The user is authenticated");
-  
+      
       // Get the user's username
       const username = currentAuthenticatedUser.username;
   
@@ -40,9 +41,11 @@ function App() {
       // https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html
       
       setUsername(username);
+      
+      
       // Return a simplified "user" object
       console.log(Username);
-      
+      getUserFragments(currentAuthenticatedUser);
     } catch (err) {
       console.log(err);
       // Unable to get user, return `null` instead
@@ -50,6 +53,7 @@ function App() {
     } 
   };
   getUserName();
+  
   return ()=>{
 
   }  
@@ -89,10 +93,10 @@ function App() {
     <Nav.Link>Search Clinic{/*Links to Search Clinics */}</Nav.Link> 
     </LinkContainer>
     <LinkContainer to="/login">
-    <Nav.Link>Login {Username} {/*Links to Login */}</Nav.Link> 
+    <Nav.Link>{Username ? Username + ' is logged in' : 'Login'} {/*Links to Login */}</Nav.Link> 
     </LinkContainer>
     <LinkContainer to={"/logout"}>
-    <Nav.Link>Logout{/*Links to Logout */}</Nav.Link> 
+    <Nav.Link>{Username ? 'Logout' : ''}{/*Links to Logout */}</Nav.Link> 
     </LinkContainer>
     <LinkContainer to="/register">
     <Nav.Link>Register{/*Links to Register */}</Nav.Link> 
