@@ -40,7 +40,7 @@ Amplify.configure({
  * Get the authenticated user
  * @returns Promise<user>
  */
-async function getUser() {
+/*async function getUser() {
   try {
     // Get the user's info, see:
     // https://docs.amplify.aws/lib/auth/advanced/q/platform/js/#identity-pool-federation
@@ -51,7 +51,7 @@ async function getUser() {
 
     // Get the user's username
     const username = currentAuthenticatedUser.username;
-
+    console.log(username);
     // Get the user's Identity Token, which we'll use later with our
     // microservce. See discussion of various tokens:
     // https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html
@@ -60,12 +60,15 @@ async function getUser() {
       currentAuthenticatedUser.signInUserSession.accessToken.jwtToken;
 
     // Return a simplified "user" object
-    return currentAuthenticatedUser;
+    return (currentAuthenticatedUser)
   } catch (err) {
     console.log(err);
     // Unable to get user, return `null` instead
     return null;
   }
+ 
 }
+*/
 
-export { Auth, getUser };
+
+export { Auth };
