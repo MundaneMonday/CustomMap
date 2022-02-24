@@ -17,23 +17,42 @@ function App() {
  
   
   const [Username,setUsername] = useState("");
-  
-
-  
+  const [validated, setValidated] = useState(false);
 
  const [searchString, setSearchString ] = useState("");
  let navigateClinic = useNavigate();
+
  function handleSubmit(e){
+  
+  
+  const postalCodeRegex = new RegExp(/^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVXY][ -]?\d[ABCEGHJKLMNPRSTVXY]\d$/i);
   e.preventDefault();
-  navigateClinic(`/clinics?postalcode=${searchString}`, {replace: true});
-  setSearchString("");
+  if(postalCodeRegex.test(searchString)){
+    console.log('regex successful')
+    navigateClinic(`/clinics?postalcode=${searchString}`, {replace: true});
+    
+    setValidated(true);
+    
+
+  }else{
+    e.stopPropagation();
+    setSearchString("");
+    console.log('regex fail')
+  }
+  
+  
  }
 
   function timeout(ms){
     return new Promise((resolve)=> setTimeout(resolve,ms));
   }
  
-  
+  function handleChangePostalCode(e){
+    
+       setSearchString(e.target.value)
+       
+    
+  }
 
   useEffect(()=>{
     async function getUserName(){
@@ -81,13 +100,15 @@ function App() {
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     
     <Nav className="container-fluid">
-    <Form onSubmit={handleSubmit} className='d-flex'>
+    <Form validated={validated} onSubmit={handleSubmit} className='d-flex'>
     <FormControl type="text" placeholder="e.g A1A 1A1" className="mr-sm-2" value={searchString}
-   onChange={(e) => setSearchString(e.target.value)} />
-   <span class="border border-dark"><Button type="submit" variant="primary">Search Clinics</Button></span>
-    
+   onChange={handleChangePostalCode} required/>
+   <span className="border border-dark"><Button type="submit" variant="primary">Search Clinics</Button></span>
+   <Form.Control.Feedback type="invalid" > 
+            Invalid Postal Code
+          </Form.Control.Feedback>
     </Form>
-
+    
     <LinkContainer to="/userprofile"> 
     <Nav.Link>Your Profile {/* Links to User Profile*/}</Nav.Link>
     </LinkContainer>
