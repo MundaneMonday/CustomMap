@@ -1,34 +1,31 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { Nav, Navbar,Container,Form,FormControl,Button } from 'react-bootstrap'
-import { Redirect, Route,Routes, useNavigate } from "react-router-dom"
+import { Nav, Navbar,Form,FormControl,Button } from 'react-bootstrap'
+import { Route,Routes, useNavigate } from "react-router-dom"
 import { LinkContainer } from 'react-router-bootstrap'
-import { useState, useEffect,useRef } from 'react'
-import { useHistory } from "react-router-dom"
+import { useState, useEffect } from 'react'
 import Login from './components/login/Login'
 import LogOut from './components/logout/logout'
 import Register from './components/register/Register'
 import { Auth } from "./components/login/auth"
 import { getUserFragments } from './components/login/api'
 import './App.css';
+import Mood from './components/moodTracker/Mood'
+import Article from './components/article/Article'
 
 function App() {
  
  
   
   const [Username,setUsername] = useState("");
-  const formRef = useRef(null);
+  
 
-  const handleKeyDown = (ev)=>{
-    if(ev.keyCode ===13){ // enter button
-     formRef.current.submit()
-    }
- }
+  
 
  const [searchString, setSearchString ] = useState("");
- let history = useNavigate();
+ let navigateClinic = useNavigate();
  function handleSubmit(e){
   e.preventDefault();
-  history.push(`/clinics?postalcode=${searchString}`);
+  navigateClinic(`/clinics?postalcode=${searchString}`, {replace: true});
   setSearchString("");
  }
 
@@ -84,7 +81,7 @@ function App() {
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     
     <Nav className="container-fluid">
-    <Form onKeyDown={handleKeyDown} ref={formRef} onSubmit={handleSubmit} className='d-flex'>
+    <Form onSubmit={handleSubmit} className='d-flex'>
     <FormControl type="text" placeholder="e.g A1A 1A1" className="mr-sm-2" value={searchString}
    onChange={(e) => setSearchString(e.target.value)} />
    <span class="border border-dark"><Button type="submit" variant="primary">Search Clinics</Button></span>
@@ -119,24 +116,18 @@ function App() {
     <Nav.Link>Emergency {/*Links to Emergency */}</Nav.Link>
     </LinkContainer>
     <Nav.Item className="ml auto">
-    {Username ? <b>Welcome {Username}</b> : '' }
+    {Username ? <b>Welcome {Username}</b> : '' } 
         </Nav.Item>
     </Nav>
      
     
     </Navbar> 
-    
-    <p></p>
-
+    {searchString}
     <Routes>
     <Route path = "/"/>
-
-    
     <Route path = "/userprofile"/>
-      
-    
-    <Route path = "/mood"/>
-    <Route path = "/articles"/>
+    <Route path = "/mood" element = {<Mood/>}/>
+    <Route path = "/articles" element = {<Article/>}/>
     <Route path = "/assessment"/>
     <Route path = "/journals"/>
     <Route path = "/clinics"/>
