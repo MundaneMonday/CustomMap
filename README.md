@@ -34,3 +34,7 @@ The student will be able to favorite the resources he likes the most.
 This feature allows the user to use his postal code to search for the nearby clinics on a map.
 
 
+---
+
+ 
+[**Change Log**](CHANGELOG.md)
