@@ -1,20 +1,36 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { Nav, Navbar,Container } from 'react-bootstrap'
-import { Redirect, Route,Routes } from "react-router-dom"
+import { Nav, Navbar,Container,Form,FormControl,Button } from 'react-bootstrap'
+import { Redirect, Route,Routes, useNavigate } from "react-router-dom"
 import { LinkContainer } from 'react-router-bootstrap'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect,useRef } from 'react'
 import { useHistory } from "react-router-dom"
 import Login from './components/login/Login'
 import LogOut from './components/logout/logout'
 import Register from './components/register/Register'
 import { Auth } from "./components/login/auth"
 import { getUserFragments } from './components/login/api'
+import './App.css';
 
 function App() {
  
  
   
   const [Username,setUsername] = useState("");
+  const formRef = useRef(null);
+
+  const handleKeyDown = (ev)=>{
+    if(ev.keyCode ===13){ // enter button
+     formRef.current.submit()
+    }
+ }
+
+ const [searchString, setSearchString ] = useState("");
+ let history = useNavigate();
+ function handleSubmit(e){
+  e.preventDefault();
+  history.push(`/clinics?postalcode=${searchString}`);
+  setSearchString("");
+ }
 
   function timeout(ms){
     return new Promise((resolve)=> setTimeout(resolve,ms));
@@ -54,11 +70,9 @@ function App() {
   };
   getUserName();
   
-  return ()=>{
-
-  }  
+  
     
-  },[Username])
+  })
 
 
   return (
@@ -68,19 +82,25 @@ function App() {
     <Navbar.Brand><b>MyStudentLife</b></Navbar.Brand>
     </LinkContainer>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
-    <Navbar.Collapse id="basic-navbar-nav">
-    <Nav className="mr-auto">
-    <LinkContainer to="/"> 
-    <Nav.Link>Home{/* Links to Home*/}</Nav.Link>
-    </LinkContainer>
+    
+    <Nav className="container-fluid">
+    <Form onKeyDown={handleKeyDown} ref={formRef} onSubmit={handleSubmit} className='d-flex'>
+    <FormControl type="text" placeholder="e.g A1A 1A1" className="mr-sm-2" value={searchString}
+   onChange={(e) => setSearchString(e.target.value)} />
+   <span class="border border-dark"><Button type="submit" variant="primary">Search Clinics</Button></span>
+    
+    </Form>
 
     <LinkContainer to="/userprofile"> 
     <Nav.Link>Your Profile {/* Links to User Profile*/}</Nav.Link>
     </LinkContainer>
-    <LinkContainer to="/mood"> 
-    <Nav.Link>Articles{/* Links to Mood Tracker*/}</Nav.Link>
-    </LinkContainer>
     <LinkContainer to="/articles"> 
+    <Nav.Link>Articles{/* Links to Articles*/}</Nav.Link>
+    </LinkContainer>
+    <LinkContainer to="/mood"> 
+    <Nav.Link>Mood Tracker{/* Links to Mood Tracker*/}</Nav.Link>
+    </LinkContainer>
+    <LinkContainer to="/meditation"> 
     <Nav.Link>Meditation {/*Links to Articles */}</Nav.Link>
     </LinkContainer>
     <LinkContainer to="/assessment">
@@ -89,24 +109,26 @@ function App() {
     <LinkContainer to="/journals">
     <Nav.Link>Journals{/*Links to Journals */}</Nav.Link>
     </LinkContainer>
-    <LinkContainer to="/clinics">
-    <Nav.Link>Search Clinic{/*Links to Search Clinics */}</Nav.Link> 
+    <LinkContainer to={Username ? '/logout' : '/login' } >
+    <Nav.Link>{Username ? 'Logout' : 'Login' } {/*Links to Login */}</Nav.Link> 
     </LinkContainer>
-    <LinkContainer to="/login">
-    <Nav.Link>{Username ? Username + ' is logged in' : 'Login'} {/*Links to Login */}</Nav.Link> 
+    <LinkContainer to="/favourites">
+      <Nav.Link>Favourites{/* Links to Favourites List */}</Nav.Link>
+      </LinkContainer>
+      <LinkContainer to="/emergency"> 
+    <Nav.Link>Emergency {/*Links to Emergency */}</Nav.Link>
     </LinkContainer>
-    <LinkContainer to={"/logout"}>
-    <Nav.Link>{Username ? 'Logout' : ''}{/*Links to Logout */}</Nav.Link> 
-    </LinkContainer>
-    <LinkContainer to="/register">
-    <Nav.Link>Register{/*Links to Register */}</Nav.Link> 
-    </LinkContainer>
+    <Nav.Item className="ml auto">
+    {Username ? <b>Welcome {Username}</b> : '' }
+        </Nav.Item>
     </Nav>
-    </Navbar.Collapse>
+     
+    
     </Navbar> 
     
+    <p></p>
 
-  <Routes>
+    <Routes>
     <Route path = "/"/>
 
     
@@ -122,7 +144,9 @@ function App() {
     <Route path = "/logout" element = {<LogOut/>}/>
      {/*Routes to Login Component */} 
      <Route path = "/register" element = {<Register/>}/>
-     <Route path = "/forgot"/>
+     <Route path = "/favourites"/>
+     <Route path = "/emergency"></Route>
+     <Route path = "/meditation"></Route>
 
   </Routes>
 
