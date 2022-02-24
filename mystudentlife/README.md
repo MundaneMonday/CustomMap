@@ -13,5 +13,6 @@ January 31,2022
 February 24,2022
 
 -Dynamically change the navigation layout depending on the User's logged state
--Added a search bar with validation
+
+-Added a clinics search bar with validation
 
