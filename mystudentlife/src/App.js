@@ -100,9 +100,14 @@ function App() {
     
     <Nav className="container-fluid">
     <Form validated={validated} onSubmit={handleSubmit} className='d-flex'>
-    <FormControl type="text" placeholder="e.g A1A1A1" className="mr-sm-2" value={searchString}
+    <FormControl type="text" placeholder="Ontario Postal Code" className="mr-sm-2" value={searchString}
    onChange={handleChangePostalCode} required/>
+   {Username ?
    <span className="border border-dark"><Button type="submit" variant="primary">Search Clinics</Button></span>
+   : <LinkContainer to="/login">
+   <span className="border border-dark"><Button type="submit" variant="primary">Search Clinics</Button></span>
+   </LinkContainer>
+}
    <Form.Control.Feedback type="invalid" > 
             Invalid Postal Code
           </Form.Control.Feedback>
