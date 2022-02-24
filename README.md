@@ -9,28 +9,28 @@ MyStudentLife Web App is a project that aims to help students to understand bett
 
 # Main Features
 ## Monthly Assessment
-**Description:**
+**Description: **
 The Monthly Assessment feature will gather feedback from the student at the same time it will help the student to understand better what hes feeling.
 The feedback gathered will be parsed into graphs and sento to the institution that the student is currently in.
 
 
 ## Mood Tracker
-**Description:**
+**Description: **
 Mood Tracker feature will make a quick evaluation of the users mood and provide useful resources like meditation and articles.
 A history of the mood tracker result will be displayed on the users profile.
 
 
 ## Journaling
-Description: 
+**Description: ** 
 Journaling feature allows the user to write or record about what they are feeling.
 
 ## Resources
-Description: 
+**Description: **
 Meditation, videos and articles will be available to the student.
 The student will be able to favorite the resources he likes the most.
 
 ## Search Clinics
-Description: 
+**Description: **
 This feature allows the user to use his postal code to search for the nearby clinics on a map.
 
 
