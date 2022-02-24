@@ -16,4 +16,5 @@
 - Monthly Assessment, Resource, Search Clinic, Journal had updated due dates.
 
 ## Files
-- Andrew updated front end on Mood Tracker and Monthly Assessment.
+- Updated front end on Mood Tracker and Monthly Assessment.
+- Uploaded updated backend with connectivity to the Database
