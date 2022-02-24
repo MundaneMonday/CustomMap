@@ -27,7 +27,7 @@ function App() {
   
   const postalCodeRegex = new RegExp(/^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVXY][ -]?\d[ABCEGHJKLMNPRSTVXY]\d$/i);
   e.preventDefault();
-  if(postalCodeRegex.test(searchString)){
+  if(postalCodeRegex.test(searchString) && searchString[0].match(/[KLMNP]/i)){
     console.log('regex successful')
     navigateClinic(`/clinics?postalcode=${searchString}`, {replace: true});
     
