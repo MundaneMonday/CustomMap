@@ -7,10 +7,10 @@ import (
 	"gorm.io/gorm"
 )
 
-func ConnectToDB(dbUser string, dbPassword string, dbName string) (*gorm.DB, error) {
+func ConnectToDB(dbUser string, dbPassword string, port int16, dbName string, dbHost string) (*gorm.DB, error) {
 	var connectionString = fmt.Sprintf(
-		"%s:%s@/%s?charset=utf8mb4&parseTime=True&loc=Local",
-		dbUser, dbPassword, dbName,
+		"%s:%s@(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+		dbUser, dbPassword, dbHost, port, dbName,
 	)
 
 	db, err := gorm.Open(mysql.Open(connectionString), &gorm.Config{})

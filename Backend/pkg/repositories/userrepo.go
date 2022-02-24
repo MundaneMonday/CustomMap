@@ -35,7 +35,7 @@ func (r *UserRepository) FindAll() RepositoryResult {
 	return RepositoryResult{Result: &Users}
 }
 
-func (r *UserRepository) FindOneById(id string) RepositoryResult {
+func (r *UserRepository) FindOneById(id int) RepositoryResult {
 	var contact models.User
 
 	err := r.db.Where(&models.User{ID: id}).Take(&contact).Error
@@ -47,7 +47,19 @@ func (r *UserRepository) FindOneById(id string) RepositoryResult {
 	return RepositoryResult{Result: &contact}
 }
 
-func (r *UserRepository) DeleteOneById(id string) RepositoryResult {
+func (r *UserRepository) FindOneByUsername(username string) RepositoryResult {
+	var user models.User
+
+	err := r.db.Where(&models.User{Username: username}).Take(&user).Error
+
+	if err != nil {
+		return RepositoryResult{Error: err}
+	}
+
+	return RepositoryResult{Result: &user}
+}
+
+func (r *UserRepository) DeleteOneById(id int) RepositoryResult {
 	err := r.db.Delete(&models.User{ID: id}).Error
 
 	if err != nil {

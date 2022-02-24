@@ -6,21 +6,26 @@ import (
 	"time"
 
 	"github.com/Farhanger9/backend_final_project/pkg/database"
+	"github.com/Farhanger9/backend_final_project/pkg/models"
+	"github.com/Farhanger9/backend_final_project/pkg/repositories"
 	"github.com/Farhanger9/backend_final_project/pkg/routes"
 )
 
 func main() {
+	dbUser, dbPassword, dbName, dbHost, port := "admin", "G2zlvR6x", "student", "mysql-68346-0.cloudclusters.net", 12008
+
+	db, err := database.ConnectToDB(dbUser, dbPassword, int16(port), dbName, dbHost)
+	userRepository := repositories.NewUserRepository(db)
 
 	srv := &http.Server{
-		Handler: routes.RegisterRoutes(),
-		Addr:    "127.0.0.1:8000",
+		Handler: routes.RegisterRoutes(userRepository),
+		Addr:    "0.0.0.0:8090",
 		// Good practice: enforce timeouts for servers you create!
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
-	dbUser, dbPassword, dbName := "root", "1234", "student"
 
-	_, err := database.ConnectToDB(dbUser, dbPassword, dbName)
+	db.AutoMigrate(&models.User{})
 
 	// unable to connect to database
 	if err != nil {
