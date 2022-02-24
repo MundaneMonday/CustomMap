@@ -10,6 +10,7 @@
 ### Issues
 - "Create user Profile" and "Mood Tracker History Feature" added to User Profile Milestone and assigned.
 - "Implement Favorite Feature" added to Resources Milestone and assigned.
+- "Use RSS Feed to populate resources" isse was added to Resources milestone and assigned.
 
 ### Due Dates
 - Monthly Assessment, Resource, Search Clinic, Journal had updated due dates.
