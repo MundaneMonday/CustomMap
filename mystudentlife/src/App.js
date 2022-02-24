@@ -25,22 +25,21 @@ function App() {
  function handleSubmit(e){
   
   
-  const postalCodeRegex = new RegExp(/^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVXY][ -]?\d[ABCEGHJKLMNPRSTVXY]\d$/i);
+  const postalCodeRegex = new RegExp(/^[KLMNP]\d[ABCEGHJKLMNPRSTVXY][ -]?\d[ABCEGHJKLMNPRSTVXY]\d$/i);
   e.preventDefault();
-  if(postalCodeRegex.test(searchString) && searchString[0].match(/[KLMNP]/i)){
+ 
+  if(postalCodeRegex.test(searchString) ){
     console.log('regex successful')
-    navigateClinic(`/clinics?postalcode=${searchString}`, {replace: true});
+    navigateClinic(`/clinics?postalcode=${searchString}`, {replace: false});
     
-    setValidated(true);
-    
-
   }else{
-    e.stopPropagation();
-    setSearchString("");
+    
+    setSearchString("")
+    
     console.log('regex fail')
   }
   
-  
+  setValidated(true);
  }
 
   function timeout(ms){
@@ -49,7 +48,7 @@ function App() {
  
   function handleChangePostalCode(e){
     
-       setSearchString(e.target.value)
+       setSearchString((e.target.value).replace(/ /g,''))
        
     
   }
@@ -101,7 +100,7 @@ function App() {
     
     <Nav className="container-fluid">
     <Form validated={validated} onSubmit={handleSubmit} className='d-flex'>
-    <FormControl type="text" placeholder="e.g A1A 1A1" className="mr-sm-2" value={searchString}
+    <FormControl type="text" placeholder="e.g A1A1A1" className="mr-sm-2" value={searchString}
    onChange={handleChangePostalCode} required/>
    <span className="border border-dark"><Button type="submit" variant="primary">Search Clinics</Button></span>
    <Form.Control.Feedback type="invalid" > 
