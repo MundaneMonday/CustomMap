@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Nav, Navbar,Form,FormControl,Button } from 'react-bootstrap'
-import { Route,Routes, useNavigate } from "react-router-dom"
+import { Navigate, Route,Routes, useNavigate } from "react-router-dom"
 import { LinkContainer } from 'react-router-bootstrap'
 import { useState, useEffect } from 'react'
 import Login from './components/login/Login'
@@ -99,52 +99,55 @@ function App() {
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     
     <Nav className="container-fluid">
-    <Form validated={validated} onSubmit={handleSubmit} className='d-flex'>
-    <FormControl type="text" placeholder="e.g A1A1A1" className="mr-sm-2" value={searchString}
+    {Username &&<Form validated={validated} onSubmit={handleSubmit} className='d-flex'>
+    <FormControl type="text" placeholder="Ontario Postal Code" className="mr-sm-2" value={searchString}
    onChange={handleChangePostalCode} required/>
+   
    <span className="border border-dark"><Button type="submit" variant="primary">Search Clinics</Button></span>
+    
+
    <Form.Control.Feedback type="invalid" > 
             Invalid Postal Code
           </Form.Control.Feedback>
-    </Form>
+    </Form>}
     
-    <LinkContainer to="/userprofile"> 
+    {Username &&<LinkContainer to="/userprofile"> 
     <Nav.Link>Your Profile {/* Links to User Profile*/}</Nav.Link>
-    </LinkContainer>
-    <LinkContainer to="/articles"> 
+    </LinkContainer>}
+    {Username &&<LinkContainer to="/articles"> 
     <Nav.Link>Articles{/* Links to Articles*/}</Nav.Link>
-    </LinkContainer>
-    <LinkContainer to="/mood"> 
+    </LinkContainer>}
+    {Username &&<LinkContainer to="/mood"> 
     <Nav.Link>Mood Tracker{/* Links to Mood Tracker*/}</Nav.Link>
-    </LinkContainer>
-    <LinkContainer to="/meditation"> 
+    </LinkContainer>}
+    {Username &&<LinkContainer to="/meditation"> 
     <Nav.Link>Meditation {/*Links to Articles */}</Nav.Link>
-    </LinkContainer>
-    <LinkContainer to="/assessment">
+    </LinkContainer>}
+    {Username &&<LinkContainer to="/assessment">
     <Nav.Link>Assessment{/*Links to Assessment */}</Nav.Link> 
-    </LinkContainer>
-    <LinkContainer to="/journals">
+    </LinkContainer>}
+    {Username &&<LinkContainer to="/journals">
     <Nav.Link>Journals{/*Links to Journals */}</Nav.Link>
-    </LinkContainer>
+    </LinkContainer>}
     <LinkContainer to={Username ? '/logout' : '/login' } >
     <Nav.Link>{Username ? 'Logout' : 'Login' } {/*Links to Login */}</Nav.Link> 
     </LinkContainer>
-    <LinkContainer to="/favourites">
+    {Username &&<LinkContainer to="/favourites">
       <Nav.Link>Favourites{/* Links to Favourites List */}</Nav.Link>
-      </LinkContainer>
-      <LinkContainer to="/emergency"> 
+      </LinkContainer>}
+      {Username && <LinkContainer to="/emergency"> 
     <Nav.Link>Emergency {/*Links to Emergency */}</Nav.Link>
-    </LinkContainer>
-    <Nav.Item className="ml auto">
-    {Username ? <b>Welcome {Username}</b> : '' } 
-        </Nav.Item>
+    </LinkContainer>}
+    {Username && <Nav.Item className="ml auto">
+    {<b>Welcome {Username}</b> } 
+        </Nav.Item>}
     </Nav>
      
     
     </Navbar> 
     {searchString}
     <Routes>
-    <Route path = "/"/>
+    <Route exact path = "/"/>
     <Route path = "/userprofile"/>
     <Route path = "/mood" element = {<Mood/>}/>
     <Route path = "/articles" element = {<Article/>}/>
