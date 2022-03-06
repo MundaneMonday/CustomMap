@@ -1,57 +1,32 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Nav, Navbar,Form,FormControl,Button } from 'react-bootstrap'
-import { Navigate, Route,Routes, useNavigate } from "react-router-dom"
+import { Route,Routes} from "react-router-dom"
 import { LinkContainer } from 'react-router-bootstrap'
 import { useState, useEffect } from 'react'
 import Login from './components/login/Login'
 import LogOut from './components/logout/logout'
-import Register from './components/register/Register'
 import { Auth } from "./components/login/auth"
 import { getUserFragments } from './components/login/api'
-import './App.css';
+import GetMap from './components/Map/Map'
 import Mood from './components/moodTracker/Mood'
 import Article from './components/article/Article'
-
+import './App.css';
+import 'leaflet/dist/leaflet.css'
 function App() {
  
  
   
   const [Username,setUsername] = useState("");
-  const [validated, setValidated] = useState(false);
 
- const [searchString, setSearchString ] = useState("");
- let navigateClinic = useNavigate();
-
- function handleSubmit(e){
-  
-  
-  const postalCodeRegex = new RegExp(/^[KLMNP]\d[ABCEGHJKLMNPRSTVXY][ -]?\d[ABCEGHJKLMNPRSTVXY]\d$/i);
-  e.preventDefault();
  
-  if(postalCodeRegex.test(searchString) ){
-    console.log('regex successful')
-    navigateClinic(`/clinics?postalcode=${searchString}`, {replace: false});
-    
-  }else{
-    
-    setSearchString("")
-    
-    console.log('regex fail')
-  }
-  
-  setValidated(true);
- }
+
+ 
 
   function timeout(ms){
     return new Promise((resolve)=> setTimeout(resolve,ms));
   }
  
-  function handleChangePostalCode(e){
-    
-       setSearchString((e.target.value).replace(/ /g,''))
-       
-    
-  }
+
 
   useEffect(()=>{
     async function getUserName(){
@@ -99,17 +74,7 @@ function App() {
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     
     <Nav className="container-fluid">
-    {Username &&<Form validated={validated} onSubmit={handleSubmit} className='d-flex'>
-    <FormControl type="text" placeholder="Ontario Postal Code" className="mr-sm-2" value={searchString}
-   onChange={handleChangePostalCode} required/>
-   
-   <span className="border border-dark"><Button type="submit" variant="primary">Search Clinics</Button></span>
     
-
-   <Form.Control.Feedback type="invalid" > 
-            Invalid Postal Code
-          </Form.Control.Feedback>
-    </Form>}
     
     {Username &&<LinkContainer to="/userprofile"> 
     <Nav.Link>Your Profile {/* Links to User Profile*/}</Nav.Link>
@@ -138,14 +103,17 @@ function App() {
       {Username && <LinkContainer to="/emergency"> 
     <Nav.Link>Emergency {/*Links to Emergency */}</Nav.Link>
     </LinkContainer>}
+    <LinkContainer to ="/Map">
+      <Nav.Link> Map </Nav.Link>
+    </LinkContainer>
     {Username && <Nav.Item className="ml auto">
     {<b>Welcome {Username}</b> } 
         </Nav.Item>}
     </Nav>
-     
+  
     
     </Navbar> 
-    {searchString}
+    
     <Routes>
     <Route exact path = "/"/>
     <Route path = "/userprofile"/>
@@ -156,12 +124,10 @@ function App() {
     <Route path = "/clinics"/>
     <Route path = "/login" element = {<Login/>}/>
     <Route path = "/logout" element = {<LogOut/>}/>
-     {/*Routes to Login Component */} 
-     <Route path = "/register" element = {<Register/>}/>
      <Route path = "/favourites"/>
-     <Route path = "/emergency"></Route>
-     <Route path = "/meditation"></Route>
-
+     <Route path = "/emergency"/>
+     <Route path = "/meditation"/>
+     <Route path = "/Map" element = {<GetMap/>}/>
   </Routes>
 
     </>
