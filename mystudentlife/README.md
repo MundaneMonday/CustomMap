@@ -12,7 +12,11 @@ January 31,2022
 
 February 24,2022
 
--Dynamically change the navigation layout depending on the User's logged state
+- Dynamically change the navigation layout depending on the User's logged state
 
--Added a clinics search bar with validation
+- Added a clinics search bar with validation
+
+March 6th,2022
+
+- Implemented Leaflet Map along with Google Geocoding API
 
