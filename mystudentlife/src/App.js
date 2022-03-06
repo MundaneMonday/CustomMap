@@ -103,7 +103,7 @@ function App() {
       {Username && <LinkContainer to="/emergency"> 
     <Nav.Link>Emergency {/*Links to Emergency */}</Nav.Link>
     </LinkContainer>}
-    {Username && <LinkContainer to ="/Map">
+    {Username && <LinkContainer to ="/clinics">
       <Nav.Link> Search For Clinics</Nav.Link>
     </LinkContainer>}
     {Username && <Nav.Item className="ml auto">
@@ -122,12 +122,11 @@ function App() {
     {Username && <Route path = "/articles" element = {<Article/>}/>}
     {Username && <Route path = "/assessment"/>}
     {Username && <Route path = "/journals"/>}
-    {Username && <Route path = "/clinics"/>}
     {Username && <Route path = "/logout" element = {<LogOut/>}/>}
     {Username && <Route path = "/favourites"/>}
     {Username && <Route path = "/emergency"/>}
     {Username && <Route path = "/meditation"/>}
-    {Username && <Route path = "/Map" element = {<GetMap/>}/>}
+    {Username && <Route path = "/clinics" element = {<GetMap/>}/>}
   
   </Routes>
 

@@ -25,7 +25,7 @@ function LocationMarker() {
     },
     locationfound(e) {
       setPosition(latLng(globalLat,globalLng))
-      map.setView(latLng(globalLat,globalLng), 20)
+      map.setView(latLng(globalLat,globalLng), 18)
     },
   })
 
@@ -51,7 +51,7 @@ export default function GetMap(){
     Geocode.setApiKey("AIzaSyC2wMHrM8FI1xA8z-6VG2B6X-tzasCQShk");
 
     function handleChangePostalCode(e){
-    
+      
       setSearchString((e.target.value).replace(/ /g,''))
       
    
@@ -99,6 +99,8 @@ export default function GetMap(){
       setValidated(true);
 
       e.preventDefault();
+
+      
      }
 
      
@@ -117,13 +119,16 @@ export default function GetMap(){
       <>
  <Form validated={validated} onSubmit={handleSubmit} className='d-flex'>
  <Form.Group as={Col} md="3" controlId="validationCustom05">
-    <FormControl type="text" placeholder="Enter A Valid Ontario Postal Code" className="mr-sm-2" value={searchString}
+    <FormControl type="text" placeholder="Enter Ontario Postal Code e.g L1A 1A1" className="mr-sm-2" value={searchString}
    onChange={handleChangePostalCode} required />
-   
+      
    <Form.Control.Feedback type="invalid"> 
             Invalid Postal Code
           </Form.Control.Feedback>
-          </Form.Group> 
+          
+          </Form.Group>  
+          <span ><Button type="submit" variant="success">Set Postal Code</Button></span>
+           Hover Over The Map and Press Enter To Zoom Toward Postal Location
     </Form>  
         
     <MapContainer center={[Latitude,Longitude]} zoom={defaultZoom} >
