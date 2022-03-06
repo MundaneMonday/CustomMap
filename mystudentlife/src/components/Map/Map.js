@@ -1,17 +1,45 @@
-import { useEffect, useState} from 'react';
-import { MapContainer, TileLayer,Marker,Popup,useMap} from 'react-leaflet';
+import { useEffect, useState,useRef } from 'react';
+import { MapContainer, TileLayer,Marker,Popup,useMapEvents} from 'react-leaflet';
 import {Form,FormControl,Button } from 'react-bootstrap'
 import Geocode from "react-geocode";
 import './customLeaflet.css';
+import { latLng,IconOptions,Icon} from 'leaflet';
+import MarkerIcon from './marker.png'
 
+var globalLat = 0;
+var globalLng = 0;
+const newicon = new Icon({
+  iconUrl: MarkerIcon,
+  iconSize: [30, 30]
+});
+function LocationMarker() {
+  const [position, setPosition] = useState(null)
+  const map = useMapEvents({
+    
+    keydown(event) {
+      if(event.originalEvent.key === "Enter"){
+        map.locate()
+      }
+     
+     
+    },
+    locationfound(e) {
+      setPosition(latLng(globalLat,globalLng))
+      map.setView(latLng(globalLat,globalLng), 20)
+    },
+  })
 
-
- 
-
+  return position === null ? null : (
+    <Marker position={position} icon = {newicon}>
+      
+      <Popup>You are here</Popup>
+    </Marker>
+  )
+}
 
 export default function GetMap(){
-  const defaultCenter = [38.9072, -77.0369];
-  const defaultZoom = 8;
+ 
+  const defaultZoom = 5;
   
     const [validated, setValidated] = useState(false);
 
@@ -29,7 +57,7 @@ export default function GetMap(){
    
  }
 
- 
+
 
 
 
@@ -37,7 +65,7 @@ export default function GetMap(){
   
   
       const postalCodeRegex = new RegExp(/^[KLMNP]\d[ABCEGHJKLMNPRSTVXYZ]?\d[ABCEGHJKLMNPRSTVXYZ]\d$/i);
-      e.preventDefault();
+     
      
       if(postalCodeRegex.test(searchString) ){
         console.log('regex successful')
@@ -49,15 +77,18 @@ export default function GetMap(){
             console.log(lat, lng);
             setLatitude(lat);
             setLongitude(lng);
+
+            globalLat = lat;
+            globalLng = lng;
+             
           },
           (error) => {
             console.error(error);
           }
         );
         
+          
        
-         
-
       }else{
         
         setSearchString("")
@@ -66,6 +97,8 @@ export default function GetMap(){
       }
       
       setValidated(true);
+
+      e.preventDefault();
      }
 
      
@@ -83,27 +116,23 @@ export default function GetMap(){
     return (
       <>
  <Form validated={validated} onSubmit={handleSubmit} className='d-flex'>
-    <FormControl type="text" placeholder="Ontario Postal Code" className="mr-sm-2" value={searchString}
+    <FormControl type="text" placeholder="Enter A Valid Ontario Postal Code" className="mr-sm-2" value={searchString}
    onChange={handleChangePostalCode} required/>
    
-   <span className="border border-dark"><Button type="submit" variant="primary">Search Clinics</Button></span>
+   
     
 
    
     </Form>  
         
-    <MapContainer center={defaultCenter} zoom={defaultZoom} >
+    <MapContainer center={[Latitude,Longitude]} zoom={defaultZoom} >
   <TileLayer
     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
   />
-  <Marker position={[Latitude,Longitude]}>
-    <Popup>
-    You are Here
-    </Popup>
-   
-  </Marker>
   
+  
+    <LocationMarker />
 </MapContainer>
 
  </>     
