@@ -1,6 +1,6 @@
 import { useEffect, useState,useRef } from 'react';
 import { MapContainer, TileLayer,Marker,Popup,useMapEvents} from 'react-leaflet';
-import {Form,FormControl,Button } from 'react-bootstrap'
+import {Form,FormControl,Button,Col } from 'react-bootstrap'
 import Geocode from "react-geocode";
 import './customLeaflet.css';
 import { latLng,IconOptions,Icon} from 'leaflet';
@@ -116,13 +116,14 @@ export default function GetMap(){
     return (
       <>
  <Form validated={validated} onSubmit={handleSubmit} className='d-flex'>
+ <Form.Group as={Col} md="3" controlId="validationCustom05">
     <FormControl type="text" placeholder="Enter A Valid Ontario Postal Code" className="mr-sm-2" value={searchString}
-   onChange={handleChangePostalCode} required/>
+   onChange={handleChangePostalCode} required />
    
-   
-    
-
-   
+   <Form.Control.Feedback type="invalid"> 
+            Invalid Postal Code
+          </Form.Control.Feedback>
+          </Form.Group> 
     </Form>  
         
     <MapContainer center={[Latitude,Longitude]} zoom={defaultZoom} >

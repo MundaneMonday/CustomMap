@@ -103,9 +103,9 @@ function App() {
       {Username && <LinkContainer to="/emergency"> 
     <Nav.Link>Emergency {/*Links to Emergency */}</Nav.Link>
     </LinkContainer>}
-    <LinkContainer to ="/Map">
-      <Nav.Link> Map </Nav.Link>
-    </LinkContainer>
+    {Username && <LinkContainer to ="/Map">
+      <Nav.Link> Search For Clinics</Nav.Link>
+    </LinkContainer>}
     {Username && <Nav.Item className="ml auto">
     {<b>Welcome {Username}</b> } 
         </Nav.Item>}
@@ -115,19 +115,20 @@ function App() {
     </Navbar> 
     
     <Routes>
-    <Route exact path = "/"/>
-    <Route path = "/userprofile"/>
-    <Route path = "/mood" element = {<Mood/>}/>
-    <Route path = "/articles" element = {<Article/>}/>
-    <Route path = "/assessment"/>
-    <Route path = "/journals"/>
-    <Route path = "/clinics"/>
     <Route path = "/login" element = {<Login/>}/>
-    <Route path = "/logout" element = {<LogOut/>}/>
-     <Route path = "/favourites"/>
-     <Route path = "/emergency"/>
-     <Route path = "/meditation"/>
-     <Route path = "/Map" element = {<GetMap/>}/>
+    <Route exact path = "/"/>
+    {Username && <Route path = "/userprofile"/> }
+    {Username && <Route path = "/mood" element = {<Mood/>}/>}
+    {Username && <Route path = "/articles" element = {<Article/>}/>}
+    {Username && <Route path = "/assessment"/>}
+    {Username && <Route path = "/journals"/>}
+    {Username && <Route path = "/clinics"/>}
+    {Username && <Route path = "/logout" element = {<LogOut/>}/>}
+    {Username && <Route path = "/favourites"/>}
+    {Username && <Route path = "/emergency"/>}
+    {Username && <Route path = "/meditation"/>}
+    {Username && <Route path = "/Map" element = {<GetMap/>}/>}
+  
   </Routes>
 
     </>
