@@ -52,6 +52,7 @@ function App() {
       // Return a simplified "user" object
       console.log(Username);
       getUserFragments(currentAuthenticatedUser);
+      return (currentAuthenticatedUser)
     } catch (err) {
       console.log(err);
       // Unable to get user, return `null` instead

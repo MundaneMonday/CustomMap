@@ -12,23 +12,23 @@ Amplify.configure({
     region: "us-east-1",
 
     // Amazon Cognito User Pool ID
-    userPoolId: "us-east-1_YtZKVbE1L",
+    userPoolId: process.env.REACT_APP_AWS_COGNITO_POOL_ID,
 
     // Amazon Cognito App Client ID (26-char alphanumeric string)
-    userPoolWebClientId: "284fqcq56okpob5frp40o3uned",
+    userPoolWebClientId: process.env.REACT_APP_AWS_COGNITO_CLIENT_ID,
 
     // Hosted UI configuration
     oauth: {
       // Amazon Hosted UI Domain
-      domain: "mystudentlife.auth.us-east-1.amazoncognito.com",
+      domain: process.env.REACT_APP_AWS_COGNITO_HOSTED_UI_DOMAIN,
 
       // These scopes must match what you set in the User Pool for this App Client
       scope: ["email", "profile", "openid"],
 
       // NOTE: these must match what you have specified in the Hosted UI
       // app settings for Callback and Redirect URLs (e.g., no trailing slash).
-      redirectSignIn: "http://localhost:3000",
-      redirectSignOut: "http://localhost:3000",
+      redirectSignIn: process.env.REACT_APP_OAUTH_SIGN_IN_REDIRECT_URL,
+      redirectSignOut: process.env.REACT_APP_OAUTH_SIGN_OUT_REDIRECT_URL,
 
       // We're using the Access Code Grant flow (i.e., `code`)
       responseType: "code",

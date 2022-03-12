@@ -6,6 +6,7 @@ import './customLeaflet.css';
 import { latLng,IconOptions,Icon} from 'leaflet';
 import MarkerIcon from './marker.png'
 
+
 var globalLat = 0;
 var globalLng = 0;
 const newicon = new Icon({
@@ -47,8 +48,9 @@ export default function GetMap(){
     const [Longitude,setLongitude] = useState(0);
     const [Latitude,setLatitude] = useState(0);
 
- 
-    Geocode.setApiKey("AIzaSyC2wMHrM8FI1xA8z-6VG2B6X-tzasCQShk");
+    
+    Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAP_API_URL);
+    
 
     function handleChangePostalCode(e){
       
