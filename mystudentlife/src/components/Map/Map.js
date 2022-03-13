@@ -30,12 +30,7 @@ function LocationMarker() {
     },
   })
 
-  return position === null ? null : (
-    <Marker position={position} icon = {newicon}>
-      
-      <Popup>You are here</Popup>
-    </Marker>
-  )
+  return null
 }
 
 export default function GetMap(){
@@ -138,7 +133,10 @@ export default function GetMap(){
     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
   />
-  
+   <Marker position={[Latitude,Longitude]} icon = {newicon}>
+   <Popup>You are here</Popup>
+      
+    </Marker>
   
     <LocationMarker />
 </MapContainer>
