@@ -20,3 +20,8 @@ March 6th,2022
 
 - Implemented Leaflet Map along with Google Geocoding API
 
+March 16, 2022
+
+- Fixed Monthly Assessment Route
+- Implemented Emergency Contact placeholder
+- Implemented Mood Tracker Placeholder
