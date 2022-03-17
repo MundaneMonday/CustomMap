@@ -1,6 +1,6 @@
 - Change Log:
 
-** 03/16/2022 **
+**03/16/2022**
 
 ## Due Dates
 Monthly Assessment, Mood tracker had updated due dates.
