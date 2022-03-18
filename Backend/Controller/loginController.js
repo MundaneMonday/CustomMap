@@ -1,58 +1,73 @@
 const Register = require('../Model/Register');
+const Mood = require('../Model/Mood');
+const assesment = require('../Data/assesment');
+const Moods = require('../Data/moods');
+const mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
 
 exports.getLogin = (req, res, next) => {
 
-    res.render('login')
+    res.status('200').json({message:'login'});
 }
 
 exports.postLogin = async (req, res, next) => {
-    console.log(req.body);
-    const { email,password } = req.body;
-    const isEmailExists = await Register.findOne({ email })
-    if (!isEmailExists) {
-        return res.render('login');
-    }
-    console.log(isEmailExists);
-    bcrypt.compare(password, isEmailExists.password).then((err, result) => {
-        if (result === false) {
-            return res.render('login');
+    const { email, password } = req.body;
+    try {
+        const isEmailExists = await Register.findOne({ email });
+        console.log(isEmailExists);
+        if (!isEmailExists) {
+            return  res.status('409').json({error:{message:'Email Not exist',status:409}});
         }
-        req.user = isEmailExists;
-        return res.redirect('home');
-        
-    }).catch(err => console.log(err));
-}
+        const result = await bcrypt.compare(password, isEmailExists.password);
+        if (!result) {
+            return res.status('409').json({error:{message:'Password not match',status:409}});
+
+        }
+        req.session.user = isEmailExists;
+        req.session.isAuth = true;
+        res.status(201).json({ message: 'Login successful',status:201 });
+    } catch (err) {
+        console.log(err);
+        return res.status('500').json({error:{message:'Server error',status:500}});
+    }
+    
+};
 
 
-exports.getRegister = (req, res, next) => {
-    res.render('register')
-}
-
-exports.getHome = (req, res, next) => {
-    res.render('home')
-}
 
 
 
 exports.postRegister = async (req, res, next) => {
     const { name, email, organization, password } = req.body;
+    console.log(req.body);
     const isEmailExists = await Register.findOne({ email })
     if (isEmailExists) {
-        return res.render('register');
+        return res.status('409').json({error:{message:'Already Registered with this email',status:409}});
     }
     const hashedPassword = await bcrypt.hash(password, 12);
-    const newUser = new Register({ name, email, password, organization });
+    const newUser = new Register({ name, email, password:hashedPassword, organization });
     const user = await newUser.save();
     if (user) {
-        res.redirect('home')
+        res.status(201).json({ message: 'Registration Completed success',status:201 });
     }
 };
 
 
 
-exports.getProfile = async (req, res, next) => {
-    const user = req.user;
-    console.log(user);
-    res.render('profile', { name: user?.name, organization: user?.organization, email: user?.email });
+
+exports.postLogout = async (req, res, next) => {
+    req.session.destroy((err) => {
+        if (err) throw err;
+        res.status(200).json({message:'Logut Success',status:200})
+    });
+};
+
+exports.getRegister = (req, res, next) => {
+    res.status('200').json({message:'Register',status:200});
+    
+}
+
+exports.getHome = (req, res, next) => {
+    res.status('200').json({message:'Home',status:200});
+    
 }
