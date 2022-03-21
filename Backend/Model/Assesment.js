@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Register = require('./Register');
+const Register = require('./profileData');
 
 const assesmentSchema = new Schema({
     question: {
