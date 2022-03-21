@@ -1,7 +1,14 @@
-import React from "react";
+import {useState, useEffect} from "react";
 import { Form, Card, Button, Nav, Navbar, Container } from "react-bootstrap";
 
 function Mood() {
+const [mood,setMood] = useState("");
+
+const handleChange = e =>{
+  
+  setMood(e.target.value);
+}
+
   return (
     <>
       <Navbar bg="dark" class="text-center" variant="dark">
@@ -18,20 +25,51 @@ function Mood() {
           <Form class="text-center">
             {["radio"].map((type) => (
               <div key={`default-${type}`} className="mb-3">
+                <Form.Group>
                 <Form.Check
+                  value="perfect"
                   type={type}
                   id={`default-${type}`}
                   label="Perfect"
+                  onChange={handleChange}
+                  checked={mood === "perfect"}
                 />
 
-                <Form.Check type={type} id={`default-${type}`} label="Good" />
-                <Form.Check type={type} id={`default-${type}`} label="Ok" />
                 <Form.Check
-                  type={type}
-                  id={`default-${type}`}
-                  label="Not Good"
+                value="good" 
+                type={type} 
+                id={`default-${type}`} 
+                label="Good" 
+                onChange={handleChange}
+                checked={mood === "good"}
                 />
-                <Form.Check type={type} id={`default-${type}`} label="Awful" />
+                <Form.Check
+                value="ok" 
+                type={type} 
+                id={`default-${type}`} 
+                label="Ok"
+                onChange={handleChange}
+                checked={mood === "ok"}
+                />
+                <Form.Check
+                value="notgood"
+                type={type}
+                id={`default-${type}`}
+                label="Not Good"
+                onChange={handleChange}
+                checked={mood === "notgood"}
+                />
+                <Form.Check
+                value="awful" 
+                type={type} 
+                id={`default-${type}`} 
+                label="Awful" 
+                onChange={handleChange}
+                checked={mood === "awful"}
+                />
+
+                </Form.Group>
+                
               </div>
             ))}
           </Form>

@@ -1,6 +1,7 @@
 const express = require('express');
 const routes = express.Router();
 const profileController = require('../Controller/profileController');
+const profileData = require('../Model/profileData')
 
 
 const isAuth = (req, res, next) => {
@@ -12,33 +13,35 @@ const isAuth = (req, res, next) => {
 };
 
 // Get Route for Profile Details and moods of LoggedIn User
-routes.get('/profile',isAuth,profileController.getProfile);
+routes.get('/api/profile/:username',(req,res)=>{
+profileData.findOne({username: req.params.username})
+});
 
 
 
 // Get Router to fetch all the Assesment options to show the current user
-routes.get('/assesments', isAuth, profileController.getAssesments);
+routes.get('/api/assesments', isAuth, profileController.getAssesments);
 
 // Get Router to fetch all the Assesment of current loggedin user
-routes.get('/assesments/:userId', isAuth, profileController.getUserAssesments);
+routes.get('/api/assesments/:username', isAuth, profileController.getUserAssesments);
 
 // POST Route to insert the assesment Question and Answer
-routes.post('/assesment', isAuth,profileController.postAssesment);
+routes.post('/api/assesment', isAuth,profileController.postAssesment);
 
 
 
 // Get Route to fetch all the moods option
-routes.get('/moods', isAuth, profileController.getMoods);
+routes.get('/api/moods', isAuth, profileController.getMoods);
 
 // Get Route to fetch modes of specific user with time and date 
-routes.get('/moods/:userId', isAuth, profileController.getUserMoods);
+routes.get('/api/moods/:username', isAuth, profileController.getUserMoods);
 
 // POST Route to insert the Moods of user
-routes.post('/mood', isAuth,profileController.postMoods);
+routes.post('/api/mood', isAuth,profileController.postMoods);
 
 
 
 // GET Route to fetch the emergency Contacts
-routes.get('/emergency', profileController.getEmergencyContacts);
+routes.get('/api/emergency', profileController.getEmergencyContacts);
 
 module.exports = routes;

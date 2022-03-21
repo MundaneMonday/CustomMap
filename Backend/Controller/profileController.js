@@ -1,4 +1,4 @@
-const Register = require('../Model/Register');
+const Register = require('../Model/profileData');
 const Mood = require('../Model/Mood');
 const assesment = require('../Data/assesment');
 const emergencyContacts = require('../Data/emergencyContacts');

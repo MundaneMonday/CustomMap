@@ -1,16 +1,35 @@
-import { useEffect, useState,useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer,Marker,Popup,useMapEvents} from 'react-leaflet';
 import {Form,FormControl,Button,Col } from 'react-bootstrap'
 import Geocode from "react-geocode";
 import './customLeaflet.css';
-import { latLng,IconOptions,Icon} from 'leaflet';
+import { latLng,Icon} from 'leaflet';
 import MarkerIcon from './marker.png'
+import MarkerIcon2 from './icons8-map-48.png'
+
+const position2 = [43.758683, -79.408785]
+const position3 = [43.725912, -79.402773]
+const position4 = [43.722097, -79.373811]
+const position5 = [43.708354, -79.397053]
+const position6 = [43.699511, -79.402773]
+const position7 = [43.676087, -79.401116]
+const position8 = [43.658851, -79.399111]
+const position9 = [43.655738, -79.386813]
+const position10 = [43.646291, -79.382598]
+const position11 = [43.670053, -79.390425]
+const position12 = [43.699376, -79.424576]
+const position13 = [43.753743, -79.448517]
+const position14 = [43.773275, -79.336065]
 
 
 var globalLat = 0;
 var globalLng = 0;
 const newicon = new Icon({
   iconUrl: MarkerIcon,
+  iconSize: [30, 30]
+});
+const newicon2 = new Icon({
+  iconUrl: MarkerIcon2,
   iconSize: [30, 30]
 });
 function LocationMarker() {
@@ -26,7 +45,7 @@ function LocationMarker() {
     },
     locationfound(e) {
       setPosition(latLng(globalLat,globalLng))
-      map.setView(latLng(globalLat,globalLng), 18)
+      map.setView(latLng(globalLat,globalLng), 20)
     },
   })
 
@@ -42,9 +61,10 @@ export default function GetMap(){
     const [searchString, setSearchString ] = useState("");
     const [Longitude,setLongitude] = useState(0);
     const [Latitude,setLatitude] = useState(0);
+    const [NearbyPlaces,setNearbyPlaces] = useState([]);
 
     
-    Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAP_API_URL);
+    Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
     
 
     function handleChangePostalCode(e){
@@ -77,6 +97,10 @@ export default function GetMap(){
 
             globalLat = lat;
             globalLng = lng;
+            
+           
+           
+          
              
           },
           (error) => {
@@ -104,7 +128,7 @@ export default function GetMap(){
      
     
     useEffect(() => {
-     
+   
       
       
       }, []);
@@ -130,15 +154,76 @@ export default function GetMap(){
         
     <MapContainer center={[Latitude,Longitude]} zoom={defaultZoom} >
   <TileLayer
-    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+    
+    url='https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}'
+    attribution='Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'
+    apiKey= {process.env.REACT_APP_ARCGIS_API_KEY}
   />
-   <Marker position={[Latitude,Longitude]} icon = {newicon}>
+
+
+   <Marker position={[Latitude,Longitude]} icon = {newicon2}>
    <Popup>You are here</Popup>
       
     </Marker>
+
+    <Marker position={position2} icon = {newicon}>
+      <Popup>Reframe Psychology Clinic</Popup>
+    </Marker>
+
+    <Marker position={position3} icon = {newicon}>
+      <Popup>Mind Health Toronto</Popup>
+    </Marker>
+
+    <Marker position={position4} icon = {newicon}>
+      <Popup>Sunnybrook Health Sciences</Popup>
+    </Marker>
+
+    <Marker position={position5} icon = {newicon}>
+      <Popup> WMH Clinic <br></br> 647-343-4115</Popup>
+    </Marker>
+
+    
+    <Marker position={position6} icon = {newicon}>
+      <Popup> The Possibilities Clinic<br></br> 416-482-5558 </Popup>
+    </Marker>
+
+    <Marker position={position7} icon = {newicon}>
+      <Popup> The Clinic on Dupont<br></br> 416-515-2649 </Popup>
+    </Marker>
+
+    <Marker position={position8} icon = {newicon}>
+      <Popup> Psychosocial Rehabilitation<br></br> 416-535-8501 </Popup>
+    </Marker>
+
+    <Marker position={position9} icon = {newicon}>
+      <Popup>Toronto Psychology Clinic<br></br> 613-690-6259 </Popup>
+    </Marker>
+
+    <Marker position={position10} icon = {newicon}>
+      <Popup>BeWell Health Clinic<br></br> 416-367-8267 </Popup>
+    </Marker>
+
+    <Marker position={position11} icon = {newicon}>
+      <Popup>Dr. Sandra R. Palef<br></br> 647-735-4254 </Popup>
+    </Marker>
+
+    <Marker position={position12} icon = {newicon}>
+      <Popup>Whole Heart Mental Health & Wellness<br></br> 647-345-0661 </Popup>
+    </Marker>
+
+    <Marker position={position13} icon = {newicon}>
+      <Popup>Dynamic Health - North York<br></br> 647-735-4268 </Popup>
+    </Marker>
+
+    <Marker position={position14} icon = {newicon}>
+      <Popup>Dr. Joel Arthur Shapiro<br></br> 416-229-2399 </Popup>
+    </Marker>
+
+   
   
     <LocationMarker />
+
+ 
 </MapContainer>
 
  </>     
@@ -148,6 +233,3 @@ export default function GetMap(){
  
 
 }
-
-
-
