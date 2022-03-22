@@ -1,26 +1,23 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Register = require('./profileData');
 
 const moodSchema = new Schema({
-    currentMood: {
+
+    username: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    date_time: {
+        type: Date,
+        required: true
+    },
+    mood:{
         type: String,
         required: true
-    },
-    userId: {
-        type: mongoose.Types.ObjectId,
-        ref: 'Register',
-        required: true
-    },
-    created_at: {
-        type: Date,
-        default: Date.now
-    },
-    updated_at: {
-        type: Date,
-        default: Date.now
     }
+
 });
 
-const Mood = mongoose.model('Mood', moodSchema);
+const Mood = mongoose.model('mood', moodSchema);
 module.exports = Mood;

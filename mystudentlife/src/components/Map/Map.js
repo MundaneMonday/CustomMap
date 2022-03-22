@@ -81,8 +81,8 @@ export default function GetMap(){
     function handleSubmit(e){
   
   
-      const postalCodeRegex = new RegExp(/^[KLMNP]\d[ABCEGHJKLMNPRSTVXYZ]?\d[ABCEGHJKLMNPRSTVXYZ]\d$/i);
-     
+      const postalCodeRegex = new RegExp(/^[K-P]\d[A-Z]?\d[A-Z]\d$/i);
+    
      
       if(postalCodeRegex.test(searchString) ){
         console.log('regex successful')
