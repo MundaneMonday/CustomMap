@@ -10,7 +10,8 @@ const moodSchema = new Schema({
     },
     date_time: {
         type: Date,
-        required: true
+        required: true,
+        default: Date.now
     },
     mood:{
         type: String,
@@ -19,5 +20,5 @@ const moodSchema = new Schema({
 
 });
 
-const Mood = mongoose.model('mood', moodSchema);
+const Mood = mongoose.model('moods', moodSchema);
 module.exports = Mood;
