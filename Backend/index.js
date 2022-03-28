@@ -7,7 +7,7 @@ const moodRoutes = require('./Routes/moodRoutes')
 const cors = require('cors')
 const mongoose = require("mongoose");
 
-
+//API URL https://murmuring-garden-88441.herokuapp.com/
 
 const app = express();
 require('dotenv').config()

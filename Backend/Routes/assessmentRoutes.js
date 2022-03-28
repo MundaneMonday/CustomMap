@@ -1,6 +1,6 @@
 const express = require('express');
 const routes = express.Router();
-const Assessment = require('../Model/Assessment');
+var Assessment = require('../Model/Assessment');
 
 
 // Get Router to fetch all the Assesment of current loggedin user

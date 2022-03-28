@@ -1,6 +1,6 @@
 const express = require('express');
 const routes = express.Router();
-const Mood = require('../Model/Mood')
+var Mood = require('../Model/Mood')
 
 // Get Route to fetch modes of specific user with time and date 
 routes.get('/api/moods/:username',(req,res)=>{

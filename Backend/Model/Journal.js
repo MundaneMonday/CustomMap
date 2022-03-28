@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-const journalSchema = new Schema({
+var journalSchema = new Schema({
 
     username: {
         type: String,
@@ -27,5 +27,5 @@ const journalSchema = new Schema({
 
 });
 
-const Journal = mongoose.model('journals', journalSchema);
+var Journal = mongoose.model('journals', journalSchema);
 module.exports = Journal;

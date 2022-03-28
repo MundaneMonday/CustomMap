@@ -1,6 +1,6 @@
 const express = require('express');
 const routes = express.Router();
-const profileData = require('../Model/profileData')
+var profileData = require('../Model/profileData')
 
 
 
@@ -13,6 +13,27 @@ profileData.findOne({username: req.params.username}).exec().then((user)=>{
     res.status(500).json(err);
 });
 });
+
+//Post Route For Profile Data
+routes.post('/api/profiles', (req,res)=>{
+    var newProfileEntry = new profileData({
+        firstname: "",
+        lastname: "",
+        username: req.query.username,
+        email: "",
+        organization :""
+      });
+     newProfileEntry.save((err) =>{
+        if(err){
+            res.status(500).json({message: "Profile Entry Not Added!"})
+    
+        }else{
+            res.status(201).json({message: "Profile Entry Added!"});
+        }
+    });  
+    });
+
+//Put Route For Profile Data
 
 
 

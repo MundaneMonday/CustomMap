@@ -1,30 +1,30 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-const profileSchema = new Schema({
+var profileSchema = new Schema({
     firstname: {
-        type: String
-       
+        type: String,
+        
     },
     lastname: {
-        type: String
-       
+        type:String
+        
     },
     username: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        
     },
     email: {
-        type: String
-        
+        type: String,
+        index: true
     },
     organization: {
-        type: String
-        
-    },
-    
+        type:String
+       
+    }
 });
 
-const profileData = mongoose.model('profile_data', profileSchema);
+var profileData = mongoose.model('profile_datas', profileSchema);
 module.exports = profileData;

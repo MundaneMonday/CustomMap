@@ -1,15 +1,11 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-const assessmentSchema = new Schema({
-    question: {
-        type: String,
-        required: true
-    },
-    answer: {
-        type: String,
-        required: true
-    },
+var assessmentSchema = new Schema({
+    answers: [{
+        answer: String
+        
+    }],
     username: {
         type: String,
         required: true,
@@ -25,5 +21,5 @@ const assessmentSchema = new Schema({
     }
 });
 
-const Assessment = mongoose.model('assessments', assessmentSchema);
+var Assessment = mongoose.model('assessments', assessmentSchema);
 module.exports = Assessment;

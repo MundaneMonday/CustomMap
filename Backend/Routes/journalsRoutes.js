@@ -1,6 +1,6 @@
 const express = require('express');
 const routes = express.Router();
-const Journal = require('../Model/Journal')
+var Journal = require('../Model/Journal')
 
 
 
