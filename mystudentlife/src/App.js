@@ -22,7 +22,7 @@ function App() {
   }
 
   useEffect(() => {
-    async function getUserName() {
+    async function setUserName() {
       await timeout(1000);
       try {
         // Get the user's info, see:
@@ -35,15 +35,11 @@ function App() {
         // Get the user's username
         const username = currentAuthenticatedUser.username;
 
-        // Get the user's Identity Token, which we'll use later with our
-        // microservce. See discussion of various tokens:
-        // https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html
-
         setUsername(username);
 
         // Return a simplified "user" object
-        console.log(Username);
-        getUserFragments(currentAuthenticatedUser);
+       
+        
         return currentAuthenticatedUser;
       } catch (err) {
         console.log(err);
@@ -51,7 +47,7 @@ function App() {
         return null;
       }
     }
-    getUserName();
+    setUserName();
   });
 
   return (
