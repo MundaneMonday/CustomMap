@@ -14,6 +14,10 @@ import Assessment from "./components/assessment/Assessment";
 import Article from "./components/article/Article";
 import "./App.css";
 import "leaflet/dist/leaflet.css";
+import axios from 'axios'
+import qs from 'qs'
+
+
 function App() {
   const [Username, setUsername] = useState("");
 
@@ -22,7 +26,8 @@ function App() {
   }
 
   useEffect(() => {
-    async function setUserName() {
+   
+    async function getUserName() {
       await timeout(1000);
       try {
         // Get the user's info, see:
@@ -35,11 +40,15 @@ function App() {
         // Get the user's username
         const username = currentAuthenticatedUser.username;
 
+        // Get the user's Identity Token, which we'll use later with our
+        // microservce. See discussion of various tokens:
+        // https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html
+
         setUsername(username);
 
         // Return a simplified "user" object
-       
-        
+        console.log(Username);
+        getUserFragments(currentAuthenticatedUser);
         return currentAuthenticatedUser;
       } catch (err) {
         console.log(err);
@@ -47,7 +56,33 @@ function App() {
         return null;
       }
     }
-    setUserName();
+
+    var data = qs.stringify({
+      'username': Username 
+    });
+    var config = {
+      method: 'post',
+      url: 'https://murmuring-garden-88441.herokuapp.com/api/profiles',
+      headers: { 
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      data : data
+    };
+    
+    getUserName();
+    
+    
+    
+    axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    
+  
+    
   });
 
   return (

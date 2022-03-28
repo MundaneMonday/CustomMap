@@ -6,11 +6,11 @@ const assessmentRoutes = require('./Routes/assessmentRoutes')
 const moodRoutes = require('./Routes/moodRoutes')
 const cors = require('cors')
 const mongoose = require("mongoose");
-
+require('dotenv').config()
 //API URL https://murmuring-garden-88441.herokuapp.com/
 
 const app = express();
-require('dotenv').config()
+
 
 app.use(cors())
 app.use(express.urlencoded({ extended: false }));

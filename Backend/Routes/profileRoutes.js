@@ -19,7 +19,7 @@ routes.post('/api/profiles', (req,res)=>{
     var newProfileEntry = new profileData({
         firstname: "",
         lastname: "",
-        username: req.query.username,
+        username: req.body.username,
         email: "",
         organization :""
       });
@@ -28,7 +28,8 @@ routes.post('/api/profiles', (req,res)=>{
             res.status(500).json({message: "Profile Entry Not Added!"})
     
         }else{
-            res.status(201).json({message: "Profile Entry Added!"});
+            res.status(201).json({message: `Profile Entry Added! + ${req.body.username}`});
+            
         }
     });  
     });
