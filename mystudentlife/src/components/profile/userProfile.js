@@ -6,13 +6,17 @@ function UserProfile(){
 
     const [profile,setProfile] = useState([])
     const [username,setUsername] = useState("")
+   
     
     useEffect(()=>{
         async function setUserInfo() {
             try{
         const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
         const username = currentAuthenticatedUser.username;
+       
+       
         setUsername(username);
+        
         return currentAuthenticatedUser;
             }catch(err) {
                 console.log(err);
@@ -34,7 +38,9 @@ return(
 
     <>
     Username: {profile.username}
+    Email: {profile.email}
     
+ 
     
     
     </>

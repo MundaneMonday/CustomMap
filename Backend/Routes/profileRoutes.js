@@ -20,7 +20,7 @@ routes.post('/api/profiles', (req,res)=>{
         firstname: "",
         lastname: "",
         username: req.body.username,
-        email: "",
+        email: req.body.email,
         organization :""
       });
      newProfileEntry.save((err) =>{

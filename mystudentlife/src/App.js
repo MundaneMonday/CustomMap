@@ -21,7 +21,7 @@ import UserProfile from "./components/profile/userProfile";
 
 function App() {
   const [Username, setUsername] = useState("");
-
+  const [Email,setEmail] = useState("")
   function timeout(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
@@ -29,7 +29,7 @@ function App() {
   useEffect(() => {
    
     async function setUserInfo() {
-      await timeout(1000);
+      
       try {
         // Get the user's info, see:
         // https://docs.amplify.aws/lib/auth/advanced/q/platform/js/#identity-pool-federation
@@ -40,17 +40,17 @@ function App() {
 
         // Get the user's username
         const username = currentAuthenticatedUser.username;
-
+        const currentSession = await Auth.currentSession();
         // Get the user's Identity Token, which we'll use later with our
         // microservce. See discussion of various tokens:
         // https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html
-
+        const email = currentSession.getIdToken().payload.email;
         setUsername(username);
-
+        setEmail(email)
         // Return a simplified "user" object
         console.log(Username);
+        console.log(Email)
         
-        getUserFragments(currentAuthenticatedUser);
         return currentAuthenticatedUser;
       } catch (err) {
         console.log(err);
@@ -59,10 +59,11 @@ function App() {
       }
     }
     
-    var data = qs.stringify({
-      'username': Username 
+    const data = qs.stringify({
+      'username': Username,
+      'email': Email  
     });
-    var config = {
+    const config = {
       method: 'post',
       url: 'https://murmuring-garden-88441.herokuapp.com/api/profiles',
       headers: { 
