@@ -18,7 +18,8 @@ var profileSchema = new Schema({
     },
     email: {
         type: String,
-        index: true
+        required: true,
+        unique: true,
     },
     organization: {
         type:String

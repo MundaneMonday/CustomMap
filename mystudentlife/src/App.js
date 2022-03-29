@@ -25,56 +25,53 @@ function App() {
   function timeout(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
+  async function setUserInfo() {
+    await timeout(1000);
+    try {
+      // Get the user's info, see:
+      // https://docs.amplify.aws/lib/auth/advanced/q/platform/js/#identity-pool-federation
+      const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
 
+      // If that didn't throw, we have a user object, and the user is authenticated
+      console.log("The user is authenticated");
+
+      // Get the user's username
+      const username = currentAuthenticatedUser.username;
+      const currentUser = await Auth.currentSession().getIdToken().payload.email
+      // Get the user's Identity Token, which we'll use later with our
+      // microservce. See discussion of various tokens:
+      // https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html
+      
+      setUsername(username);
+      setEmail(currentUser)
+      // Return a simplified "user" object
+      console.log(Username);
+      console.log(Email)
+      
+     
+    } catch (err) {
+      console.log(err);
+      // Unable to get user, return `null` instead
+      
+    }
+  }
+
+  var data = qs.stringify({
+    'username': Username,
+    'email': Email  
+  });
+  var config = {
+    method: 'post',
+    url: 'https://murmuring-garden-88441.herokuapp.com/api/profiles',
+    headers: { 
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    data: data
+  };
   useEffect(() => {
   
-    async function setUserInfo() {
-      await timeout(1000);
-      try {
-        // Get the user's info, see:
-        // https://docs.amplify.aws/lib/auth/advanced/q/platform/js/#identity-pool-federation
-        const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
-
-        // If that didn't throw, we have a user object, and the user is authenticated
-        console.log("The user is authenticated");
-
-        // Get the user's username
-        const username = currentAuthenticatedUser.username;
-        const currentSession = await Auth.currentSession();
-        // Get the user's Identity Token, which we'll use later with our
-        // microservce. See discussion of various tokens:
-        // https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html
-        const email = currentSession.getIdToken().payload.email;
-        setUsername(username);
-        setEmail(email)
-        // Return a simplified "user" object
-        console.log(Username);
-        console.log(Email)
-        
-       
-      } catch (err) {
-        console.log(err);
-        // Unable to get user, return `null` instead
-        return null;
-      }
-    }
+    
     setUserInfo();
-    var data = qs.stringify({
-      'username': Username,
-      'email': Email  
-    });
-    var config = {
-      method: 'post',
-      url: 'https://murmuring-garden-88441.herokuapp.com/api/profiles',
-      headers: { 
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      data : data
-    };
-    
-    
-    
-    
     
     axios(config)
     .then(function (response) {
