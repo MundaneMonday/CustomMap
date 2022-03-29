@@ -16,6 +16,7 @@ import "./App.css";
 import "leaflet/dist/leaflet.css";
 import axios from 'axios'
 import qs from 'qs'
+import UserProfile from "./components/profile/userProfile";
 
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
 
   useEffect(() => {
    
-    async function getUserName() {
+    async function setUserInfo() {
       await timeout(1000);
       try {
         // Get the user's info, see:
@@ -48,6 +49,7 @@ function App() {
 
         // Return a simplified "user" object
         console.log(Username);
+        
         getUserFragments(currentAuthenticatedUser);
         return currentAuthenticatedUser;
       } catch (err) {
@@ -56,7 +58,7 @@ function App() {
         return null;
       }
     }
-
+    
     var data = qs.stringify({
       'username': Username 
     });
@@ -69,7 +71,7 @@ function App() {
       data : data
     };
     
-    getUserName();
+    setUserInfo();
     
     
     
@@ -159,7 +161,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route exact path="/" />
-        {Username && <Route path="/userprofile" />}
+        {Username && <Route path="/userprofile" element={<UserProfile/>}/>}
         {Username && <Route path="/mood" element={<Mood />} />}
         {Username && <Route path="/articles" element={<Article />} />}
         {Username && <Route path="/assessment" element={<Assessment />} />}
