@@ -1,31 +1,19 @@
 import {useState, useEffect} from "react";
 import {Auth} from "./../login/auth"
+import { useParams } from 'react-router-dom';
 
 
 function UserProfile(){
-
+    
     const [profile,setProfile] = useState([])
-    const [username,setUsername] = useState("")
-   
+  
+    
+    let {username} = useParams();
     
     useEffect(()=>{
-        async function setUserInfo() {
-            try{
-        const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
-        const username = currentAuthenticatedUser.username;
-       
-       
-        setUsername(username);
         
-        return currentAuthenticatedUser;
-            }catch(err) {
-                console.log(err);
-                // Unable to get user, return `null` instead
-                return null;
-              }
-        }
-
-        setUserInfo();
+      
+    
 
         fetch(`https://murmuring-garden-88441.herokuapp.com/api/profiles/${username}`).then(response => response.json())
         .then(data => setProfile(data));

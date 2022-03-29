@@ -27,9 +27,9 @@ function App() {
   }
 
   useEffect(() => {
-   
+  
     async function setUserInfo() {
-      
+      await timeout(1000);
       try {
         // Get the user's info, see:
         // https://docs.amplify.aws/lib/auth/advanced/q/platform/js/#identity-pool-federation
@@ -51,19 +51,19 @@ function App() {
         console.log(Username);
         console.log(Email)
         
-        return currentAuthenticatedUser;
+       
       } catch (err) {
         console.log(err);
         // Unable to get user, return `null` instead
         return null;
       }
     }
-    
-    const data = qs.stringify({
+    setUserInfo();
+    var data = qs.stringify({
       'username': Username,
       'email': Email  
     });
-    const config = {
+    var config = {
       method: 'post',
       url: 'https://murmuring-garden-88441.herokuapp.com/api/profiles',
       headers: { 
@@ -72,7 +72,7 @@ function App() {
       data : data
     };
     
-    setUserInfo();
+    
     
     
     
@@ -100,7 +100,7 @@ function App() {
 
         <Nav className="container-fluid">
           {Username && (
-            <LinkContainer to="/userprofile">
+            <LinkContainer to={`/userprofile/${Username}`}>
               <Nav.Link>Your Profile {/* Links to User Profile*/}</Nav.Link>
             </LinkContainer>
           )}
@@ -162,7 +162,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route exact path="/" />
-        {Username && <Route path="/userprofile" element={<UserProfile/>}/>}
+        {Username && <Route path={'/userprofile/:username'} element={<UserProfile/>}/>}
         {Username && <Route path="/mood" element={<Mood />} />}
         {Username && <Route path="/articles" element={<Article />} />}
         {Username && <Route path="/assessment" element={<Assessment />} />}
