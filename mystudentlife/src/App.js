@@ -37,13 +37,14 @@ function App() {
 
       // Get the user's username
       const username = currentAuthenticatedUser.username;
-      const currentUser = await Auth.currentSession().getIdToken().payload.email
+      const currentUser = await Auth.currentSession()
+      const email = currentUser.getIdToken().payload.email
       // Get the user's Identity Token, which we'll use later with our
       // microservce. See discussion of various tokens:
       // https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html
       
       setUsername(username);
-      setEmail(currentUser)
+      setEmail(email)
       // Return a simplified "user" object
       console.log(Username);
       console.log(Email)
