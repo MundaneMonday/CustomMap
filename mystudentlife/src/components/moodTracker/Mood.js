@@ -8,8 +8,9 @@ import qs from 'qs'
 function Mood() {
 const [mood,setMood] = useState("");
 const[username,setUsername] = useState("")
-const [showB, setShowB] = useState(true);
+const [showB, setShowB] = useState(false);
 const toggleShowB = () => setShowB(!showB);
+const [message,setMessage] = useState("")
 //sets the user name
 function timeout(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -52,11 +53,12 @@ const handleChange = e =>{
 //Handle Submission for Mood
 function handleSubmit(e){
   e.preventDefault();
-  console.log(username + mood)
+  
+  const date = new Date()
   var data = qs.stringify({
     'username': username,
     'mood': mood,
-    'date_time': new Date()
+    'date_time': date
   });
   var config = {
     method: 'post',
@@ -69,9 +71,13 @@ function handleSubmit(e){
   
   axios(config)
   .then(function (response) {
-    console.log(JSON.stringify(response.data));
+   console.log(JSON.stringify(response.data))
+    setShowB(true);
+    setMessage(`${username} is feeling ${mood} at ${date}`)
   })
   .catch(function (error) {
+    setShowB(true);
+    setMessage("Mood was not recorded");
     console.log(error);
   });
   
@@ -129,12 +135,12 @@ useEffect(()=>{
                 checked={mood === "ok"}
                 />
                 <Form.Check
-                value="notgood"
+                value="not good"
                 type={type}
                 id={`default-${type}`}
                 label="Not Good"
                 onChange={handleChange}
-                checked={mood === "notgood"}
+                checked={mood === "not good"}
                 />
                 <Form.Check
                 value="awful" 
@@ -152,30 +158,30 @@ useEffect(()=>{
             <div class="row">
           <div class="col text-center">
           
-            <Button onClick={toggleShowB} type="submit" variant="success">Submit</Button>
+            <Button type="submit" variant="success">Submit</Button>
 
             </div>
         </div>
           </Form>
-
+          <div class="container">
+        
+        <Toast onClose={toggleShowB} show={showB} animation={true}>
+        <Toast.Header>
+          <img
+            src="holder.js/20x20?text=%20"
+            className="rounded me-2"
+            alt=""
+          />
+          <strong className="me-auto">MyStudentLife</strong>
+          
+        </Toast.Header>
+        <Toast.Body>{message}</Toast.Body>
+      </Toast>
+        
+    </div>
         </div>
       </Card>
-     <div class="container">
-        
-          <Toast onClose={toggleShowB} show={showB} animation={false}>
-          <Toast.Header>
-            <img
-              src="holder.js/20x20?text=%20"
-              className="rounded me-2"
-              alt=""
-            />
-            <strong className="me-auto">Bootstrap</strong>
-            <small>11 mins ago</small>
-          </Toast.Header>
-          <Toast.Body>Woohoo, you're reading this text in a Toast!</Toast.Body>
-        </Toast>
-          
-      </div>
+    
     </>
   );
 }
