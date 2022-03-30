@@ -5,13 +5,12 @@ var moodSchema = new Schema({
 
     username: {
         type: String,
-        required: true,
-        unique: true
+        required: true
+        
     },
     date_time: {
-        type: Date,
-        required: true,
-        default: Date.now
+        type: Date
+        
     },
     mood:{
         type: String,

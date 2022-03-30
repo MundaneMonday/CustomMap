@@ -15,14 +15,14 @@ profileData.findOne({username: req.params.username}).exec().then((user)=>{
 });
 
 //Post Route For Profile Data
-routes.post('/api/profiles', (req,res)=>{
-    var newProfileEntry = new profileData({
+routes.post('/api/profiles', async (req,res)=>{
+    const newProfileEntry = new profileData({
         name: req.body.name,
         username: req.body.username,
         email: req.body.email,
         organization :""
       });
-     newProfileEntry.save((err) =>{
+     await newProfileEntry.save((err) =>{
         if(err){
             res.status(500).json({message: "Profile Entry Not Added!"})
     
@@ -32,8 +32,6 @@ routes.post('/api/profiles', (req,res)=>{
         }
     });  
     });
-
-//Put Route For Profile Data
 
 
 

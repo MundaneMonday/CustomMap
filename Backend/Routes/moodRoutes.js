@@ -13,13 +13,19 @@ Mood.find({username: req.params.username}).exec().then((moods)=>{
 
 // POST Route to insert the Moods of user
 routes.post('/api/moods', async (req,res)=>{
-const newMoodEntry = new Mood(req.body);
+const newMoodEntry = new Mood({
+    username: req.body.username,
+    mood: req.body.mood,
+    date_time: req.body.date_time
+}
+);
 await newMoodEntry.save((err) =>{
     if(err){
-        res.status(201).json({message: "Mood Entry Added!"})
+        res.status(500).json(err);
+       
 
     }else{
-        res.status(500).json(err);
+        res.status(201).json({message: "Mood Entry Added!"})
     }
 });  
 });
