@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import {Auth} from "./../login/auth"
-import { useParams } from 'react-router-dom';
+import {Card,ListGroup} from 'react-bootstrap'
 
 
 function UserProfile(){
@@ -54,9 +54,20 @@ return(
 
 
     <>
-    Username: {profile.username} <br></br>
-    Email: {profile.email} <br></br>
-    Name: {profile.name}
+
+<Card style={{marginTop: 50, marginBottom: 50}} >
+  <Card.Body>
+    <Card.Title>User's Info</Card.Title>
+    <ListGroup variant="flush">
+    <ListGroup.Item>Username: {profile.username} <br></br></ListGroup.Item>
+    <ListGroup.Item>Email: {profile.email} <br></br></ListGroup.Item>
+    <ListGroup.Item>Name: {profile.name}</ListGroup.Item>
+  </ListGroup>
+  </Card.Body>
+</Card>
+    
+    
+    
     
  
     
