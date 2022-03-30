@@ -17,8 +17,7 @@ profileData.findOne({username: req.params.username}).exec().then((user)=>{
 //Post Route For Profile Data
 routes.post('/api/profiles', (req,res)=>{
     var newProfileEntry = new profileData({
-        firstname: "",
-        lastname: "",
+        name: req.body.name,
         username: req.body.username,
         email: req.body.email,
         organization :""

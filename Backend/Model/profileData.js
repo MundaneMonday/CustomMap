@@ -2,13 +2,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var profileSchema = new Schema({
-    firstname: {
+   name: {
         type: String,
-        
-    },
-    lastname: {
-        type:String
-        
+        required: true
     },
     username: {
         type: String,

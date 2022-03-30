@@ -22,6 +22,7 @@ import UserProfile from "./components/profile/userProfile";
 function App() {
   const [Username, setUsername] = useState("");
   const [Email,setEmail] = useState("")
+  const [Name,setName] = useState("")
   function timeout(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
@@ -30,36 +31,39 @@ function App() {
     try {
       // Get the user's info, see:
       // https://docs.amplify.aws/lib/auth/advanced/q/platform/js/#identity-pool-federation
-      const currentAuthenticatedUser = await Auth.currentAuthenticatedUser();
-
-      // If that didn't throw, we have a user object, and the user is authenticated
-      console.log("The user is authenticated");
-
-      // Get the user's username
-      const username = currentAuthenticatedUser.username;
+      
       const currentUser = await Auth.currentSession()
-      const email = currentUser.getIdToken().payload.email
-      // Get the user's Identity Token, which we'll use later with our
+      // If that didn't throw, we have a user object, and the user is authenticated
+    
+            // Get the user's Identity Token, which we'll use later with our
       // microservce. See discussion of various tokens:
       // https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html
+      const name = currentUser.getIdToken().payload.name
+      const email = currentUser.getIdToken().payload.email
       
+      const username = currentUser.getIdToken().payload["cognito:username"]
+      
+
+      //set the user's infos
       setUsername(username);
       setEmail(email)
-      // Return a simplified "user" object
-      console.log(Username);
-      console.log(Email)
+      setName(name)
       
+     
+      return currentUser;
      
     } catch (err) {
       console.log(err);
       // Unable to get user, return `null` instead
-      
+      return null;
     }
   }
 
   var data = qs.stringify({
     'username': Username,
-    'email': Email  
+    'email': Email,
+    'name': Name,
+
   });
   var config = {
     method: 'post',
@@ -73,7 +77,9 @@ function App() {
   
     
     setUserInfo();
-    
+    console.log(Username);
+    console.log(Email)
+    console.log(Name)
     axios(config)
     .then(function (response) {
       console.log(JSON.stringify(response.data));
@@ -98,7 +104,7 @@ function App() {
 
         <Nav className="container-fluid">
           {Username && (
-            <LinkContainer to={`/userprofile/${Username}`}>
+            <LinkContainer to={`/userprofile`}>
               <Nav.Link>Your Profile {/* Links to User Profile*/}</Nav.Link>
             </LinkContainer>
           )}
@@ -160,7 +166,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route exact path="/" />
-        {Username && <Route path={'/userprofile/:username'} element={<UserProfile/>}/>}
+        {Username && <Route path={'/userprofile'} element={<UserProfile/>}/>}
         {Username && <Route path="/mood" element={<Mood />} />}
         {Username && <Route path="/articles" element={<Article />} />}
         {Username && <Route path="/assessment" element={<Assessment />} />}
