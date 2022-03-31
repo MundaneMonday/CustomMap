@@ -49,7 +49,7 @@ function App() {
       setEmail(email)
       setName(name)
       
-     
+     return currentUser;
     } catch (err) {
       console.log(err);
      

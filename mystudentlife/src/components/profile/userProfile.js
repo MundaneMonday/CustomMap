@@ -14,7 +14,7 @@ function UserProfile(){
     const MoodHistoryURL = `https://murmuring-garden-88441.herokuapp.com/api/moods/${username}`
     
     function PreviousPage(){
-      if(page > 0)
+      if(page > 1)
   setPage(Page => Page - 1);
   
   }  
