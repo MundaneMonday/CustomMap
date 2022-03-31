@@ -55,12 +55,12 @@ function handleSubmit(e){
   e.preventDefault();
   
   const date = new Date()
-  var data = qs.stringify({
+  const data = qs.stringify({
     'username': username,
     'mood': mood,
     'date_time': date
   });
-  var config = {
+  const config = {
     method: 'post',
     url: 'https://murmuring-garden-88441.herokuapp.com/api/moods',
     headers: { 

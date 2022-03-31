@@ -23,6 +23,7 @@ function App() {
   const [Username, setUsername] = useState("");
   const [Email,setEmail] = useState("")
   const [Name,setName] = useState("")
+  const [ID,setID] = useState("")
   function timeout(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
@@ -87,8 +88,20 @@ function App() {
     .catch(function (error) {
       console.log(error);
     });
-    
-  
+    //get id
+    const profileURL = `https://murmuring-garden-88441.herokuapp.com/api/profiles/${Username}`
+    const FetchProfile = async() =>{
+      try{
+      const response = await fetch(profileURL);
+      const json = await response.json()
+     setID(json._id)
+     console.log(ID)
+    }catch (error) {
+     console.log(error);
+    }
+   }
+
+   FetchProfile()
     
   });
 
@@ -104,7 +117,7 @@ function App() {
 
         <Nav className="container-fluid">
           {Username && (
-            <LinkContainer to={`/userprofile`}>
+            <LinkContainer to={`/userprofile/${Username}/${ID}`}>
               <Nav.Link>Your Profile {/* Links to User Profile*/}</Nav.Link>
             </LinkContainer>
           )}
@@ -166,7 +179,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route exact path="/" />
-        {Username && <Route path={'/userprofile'} element={<UserProfile/>}/>}
+        {Username && <Route path={'/userprofile/:username/:id'} element={<UserProfile/>}/>}
         {Username && <Route path="/mood" element={<Mood />} />}
         {Username && <Route path="/articles" element={<Article />} />}
         {Username && <Route path="/assessment" element={<Assessment />} />}

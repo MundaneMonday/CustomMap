@@ -9,7 +9,8 @@ var moodSchema = new Schema({
         
     },
     date_time: {
-        type: Date
+        type: Date,
+        required: true
         
     },
     mood:{
