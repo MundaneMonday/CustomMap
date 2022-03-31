@@ -1,6 +1,6 @@
 import {useState,useEffect} from "react";
 import {Auth} from './../login/auth'
-import { Form, Card, Nav, Navbar, Container ,Button,Toast} from "react-bootstrap";
+import { Form, Card, Navbar,Button,Toast,ToastContainer} from "react-bootstrap";
 import axios from 'axios'
 import qs from 'qs'
 
@@ -155,17 +155,22 @@ useEffect(()=>{
                 
               </div>
             ))}
+            
             <div class="row">
           <div class="col text-center">
           
             <Button type="submit" variant="success">Submit</Button>
+            
 
             </div>
         </div>
           </Form>
-          <div class="container">
-        
-        <Toast onClose={toggleShowB} show={showB} animation={true}>
+          
+        </div>
+      </Card>
+      
+        <ToastContainer position= 'bottom-center'>
+        <Toast onClose={toggleShowB} show={showB} animation={true} delay={7000} autohide  >
         <Toast.Header>
           <img
             src="holder.js/20x20?text=%20"
@@ -175,13 +180,10 @@ useEffect(()=>{
           <strong className="me-auto">MyStudentLife</strong>
           
         </Toast.Header>
-        <Toast.Body>{message}</Toast.Body>
+        <Toast.Body><b>{message}</b></Toast.Body>
       </Toast>
-        
-    </div>
-        </div>
-      </Card>
-    
+      </ToastContainer>  
+   
     </>
   );
 }
