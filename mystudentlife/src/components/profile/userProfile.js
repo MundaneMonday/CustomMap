@@ -10,14 +10,17 @@ function UserProfile(){
     const [page,setPage] = useState(1)
     const MAXENTRIES = 20;
     let {username} = useParams()
+    
     function PreviousPage(){
       if(page > 0)
   setPage(Page => Page - 1);
+  
   }  
   
   function NextPage(){
     if (page > 0 && ((page) * (MAXENTRIES)) < MoodHistory.length){
   setPage(Page => Page + 1);
+  
     }
   } 
     
@@ -40,14 +43,14 @@ function UserProfile(){
         try{
           const response = await fetch(MoodHistoryURL);
           const json = await response.json()
-         setMoodHistory(json)
+         setMoodHistory(json.reverse())
         }catch (error) {
          console.log(error);
         }
       }
       FetchProfile()
       FetchMoodHistory()
-
+      
       return
     },[])
         
@@ -75,7 +78,8 @@ return(
   </thead>
   <tbody>
   {
-      MoodHistory.slice((page-1)*MAXENTRIES,page*MAXENTRIES).reverse().map((moodEntry)=>{
+    
+      MoodHistory.slice((page-1)*MAXENTRIES,page*MAXENTRIES).map((moodEntry)=>{
        return <tr>
       <td>{moodEntry.date_time}</td>
       <td>{moodEntry.mood} </td>
