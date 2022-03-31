@@ -10,6 +10,8 @@ function UserProfile(){
     const [page,setPage] = useState(1)
     const MAXENTRIES = 20;
     let {username} = useParams()
+    const profileURL = `https://murmuring-garden-88441.herokuapp.com/api/profiles/${username}`
+    const MoodHistoryURL = `https://murmuring-garden-88441.herokuapp.com/api/moods/${username}`
     
     function PreviousPage(){
       if(page > 0)
@@ -23,12 +25,7 @@ function UserProfile(){
   
     }
   } 
-    
-    useEffect(()=>{
-    
-      const profileURL = `https://murmuring-garden-88441.herokuapp.com/api/profiles/${username}`
-
-      const MoodHistoryURL = `https://murmuring-garden-88441.herokuapp.com/api/moods/${username}`
+  
        const FetchProfile = async() =>{
          try{
          const response = await fetch(profileURL);
@@ -47,11 +44,16 @@ function UserProfile(){
         }catch (error) {
          console.log(error);
         }
-      }
+      }  
+
+      
+    useEffect(()=>{
+    
+      
       FetchProfile()
       FetchMoodHistory()
       
-      return
+      
     },[])
         
 return(
@@ -80,8 +82,8 @@ return(
   {
     
       MoodHistory.slice((page-1)*MAXENTRIES,page*MAXENTRIES).map((moodEntry)=>{
-       return <tr>
-      <td>{moodEntry.date_time}</td>
+       return <tr key={moodEntry._id}>
+      <td><b>{moodEntry.date_time}</b></td>
       <td>{moodEntry.mood} </td>
       
     </tr>

@@ -1,12 +1,11 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Nav, Navbar, Form, FormControl, Button } from "react-bootstrap";
+import { Nav, Navbar} from "react-bootstrap";
 import { Route, Routes } from "react-router-dom";
 import { LinkContainer } from "react-router-bootstrap";
 import { useState, useEffect } from "react";
 import Login from "./components/login/Login";
 import LogOut from "./components/logout/logout";
 import { Auth } from "./components/login/auth";
-import { getUserFragments } from "./components/login/api";
 import GetMap from "./components/Map/Map";
 import Emergency from "./components/Emergency/Emergency";
 import Mood from "./components/moodTracker/Mood";
@@ -51,12 +50,9 @@ function App() {
       setName(name)
       
      
-      return currentUser;
-     
     } catch (err) {
       console.log(err);
-      // Unable to get user, return `null` instead
-      return null;
+     
     }
   }
 
@@ -74,22 +70,8 @@ function App() {
     },
     data: data
   };
-  useEffect(() => {
-  
-    
-    setUserInfo();
-    console.log(Username);
-    console.log(Email)
-    console.log(Name)
-    axios(config)
-    .then(function (response) {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-    //get id
-    const profileURL = `https://murmuring-garden-88441.herokuapp.com/api/profiles/${Username}`
+
+  const profileURL = `https://murmuring-garden-88441.herokuapp.com/api/profiles/${Username}`
     const FetchProfile = async() =>{
       try{
       const response = await fetch(profileURL);
@@ -101,6 +83,20 @@ function App() {
     }
    }
 
+  useEffect(() => {
+  
+    
+    setUserInfo();
+
+    axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+    //get id
+    
    FetchProfile()
     
   });
