@@ -1,14 +1,25 @@
 import {useState, useEffect} from "react";
 import {Auth} from "./../login/auth"
-import {Card,ListGroup} from 'react-bootstrap'
+import {Card,ListGroup,Table,Pagination} from 'react-bootstrap'
 import { useNavigate, useParams } from "react-router-dom";
 
 function UserProfile(){
     
     const [profile,setProfile] = useState([])
     const [MoodHistory,setMoodHistory] = useState([])
-
+    const [page,setPage] = useState(1)
+    const MAXENTRIES = 20;
     let {username} = useParams()
+    function PreviousPage(){
+      if(page > 0)
+  setPage(Page => Page - 1);
+  }  
+  
+  function NextPage(){
+    if (page > 0 && ((page) * (MAXENTRIES)) < MoodHistory.length){
+  setPage(Page => Page + 1);
+    }
+  } 
     
     useEffect(()=>{
     
@@ -54,21 +65,35 @@ return(
     <ListGroup.Item>Name: {profile.name}</ListGroup.Item>
   </ListGroup>
   <Card.Title>Mood History</Card.Title>
-  <ListGroup variant="flush">
-
-    {
-      MoodHistory.map((moodEntry)=>{
-        return <ListGroup.Item> {moodEntry.mood} <br></br></ListGroup.Item>
+  <Table striped bordered hover>
+  <thead>
+    <tr>
+      
+      <th>Date/Time</th>
+      <th>Mood</th>
+    </tr>
+  </thead>
+  <tbody>
+  {
+      MoodHistory.slice((page-1)*MAXENTRIES,page*MAXENTRIES).reverse().map((moodEntry)=>{
+       return <tr>
+      <td>{moodEntry.date_time}</td>
+      <td>{moodEntry.mood} </td>
+      
+    </tr>
       })
     }
-    
-    
-  </ListGroup>
+  </tbody>
+</Table>
   </Card.Body>
 </Card>
     
     
-    
+<Pagination>
+                        <Pagination.Prev onClick={ PreviousPage} />
+                        <Pagination.Item>{page}</Pagination.Item>
+                        <Pagination.Next onClick={NextPage} />
+            </Pagination>  
     
  
     
