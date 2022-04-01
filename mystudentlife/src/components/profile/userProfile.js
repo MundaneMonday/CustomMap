@@ -1,7 +1,6 @@
 import {useState, useEffect} from "react";
-import {Auth} from "./../login/auth"
 import {Card,ListGroup,Table,Pagination} from 'react-bootstrap'
-import { useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 
 function UserProfile(){
     
@@ -54,7 +53,7 @@ function UserProfile(){
       FetchMoodHistory()
       
       
-    },[])
+    })
         
 return(
 

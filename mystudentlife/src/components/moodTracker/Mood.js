@@ -170,7 +170,7 @@ useEffect(()=>{
       </Card>
       
         <ToastContainer position= 'bottom-center'>
-        <Toast onClose={toggleShowB} show={showB} animation={true} delay={7000} autohide  >
+        <Toast onClose={toggleShowB} show={showB} animation={true} delay={7000} autohide>
         <Toast.Header>
           <img
             src="holder.js/20x20?text=%20"

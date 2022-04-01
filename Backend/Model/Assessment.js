@@ -2,22 +2,18 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var assessmentSchema = new Schema({
-    answers: [{
-        answer: String
-        
-    }],
+    answers: [String],
     username: {
         type: String,
-        required: true,
-        unique: true
+        required: true
     },
     created_at: {
         type: Date,
-        default: Date.now
+        default: new Date()
     },
     updated_at: {
         type: Date,
-        default: Date.now
+        default: new Date()
     }
 });
 

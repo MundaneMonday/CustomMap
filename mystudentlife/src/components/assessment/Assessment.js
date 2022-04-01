@@ -1,8 +1,12 @@
 import {useState, useEffect} from "react";
-import { Form, Card, Button, Nav, Navbar, Container } from "react-bootstrap";
+import { Form, Card, Button,Navbar } from "react-bootstrap";
+import {Auth} from "./../login/auth"
+import qs from 'qs'
+import axios from 'axios'
 
 function Assessment() {
   const [Frequency,setFrequency] = useState({Question1 : "", Question2: "", Question3: "", Question4: "",Question5: ""});
+  const[username,setUsername] = useState("")
 
   const handleChange = e =>{
   
@@ -26,6 +30,70 @@ function Assessment() {
   
           setFrequency(prevState => ({...prevState, Question5 : e.target.value}));
           }
+
+          async function setUser() {
+            try {
+              // Get the user's info, see:
+              // https://docs.amplify.aws/lib/auth/advanced/q/platform/js/#identity-pool-federation
+              
+              const currentUser = await Auth.currentSession()
+              // If that didn't throw, we have a user object, and the user is authenticated
+            
+                    // Get the user's Identity Token, which we'll use later with our
+              // microservce. See discussion of various tokens:
+              // https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html
+           
+              
+              const username = currentUser.getIdToken().payload["cognito:username"]
+              
+          
+              //set the user's infos
+              setUsername(username);
+             
+              
+             
+              return currentUser;
+             
+            } catch (err) {
+              console.log(err);
+              // Unable to get user, return `null` instead
+              return null;
+            }
+          }
+          function handleSubmit(e){
+            e.preventDefault();
+           
+            
+            
+          
+          var data = qs.stringify({
+            'username': 'dynamo',
+            'answers': Frequency.Question1
+          });
+          var config = {
+            method: 'post',
+            url: 'https://murmuring-garden-88441.herokuapp.com/api/assessments',
+            headers: { 
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data : data
+          };
+          
+          axios(config)
+          .then(function (response) {
+            console.log(JSON.stringify(response.data));
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+           
+         
+            
+          }
+
+          useEffect(()=>{
+            setUser()
+          })
   return (
     <>
       <Navbar bg="dark" class="text-center" variant="dark">
@@ -34,20 +102,24 @@ function Assessment() {
 
       <br />
 
-      <h5 class="text-center">
+      
+    
+        
+        
+          <Form class="text-center" onSubmit={handleSubmit}>
+          <Card class="text-center">
+          <h5 class="text-center">
         <b>
           The questions below ask about anxiety and worrying.<br></br>
           In the last month, have you experienced any of the following symptoms?
           If so, how often?
         </b>
       </h5>
-      <Card class="text-center">
         <p class="card-header">
           I was very anxious, worried or scared about a lot of things in my
           life.{" "}
         </p>
         <div class="card-body">
-          <Form class="text-center">
             {["radio"].map((type) => (
               <div key={`default-${type}`} className="mb-3">
                 <Form.Group >
@@ -87,17 +159,16 @@ function Assessment() {
                 </Form.Group>
               </div>
             ))}
-          </Form>
-        </div>
-      </Card>
+            </div>
+            </Card>
 
-      <Card class="text-center">
+            <Card class="text-center">
         <p class="card-header">
           I had trouble sleeping - I could not fall or stay asleep, and/or
           didn't feel well-rested when I woke up.{" "}
         </p>
         <div class="card-body">
-          <Form class="text-center">
+          
             {["radio"].map((type) => (
               <div key={`default-${type}`} className="mb-3">
                 <Form.Group >
@@ -137,9 +208,9 @@ function Assessment() {
                 </Form.Group>
               </div>
             ))}
-          </Form>
         </div>
       </Card>
+
 
       <Card class="col-md-8 offset-md-2">
         <p class="card-header">
@@ -147,7 +218,7 @@ function Assessment() {
           I felt restless, agitated, frantic, or tense.{" "}
         </p>
         <div class="card-body">
-          <Form>
+          
             {["Radio"].map((type) => (
               <div class="text-center" key={`default-${type}`} className="mb-3">
                 <Form.Group>
@@ -191,7 +262,7 @@ function Assessment() {
                 </Form.Group>
               </div>
             ))}
-          </Form>
+        
         </div>
       </Card>
 
@@ -200,7 +271,7 @@ function Assessment() {
           My heart would skip beat, was pounding, or my heart rate increased.{" "}
         </p>
         <div class="card-body">
-        <Form>
+        <Form onSubmit={handleSubmit}>
             {["Radio"].map((type) => (
               <div class="text-center" key={`default-${type}`} className="mb-3">
                 <Form.Group>
@@ -251,7 +322,7 @@ function Assessment() {
       <Card class="text-center">
         <p class="card-header"> I had cold or hot flashes. </p>
         <div class="card-body">
-        <Form>
+        <Form onSubmit={handleSubmit}>
             {["Radio"].map((type) => (
               <div class="text-center" key={`default-${type}`} className="mb-3">
                 <Form.Group>
@@ -302,10 +373,23 @@ function Assessment() {
       <div class="container">
         <div class="row">
           <div class="col text-center">
-            <Button class="btn btn-default">Next</Button>
+          <Button type="submit" variant="success">Submit</Button>
           </div>
         </div>
       </div>
+          </Form>
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+     
     </>
   );
 }
