@@ -1,27 +1,38 @@
 import {useState, useEffect} from "react";
-import { Form, Card, Button,Navbar } from "react-bootstrap";
+import { Form, Card, Button,Navbar,Toast,ToastContainer} from "react-bootstrap";
 import {Auth} from "./../login/auth"
 import qs from 'qs'
 import axios from 'axios'
 
 function Assessment() {
-  const [Frequency,setFrequency] = useState(['']);
+  const [Frequency,setFrequency] = useState({Question1 : "", Question2: "", Question3: "", Question4: "",Question5: ""});
   const[username,setUsername] = useState("")
   const[Questions,setQuestion] = useState([""])
+  const [Disabled,setDisabled] = useState(false)
+  const [showB, setShowB] = useState(false);
+const toggleShowB = () => setShowB(!showB);
+const [message,setMessage] = useState("")
   
-
   Questions[0] = "I was very anxious, worried or scared about a lot of things in my life."
   Questions[1] = "I had trouble sleeping - I could not fall or stay asleep, and/or didn't feel well-rested when I woke up."
   Questions[2] = "I felt restless, agitated, frantic, or tense."
   Questions[3] = "My heart would skip beat, was pounding, or my heart rate increased."
   Questions[4] = "I had cold or hot flashes. "
 
+
+
+
   const handleChange = (e,name) =>{
-    if(e.target.name == name){
+
       setFrequency(prevState => ({...prevState,  [name]: e.target.value}));
      
-    }
+    
+   
+     
+    
   }
+  
+  
 
           async function setUser() {
             try {
@@ -42,8 +53,6 @@ function Assessment() {
               //set the user's infos
               setUsername(username);
              
-              
-             
               return currentUser;
              
             } catch (err) {
@@ -61,37 +70,58 @@ var urlencoded = new URLSearchParams();
 urlencoded.append("username", username);
 
 Object.keys(Frequency).forEach( freq =>{
-  if(Frequency[freq] != "")
+  
   urlencoded.append("answers", Frequency[freq] );
 })
 
-Object.keys(Questions).map( index =>{
+Object.keys(Questions).forEach( index =>{
   urlencoded.append("questions", Questions[index] );
 })
 
 
 
-var requestOptions = {
+const requestOptions = {
   method: 'POST',
   headers: myHeaders,
   body: urlencoded,
   redirect: 'follow'
 };
 
+
+
+
+
 fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOptions)
-  .then(response => response.text())
-  .then(result => console.log(result))
-  .catch(error => console.log('error', error));
+  .then(() =>{
+    
+    setShowB(true)
+      if(Frequency.Question1 == "" || Frequency.Question2 == "" || Frequency.Question1 == "" || Frequency.Question1 == "" || Frequency.Question1 == "" || Frequency.Question5 == ""){
+        setDisabled(false)
+        setMessage('Assessment submission was unsuccessful')
+      }else{
+        setDisabled(true)
+       
+        setMessage('Assessment has been successfully submitted')
+      }
+  } 
+  ).catch(error =>{
+  setShowB(true);
+  setMessage("Assessment submission was unsuccessful");
+  console.log(error);
+  });
            
-         
+     
             
           }
 
           useEffect(()=>{
+           
             setUser()
-          },[])
+
+          })
   return (
     <>
+    
       <Navbar bg="dark" className="text-center" variant="dark">
         <h3 className="text-white bg-dark">Monthly Assessment</h3>
       </Navbar>
@@ -119,32 +149,32 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
               <div key="Question1" className="mb-3">
                 <Form.Group >
                 <Form.Check 
-                name="Question1"
+                name="1"
                 value="never"
                 type={type} 
                 id={`default-${type}`} 
                 label="Never"
                 onChange={e=>handleChange(e,"Question1")} 
-                checked={Frequency["Question1"] === "never"}
+                checked={Frequency.Question1 === "never"}
                 />
 
                 <Form.Check
-                name="Question1"
+                name="1"
                 value="sometimes"
                   type={type}
                   id={`default-${type}`}
                   label="Sometimes"
                   onChange={e=>handleChange(e,"Question1")}
-                  checked={Frequency["Question1"]  === "sometimes"}
+                  checked={Frequency.Question1  === "sometimes"}
                 />
                 <Form.Check
-                name="Question1" 
+                name="1" 
                 value="often"
                 type={type} 
                 id={`default-${type}`} 
                 label="Often" 
                 onChange={e=>handleChange(e,"Question1")}
-                checked={Frequency["Question1"]  === "often"}
+                checked={Frequency.Question1  === "often"}
                 />
                 <Form.Check
                 name="Question1"
@@ -153,7 +183,7 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
                   id={`default-${type}`}
                   label="Constantly"
                   onChange={e=>handleChange(e,"Question1")}
-                checked={Frequency["Question1"]  === "constantly"}
+                checked={Frequency.Question1  === "constantly"}
                 />
                 </Form.Group>
               </div>
@@ -177,7 +207,7 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
                 id={`default-${type}`} 
                 label="Never"
                 onChange={e=>handleChange(e,"Question2")} 
-                checked={Frequency["Question2"] === "never"}
+                checked={Frequency.Question2 === "never"}
                 />
 
                 <Form.Check
@@ -187,7 +217,7 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
                   id={`default-${type}`}
                   label="Sometimes"
                   onChange={e=>handleChange(e,"Question2")}
-                  checked={Frequency["Question2"] === "sometimes"}
+                  checked={Frequency.Question2 === "sometimes"}
                 />
                 <Form.Check 
                  name="Question2" 
@@ -196,7 +226,7 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
                 id={`default-${type}`} 
                 label="Often" 
                 onChange={e=>handleChange(e,"Question2")}
-                checked={Frequency["Question2"] === "often"}
+                checked={Frequency.Question2=== "often"}
                 />
                 <Form.Check
                 name="Question2" 
@@ -205,7 +235,7 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
                   id={`default-${type}`}
                   label="Constantly"
                   onChange={e=>handleChange(e,"Question2")}
-                checked={Frequency["Question2"] === "constantly"}
+                checked={Frequency.Question2 === "constantly"}
                 />
                 </Form.Group>
               </div>
@@ -232,7 +262,7 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
                   id={`default-${type}`}
                   label="Never"
                   onChange={e=>handleChange(e,"Question3")} 
-                checked={Frequency["Question3"] === "never"}
+                checked={Frequency.Question3 === "never"}
                 />
 
                 <Form.Check
@@ -243,7 +273,7 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
                   id={`default-${type}`}
                   label="Sometimes"
                   onChange={e=>handleChange(e,"Question3")} 
-                checked={Frequency["Question3"] === "sometimes"}
+                checked={Frequency.Question3  === "sometimes"}
                 />
                 <Form.Check
                 name="Question3" 
@@ -253,7 +283,7 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
                   id={`default-${type}`}
                   label="Often"
                   onChange={e=>handleChange(e,"Question3")} 
-                  checked={Frequency["Question3"] === "often"}
+                  checked={Frequency.Question3  === "often"}
                 />
                 <Form.Check
                 name="Question3" 
@@ -263,7 +293,7 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
                   id={`default-${type}`}
                   label="Constantly"
                   onChange={e=>handleChange(e,"Question3")} 
-                  checked={Frequency["Question3"] === "constantly"}
+                  checked={Frequency.Question3  === "constantly"}
                 />
                 </Form.Group>
               </div>
@@ -289,7 +319,7 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
                   id={`default-${type}`}
                   label="Never"
                   onChange={e=>handleChange(e,"Question4")} 
-                checked={Frequency["Question4"] === "never"}
+                checked={Frequency.Question4 === "never"}
                 />
 
                 <Form.Check
@@ -300,7 +330,7 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
                   id={`default-${type}`}
                   label="Sometimes"
                   onChange={e=>handleChange(e,"Question4")} 
-                checked={Frequency["Question4"] === "sometimes"}
+                checked={Frequency.Question4  === "sometimes"}
                 />
                 <Form.Check
                 name="Question4" 
@@ -310,7 +340,7 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
                   id={`default-${type}`}
                   label="Often"
                   onChange={e=>handleChange(e,"Question4")} 
-                  checked={Frequency["Question4"] === "often"}
+                  checked={Frequency.Question4  === "often"}
                 />
                 <Form.Check
                 name="Question4" 
@@ -320,7 +350,7 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
                   id={`default-${type}`}
                   label="Constantly"
                   onChange={e=>handleChange(e,"Question4")} 
-                  checked={Frequency["Question4"] === "constantly"}
+                  checked={Frequency.Question4  === "constantly"}
                 />
                 </Form.Group>
               </div>
@@ -344,7 +374,7 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
                   id={`default-${type}`}
                   label="Never"
                   onChange={e=>handleChange(e,"Question5")} 
-                checked={Frequency["Question5"] === "never"}
+                checked={Frequency.Question5 === "never"}
                 />
 
                 <Form.Check
@@ -355,7 +385,7 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
                   id={`default-${type}`}
                   label="Sometimes"
                   onChange={e=>handleChange(e,"Question5")} 
-                checked={Frequency["Question5"] === "sometimes"}
+                checked={Frequency.Question5 === "sometimes"}
                 />
                 <Form.Check
                 name="Question5" 
@@ -365,7 +395,7 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
                   id={`default-${type}`}
                   label="Often"
                   onChange={e=>handleChange(e,"Question5")} 
-                  checked={Frequency["Question5"] === "often"}
+                  checked={Frequency.Question5 === "often"}
                 />
                 <Form.Check
                 name="Question5" 
@@ -375,7 +405,7 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
                   id={`default-${type}`}
                   label="Constantly"
                   onChange={e=>handleChange(e,"Question5")} 
-                  checked={Frequency["Question5"] === "constantly"}
+                  checked={Frequency.Question5 === "constantly"}
                 />
                 </Form.Group>
               </div>
@@ -387,11 +417,25 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
       <div className="container">
         <div className="row">
           <div className="col text-center">
-          <Button type="submit" variant="success">Submit</Button>
+          <Button disabled={Disabled}type="submit" variant="success">Submit</Button>
           </div>
         </div>
       </div>
           </Form>
+          <ToastContainer position= 'bottom-end'>
+        <Toast onClose={toggleShowB} show={showB} animation={true} delay={7000} autohide>
+        <Toast.Header>
+          <img
+            src="holder.js/20x20?text=%20"
+            className="rounded me-2"
+            alt=""
+          />
+          <strong className="me-auto">MyStudentLife</strong>
+          
+        </Toast.Header>
+        <Toast.Body><b>{message}</b></Toast.Body>
+      </Toast>
+      </ToastContainer>  
      
     </>
   );

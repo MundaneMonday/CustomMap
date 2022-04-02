@@ -2,7 +2,10 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var assessmentSchema = new Schema({
-    answers: [String],
+    answers: [{
+        type:String,
+        required:true
+    }],
     questions: [String],
     username: {
         type: String,
