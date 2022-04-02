@@ -3,6 +3,7 @@ var Schema = mongoose.Schema;
 
 var assessmentSchema = new Schema({
     answers: [String],
+    questions: [String],
     username: {
         type: String,
         required: true

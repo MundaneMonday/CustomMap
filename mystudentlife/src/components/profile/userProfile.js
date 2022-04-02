@@ -53,7 +53,7 @@ function UserProfile(){
       FetchMoodHistory()
       
       
-    })
+    },[])
         
 return(
 

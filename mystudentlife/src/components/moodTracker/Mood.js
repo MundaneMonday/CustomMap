@@ -11,12 +11,11 @@ const[username,setUsername] = useState("")
 const [showB, setShowB] = useState(false);
 const toggleShowB = () => setShowB(!showB);
 const [message,setMessage] = useState("")
+
 //sets the user name
-function timeout(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
+
 async function setUser() {
-  await timeout(1000);
+  
   try {
     // Get the user's info, see:
     // https://docs.amplify.aws/lib/auth/advanced/q/platform/js/#identity-pool-federation
@@ -91,7 +90,7 @@ function handleSubmit(e){
 useEffect(()=>{
  setUser()
 
-})
+},[])
   return (
     <>
       <Navbar bg="dark" class="text-center" variant="dark">

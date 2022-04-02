@@ -5,31 +5,23 @@ import qs from 'qs'
 import axios from 'axios'
 
 function Assessment() {
-  const [Frequency,setFrequency] = useState({Question1 : "", Question2: "", Question3: "", Question4: "",Question5: ""});
+  const [Frequency,setFrequency] = useState(['']);
   const[username,setUsername] = useState("")
-
-  const handleChange = e =>{
+  const[Questions,setQuestion] = useState([""])
   
-  setFrequency(prevState => ({...prevState, Question1 : e.target.value}));
-  }
 
-  const handleChange2 = e =>{
-  
-    setFrequency(prevState => ({...prevState, Question2 : e.target.value}));
+  Questions[0] = "I was very anxious, worried or scared about a lot of things in my life."
+  Questions[1] = "I had trouble sleeping - I could not fall or stay asleep, and/or didn't feel well-rested when I woke up."
+  Questions[2] = "I felt restless, agitated, frantic, or tense."
+  Questions[3] = "My heart would skip beat, was pounding, or my heart rate increased."
+  Questions[4] = "I had cold or hot flashes. "
+
+  const handleChange = (e,name) =>{
+    if(e.target.name == name){
+      setFrequency(prevState => ({...prevState,  [name]: e.target.value}));
+     
     }
-
-  const handleChange3 = e =>{
-  
-      setFrequency(prevState => ({...prevState, Question3 : e.target.value}));
-      }
-  const handleChange4 = e =>{
-  
-        setFrequency(prevState => ({...prevState, Question4 : e.target.value}));
-        }
-  const handleChange5 = e =>{
-  
-          setFrequency(prevState => ({...prevState, Question5 : e.target.value}));
-          }
+  }
 
           async function setUser() {
             try {
@@ -61,31 +53,35 @@ function Assessment() {
             }
           }
           function handleSubmit(e){
-            e.preventDefault();
-           
-            
-            
-          
-          var data = qs.stringify({
-            'username': 'dynamo',
-            'answers': Frequency.Question1
-          });
-          var config = {
-            method: 'post',
-            url: 'https://murmuring-garden-88441.herokuapp.com/api/assessments',
-            headers: { 
-              'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            data : data
-          };
-          
-          axios(config)
-          .then(function (response) {
-            console.log(JSON.stringify(response.data));
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+           e.preventDefault()
+            var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+var urlencoded = new URLSearchParams();
+urlencoded.append("username", username);
+
+Object.keys(Frequency).forEach( freq =>{
+  if(Frequency[freq] != "")
+  urlencoded.append("answers", Frequency[freq] );
+})
+
+Object.keys(Questions).map( index =>{
+  urlencoded.append("questions", Questions[index] );
+})
+
+
+
+var requestOptions = {
+  method: 'POST',
+  headers: myHeaders,
+  body: urlencoded,
+  redirect: 'follow'
+};
+
+fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOptions)
+  .then(response => response.text())
+  .then(result => console.log(result))
+  .catch(error => console.log('error', error));
            
          
             
@@ -93,11 +89,11 @@ function Assessment() {
 
           useEffect(()=>{
             setUser()
-          })
+          },[])
   return (
     <>
-      <Navbar bg="dark" class="text-center" variant="dark">
-        <h3 class="text-white bg-dark">Monthly Assessment</h3>
+      <Navbar bg="dark" className="text-center" variant="dark">
+        <h3 className="text-white bg-dark">Monthly Assessment</h3>
       </Navbar>
 
       <br />
@@ -106,55 +102,58 @@ function Assessment() {
     
         
         
-          <Form class="text-center" onSubmit={handleSubmit}>
-          <Card class="text-center">
-          <h5 class="text-center">
+          <Form className="text-center" onSubmit={handleSubmit}>
+          <Card className="text-center">
+          <h5 className="text-center">
         <b>
           The questions below ask about anxiety and worrying.<br></br>
           In the last month, have you experienced any of the following symptoms?
           If so, how often?
         </b>
       </h5>
-        <p class="card-header">
-          I was very anxious, worried or scared about a lot of things in my
-          life.{" "}
+        <p className="card-header">
+          {Questions[0]}
         </p>
-        <div class="card-body">
+        <div className="card-body">
             {["radio"].map((type) => (
-              <div key={`default-${type}`} className="mb-3">
+              <div key="Question1" className="mb-3">
                 <Form.Group >
                 <Form.Check 
+                name="Question1"
                 value="never"
                 type={type} 
                 id={`default-${type}`} 
                 label="Never"
-                onChange={handleChange} 
-                checked={Frequency.Question1 === "never"}
+                onChange={e=>handleChange(e,"Question1")} 
+                checked={Frequency["Question1"] === "never"}
                 />
 
                 <Form.Check
+                name="Question1"
                 value="sometimes"
                   type={type}
                   id={`default-${type}`}
                   label="Sometimes"
-                  onChange={handleChange}
-                  checked={Frequency.Question1 === "sometimes"}
+                  onChange={e=>handleChange(e,"Question1")}
+                  checked={Frequency["Question1"]  === "sometimes"}
                 />
-                <Form.Check 
+                <Form.Check
+                name="Question1" 
                 value="often"
                 type={type} 
                 id={`default-${type}`} 
                 label="Often" 
-                onChange={handleChange}
-                checked={Frequency.Question1 === "often"}
+                onChange={e=>handleChange(e,"Question1")}
+                checked={Frequency["Question1"]  === "often"}
                 />
                 <Form.Check
+                name="Question1"
                   value="constantly"
                   type={type}
                   id={`default-${type}`}
                   label="Constantly"
-                  onChange={handleChange}
-                checked={Frequency.Question1 === "constantly"}
+                  onChange={e=>handleChange(e,"Question1")}
+                checked={Frequency["Question1"]  === "constantly"}
                 />
                 </Form.Group>
               </div>
@@ -162,48 +161,51 @@ function Assessment() {
             </div>
             </Card>
 
-            <Card class="text-center">
-        <p class="card-header">
-          I had trouble sleeping - I could not fall or stay asleep, and/or
-          didn't feel well-rested when I woke up.{" "}
+            <Card className="text-center">
+        <p className="card-header">
+        {Questions[1]}
         </p>
-        <div class="card-body">
+        <div className="card-body">
           
             {["radio"].map((type) => (
               <div key={`default-${type}`} className="mb-3">
                 <Form.Group >
-                <Form.Check 
+                <Form.Check
+                name="Question2" 
                 value="never"
                 type={type} 
                 id={`default-${type}`} 
                 label="Never"
-                onChange={handleChange2} 
-                checked={Frequency.Question2 === "never"}
+                onChange={e=>handleChange(e,"Question2")} 
+                checked={Frequency["Question2"] === "never"}
                 />
 
                 <Form.Check
+                 name="Question2" 
                 value="sometimes"
                   type={type}
                   id={`default-${type}`}
                   label="Sometimes"
-                  onChange={handleChange2}
-                  checked={Frequency.Question2 === "sometimes"}
+                  onChange={e=>handleChange(e,"Question2")}
+                  checked={Frequency["Question2"] === "sometimes"}
                 />
                 <Form.Check 
+                 name="Question2" 
                 value="often"
                 type={type} 
                 id={`default-${type}`} 
                 label="Often" 
-                onChange={handleChange2}
-                checked={Frequency.Question2 === "often"}
+                onChange={e=>handleChange(e,"Question2")}
+                checked={Frequency["Question2"] === "often"}
                 />
                 <Form.Check
+                name="Question2" 
                   value="constantly"
                   type={type}
                   id={`default-${type}`}
                   label="Constantly"
-                  onChange={handleChange2}
-                checked={Frequency.Question2 === "constantly"}
+                  onChange={e=>handleChange(e,"Question2")}
+                checked={Frequency["Question2"] === "constantly"}
                 />
                 </Form.Group>
               </div>
@@ -212,52 +214,56 @@ function Assessment() {
       </Card>
 
 
-      <Card class="col-md-8 offset-md-2">
-        <p class="card-header">
+      <Card className="text-center">
+        <p className="card-header">
           {" "}
-          I felt restless, agitated, frantic, or tense.{" "}
+       {Questions[2]}
         </p>
-        <div class="card-body">
+        <div className="card-body">
           
             {["Radio"].map((type) => (
-              <div class="text-center" key={`default-${type}`} className="mb-3">
+              <div className="text-center" key={`default-${type}`} className="mb-3">
                 <Form.Group>
                 <Form.Check
-                  class="text-center"
+                name="Question3" 
+                  className="text-center"
                   value="never"
                   type={type}
                   id={`default-${type}`}
                   label="Never"
-                  onChange={handleChange3} 
-                checked={Frequency.Question3 === "never"}
+                  onChange={e=>handleChange(e,"Question3")} 
+                checked={Frequency["Question3"] === "never"}
                 />
 
                 <Form.Check
-                  class="text-center"
+                name="Question3" 
+                  className="text-center"
                   value="sometimes"
                   type={type}
                   id={`default-${type}`}
                   label="Sometimes"
-                  onChange={handleChange3} 
-                checked={Frequency.Question3 === "sometimes"}
+                  onChange={e=>handleChange(e,"Question3")} 
+                checked={Frequency["Question3"] === "sometimes"}
                 />
                 <Form.Check
-                  class="text-center"
+                name="Question3" 
+                  className="text-center"
                   value="often"
                   type={type}
                   id={`default-${type}`}
                   label="Often"
-                  onChange={handleChange3} 
-                  checked={Frequency.Question3 === "often"}
+                  onChange={e=>handleChange(e,"Question3")} 
+                  checked={Frequency["Question3"] === "often"}
                 />
                 <Form.Check
-                  class="text-center"
+                name="Question3" 
+                  className="text-center"
                   value="constantly"
                   type={type}
                   id={`default-${type}`}
                   label="Constantly"
-                  onChange={handleChange3} 
-                  checked={Frequency.Question3 === "constantly"}
+                  onChange={e=>handleChange(e,"Question3")} 
+                  checked={Frequency["Question3"] === "constantly"}
                 />
                 </Form.Group>
               </div>
@@ -266,129 +272,126 @@ function Assessment() {
         </div>
       </Card>
 
-      <Card class="text-center">
-        <p class="card-header">
-          My heart would skip beat, was pounding, or my heart rate increased.{" "}
+      <Card className="text-center">
+        <p className="card-header">
+          {Questions[3]}
         </p>
-        <div class="card-body">
-        <Form onSubmit={handleSubmit}>
+        <div className="card-body">
+       
             {["Radio"].map((type) => (
-              <div class="text-center" key={`default-${type}`} className="mb-3">
+              <div className="text-center" key={`default-${type}`} className="mb-3">
                 <Form.Group>
                 <Form.Check
-                  class="text-center"
+                name="Question4" 
+                  className="text-center"
                   value="never"
                   type={type}
                   id={`default-${type}`}
                   label="Never"
-                  onChange={handleChange4} 
-                checked={Frequency.Question4 === "never"}
+                  onChange={e=>handleChange(e,"Question4")} 
+                checked={Frequency["Question4"] === "never"}
                 />
 
                 <Form.Check
-                  class="text-center"
+                name="Question4" 
+                  className="text-center"
                   value="sometimes"
                   type={type}
                   id={`default-${type}`}
                   label="Sometimes"
-                  onChange={handleChange4} 
-                checked={Frequency.Question4 === "sometimes"}
+                  onChange={e=>handleChange(e,"Question4")} 
+                checked={Frequency["Question4"] === "sometimes"}
                 />
                 <Form.Check
-                  class="text-center"
+                name="Question4" 
+                  className="text-center"
                   value="often"
                   type={type}
                   id={`default-${type}`}
                   label="Often"
-                  onChange={handleChange4} 
-                  checked={Frequency.Question4 === "often"}
+                  onChange={e=>handleChange(e,"Question4")} 
+                  checked={Frequency["Question4"] === "often"}
                 />
                 <Form.Check
-                  class="text-center"
+                name="Question4" 
+                  className="text-center"
                   value="constantly"
                   type={type}
                   id={`default-${type}`}
                   label="Constantly"
-                  onChange={handleChange4} 
-                  checked={Frequency.Question4 === "constantly"}
+                  onChange={e=>handleChange(e,"Question4")} 
+                  checked={Frequency["Question4"] === "constantly"}
                 />
                 </Form.Group>
               </div>
             ))}
-          </Form>
+          
         </div>
       </Card>
 
-      <Card class="text-center">
-        <p class="card-header"> I had cold or hot flashes. </p>
-        <div class="card-body">
-        <Form onSubmit={handleSubmit}>
+      <Card className="text-center">
+        <p className="card-header"> {Questions[4]}</p>
+        <div className="card-body">
+       
             {["Radio"].map((type) => (
-              <div class="text-center" key={`default-${type}`} className="mb-3">
+              <div className="text-center" key={`default-${type}`} className="mb-3">
                 <Form.Group>
                 <Form.Check
-                  class="text-center"
+                name="Question5" 
+                  className="text-center"
                   value="never"
                   type={type}
                   id={`default-${type}`}
                   label="Never"
-                  onChange={handleChange5} 
-                checked={Frequency.Question5 === "never"}
+                  onChange={e=>handleChange(e,"Question5")} 
+                checked={Frequency["Question5"] === "never"}
                 />
 
                 <Form.Check
-                  class="text-center"
+                name="Question5" 
+                  className="text-center"
                   value="sometimes"
                   type={type}
                   id={`default-${type}`}
                   label="Sometimes"
-                  onChange={handleChange5} 
-                checked={Frequency.Question5 === "sometimes"}
+                  onChange={e=>handleChange(e,"Question5")} 
+                checked={Frequency["Question5"] === "sometimes"}
                 />
                 <Form.Check
-                  class="text-center"
+                name="Question5" 
+                  className="text-center"
                   value="often"
                   type={type}
                   id={`default-${type}`}
                   label="Often"
-                  onChange={handleChange5} 
-                  checked={Frequency.Question5 === "often"}
+                  onChange={e=>handleChange(e,"Question5")} 
+                  checked={Frequency["Question5"] === "often"}
                 />
                 <Form.Check
-                  class="text-center"
+                name="Question5" 
+                  className="text-center"
                   value="constantly"
                   type={type}
                   id={`default-${type}`}
                   label="Constantly"
-                  onChange={handleChange5} 
-                  checked={Frequency.Question5 === "constantly"}
+                  onChange={e=>handleChange(e,"Question5")} 
+                  checked={Frequency["Question5"] === "constantly"}
                 />
                 </Form.Group>
               </div>
             ))}
-          </Form>
+        
         </div>
       </Card>
 
-      <div class="container">
-        <div class="row">
-          <div class="col text-center">
+      <div className="container">
+        <div className="row">
+          <div className="col text-center">
           <Button type="submit" variant="success">Submit</Button>
           </div>
         </div>
       </div>
           </Form>
-        
-      
-
-      
-
-      
-
-      
-
-      
-
      
     </>
   );

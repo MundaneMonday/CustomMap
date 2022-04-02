@@ -25,7 +25,9 @@ routes.get('/api/assessments/:username', (req,res)=>{
 // POST Route to insert the assesment Question and Answer
 routes.post('/api/assessments', async (req,res)=>{
     const newAssessmentEntry = new Assessment({
-        answers: req.body.answers,
+        
+            questions: req.body.questions,
+            answers: req.body.answers,
         username: req.body.username
     });
     await newAssessmentEntry.save((err) =>{

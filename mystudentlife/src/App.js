@@ -87,7 +87,7 @@ function App() {
   
     
     setUserInfo();
-
+    
     axios(config)
     .then(function (response) {
       console.log(JSON.stringify(response.data));
@@ -175,7 +175,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route exact path="/" />
-        {Username && <Route path={'/userprofile/:username/:id'} element={<UserProfile/>}/>}
+        {Username && <Route path={'/userprofile/:username/:id/'} element={<UserProfile/>}/>}
         {Username && <Route path="/mood" element={<Mood />} />}
         {Username && <Route path="/articles" element={<Article />} />}
         {Username && <Route path="/assessment" element={<Assessment />} />}
