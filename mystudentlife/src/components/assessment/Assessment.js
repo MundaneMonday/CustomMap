@@ -19,21 +19,11 @@ const [message,setMessage] = useState("")
   Questions[3] = "My heart would skip beat, was pounding, or my heart rate increased."
   Questions[4] = "I had cold or hot flashes. "
 
-
-
-
   const handleChange = (e,name) =>{
 
       setFrequency(prevState => ({...prevState,  [name]: e.target.value}));
-     
-    
-   
-     
     
   }
-  
-  
-
           async function setUser() {
             try {
               // Get the user's info, see:
@@ -61,11 +51,29 @@ const [message,setMessage] = useState("")
               return null;
             }
           }
+
+         //Check if Assessment is already done for the current month
+const assessmentURL = `https://murmuring-garden-88441.herokuapp.com/api/assessments/${username}`
+            const FetchAssessment = async() =>{
+              try{
+              const response = await fetch(assessmentURL);
+              const json = await response.json()
+            
+              return json
+             
+            }catch (error) {
+             console.log(error);
+            }
+           }
+        
+           
+//HandleSubmit
           function handleSubmit(e){
            e.preventDefault()
+
+
             var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
-
 var urlencoded = new URLSearchParams();
 urlencoded.append("username", username);
 
@@ -78,8 +86,6 @@ Object.keys(Questions).forEach( index =>{
   urlencoded.append("questions", Questions[index] );
 })
 
-
-
 const requestOptions = {
   method: 'POST',
   headers: myHeaders,
@@ -87,20 +93,18 @@ const requestOptions = {
   redirect: 'follow'
 };
 
-
-
-
-
+//Fetch POST assessment
+if(FetchAssessment == null){
 fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOptions)
   .then(() =>{
-    
+    //if any of the answers to the questions are empty strings, then disable submit button and set toast message
     setShowB(true)
       if(Frequency.Question1 == "" || Frequency.Question2 == "" || Frequency.Question1 == "" || Frequency.Question1 == "" || Frequency.Question1 == "" || Frequency.Question5 == ""){
         setDisabled(false)
         setMessage('Assessment submission was unsuccessful')
       }else{
+        //otherwise,enable submit button and set toast message
         setDisabled(true)
-       
         setMessage('Assessment has been successfully submitted')
       }
   } 
@@ -109,15 +113,18 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
   setMessage("Assessment submission was unsuccessful");
   console.log(error);
   });
-           
-     
-            
+}else{
+  setDisabled(true)
+  setShowB(true)
+  setMessage(`Assessment has already been submitted for the current month of ${new Date().toLocaleString('en-us', { month: 'long' })};`)
+}            
           }
-
+//useEffect after rendering page
           useEffect(()=>{
            
             setUser()
-
+            
+            
           })
   return (
     <>
@@ -422,7 +429,7 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
         </div>
       </div>
           </Form>
-          <ToastContainer position= 'bottom-end'>
+          <ToastContainer position= 'top-end'>
         <Toast onClose={toggleShowB} show={showB} animation={true} delay={7000} autohide>
         <Toast.Header>
           <img
