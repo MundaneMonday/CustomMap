@@ -12,6 +12,7 @@ function Assessment() {
   const [showB, setShowB] = useState(false);
 const toggleShowB = () => setShowB(!showB);
 const [message,setMessage] = useState("")
+const [Assess,setAssessment] = useState([])
   
   Questions[0] = "I was very anxious, worried or scared about a lot of things in my life."
   Questions[1] = "I had trouble sleeping - I could not fall or stay asleep, and/or didn't feel well-rested when I woke up."
@@ -54,19 +55,19 @@ const [message,setMessage] = useState("")
 
          //Check if Assessment is already done for the current month
 const assessmentURL = `https://murmuring-garden-88441.herokuapp.com/api/assessments/${username}`
-            const FetchAssessment = async() =>{
-              try{
-              const response = await fetch(assessmentURL);
-              const json = await response.json()
-            
-              return json
-             
-            }catch (error) {
-             console.log(error);
-            }
-           }
-        
-           
+
+
+
+const FetchAssessment = async()=> {
+  try{
+    const response = await fetch(assessmentURL);
+    const json = await response.json()
+   setAssessment(json)
+  }catch (error) {
+   console.log(error);
+  }
+}
+  
 //HandleSubmit
           function handleSubmit(e){
            e.preventDefault()
@@ -94,12 +95,13 @@ const requestOptions = {
 };
 
 //Fetch POST assessment ONLY if the assessment hasn't been done for the current month
-if(FetchAssessment == null){
+
+if(!Assess){
 fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOptions)
   .then(() =>{
     //if any of the answers to the questions are empty strings, then disable submit button and set toast message
     setShowB(true)
-      if(Frequency.Question1 == "" || Frequency.Question2 == "" || Frequency.Question1 == "" || Frequency.Question1 == "" || Frequency.Question1 == "" || Frequency.Question5 == ""){
+      if(Frequency.Question1 === "" || Frequency.Question2 === "" || Frequency.Question1 === "" || Frequency.Question1 === "" || Frequency.Question1 === "" || Frequency.Question5 === ""){
         setDisabled(false)
         setMessage('Assessment submission is incomplete')
       }else{
@@ -117,13 +119,14 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
   setDisabled(true)
   setShowB(true)
   setMessage(`Assessment has already been submitted for the current month of ${new Date().toLocaleString('en-us', { month: 'long' })};`)
-}            
+           }
+  
           }
 //useEffect after rendering page
           useEffect(()=>{
            
             setUser()
-            
+            FetchAssessment()
             
           })
   return (

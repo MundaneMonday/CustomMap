@@ -40,7 +40,7 @@ routes.post('/api/assessments', async (req,res)=>{
     
         await newAssessmentEntry.save((err) =>{
             if(err || req.body.answers.some((answer)=>{
-                answer === ""
+                answer == ""
             })){
                 res.status(500).json({message: "Assessment Not Added!"})
         
