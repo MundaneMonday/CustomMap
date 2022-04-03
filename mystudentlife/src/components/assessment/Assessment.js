@@ -93,7 +93,7 @@ const requestOptions = {
   redirect: 'follow'
 };
 
-//Fetch POST assessment
+//Fetch POST assessment ONLY if the assessment hasn't been done for the current month
 if(FetchAssessment == null){
 fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOptions)
   .then(() =>{
