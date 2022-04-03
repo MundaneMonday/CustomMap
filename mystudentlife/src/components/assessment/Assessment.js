@@ -101,7 +101,7 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
     setShowB(true)
       if(Frequency.Question1 == "" || Frequency.Question2 == "" || Frequency.Question1 == "" || Frequency.Question1 == "" || Frequency.Question1 == "" || Frequency.Question5 == ""){
         setDisabled(false)
-        setMessage('Assessment submission was unsuccessful')
+        setMessage('Assessment submission is incomplete')
       }else{
         //otherwise,enable submit button and set toast message
         setDisabled(true)
