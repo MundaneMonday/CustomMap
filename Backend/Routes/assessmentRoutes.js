@@ -14,6 +14,19 @@ routes.get('/api/assessments', (req,res)=>{
     })
     });
 
+    //GET route to fetch all assessments by current month
+    routes.get('/api/assessments/currentMonth', (req,res)=>{
+    
+        Assessment.find({created_at: {
+            $gte: startOfMonth(new Date()),
+            $lt: endOfMonth(new Date())
+        }}).exec().then((assessments)=>{
+            res.status(200).json(assessments)
+        }).catch((err)=>{
+            res.status(500).json(err);
+        })
+        });
+
 
 // Get Router to fetch all the Assesment of current loggedin user at Current Month
 routes.get('/api/assessments/:username', (req,res)=>{

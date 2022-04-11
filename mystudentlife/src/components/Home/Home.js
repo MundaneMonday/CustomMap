@@ -8,7 +8,7 @@ const [Assessment,setAssessment] = useState([])
 const [Counter,setCounter] = useState({Never: 0, Sometimes: 0, Often: 0, Constantly: 0})
 const [Question,setQuestion] = useState("")
    
-const assessmentURL = "https://murmuring-garden-88441.herokuapp.com/api/assessments"
+const assessmentURL = "https://murmuring-garden-88441.herokuapp.com/api/assessments/currentMonth"
       const FetchAssessment = async()=> {
         try{
           const response = await fetch(assessmentURL);
