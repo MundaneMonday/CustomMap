@@ -4,6 +4,17 @@ var Assessment = require('../Model/Assessment');
 var startOfMonth = require('date-fns/startOfMonth')
 var endOfMonth = require('date-fns/endOfMonth')
 
+//GET route to fetch all assessments
+routes.get('/api/assessments', (req,res)=>{
+    
+    Assessment.find().exec().then((assessments)=>{
+        res.status(200).json(assessments)
+    }).catch((err)=>{
+        res.status(500).json(err);
+    })
+    });
+
+
 // Get Router to fetch all the Assesment of current loggedin user at Current Month
 routes.get('/api/assessments/:username', (req,res)=>{
     
