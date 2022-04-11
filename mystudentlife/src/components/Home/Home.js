@@ -6,6 +6,7 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 function Home(){
 const [Assessment,setAssessment] = useState([])
 const [Counter,setCounter] = useState({Never: 0, Sometimes: 0, Often: 0, Constantly: 0})
+const [Question,setQuestion] = useState("")
    
 const assessmentURL = "https://murmuring-garden-88441.herokuapp.com/api/assessments"
       const FetchAssessment = async()=> {
@@ -13,7 +14,10 @@ const assessmentURL = "https://murmuring-garden-88441.herokuapp.com/api/assessme
           const response = await fetch(assessmentURL);
           const json = await response.json()
          setAssessment(json)
-       
+         setQuestion(json[0].questions[0])
+         setCounter({Never: json.filter(element => element.answers[0] == "never").length, Sometimes: json.filter(element => element.answers[0] == "sometimes").length,Often: json.filter(element => element.answers[0] == "often").length,Constantly: json.filter(element => element.answers[0] == "constantly").length })
+        
+         Counter.Constantly = json.filter(element => element.answers[0] == "constantly").length
 
 
         }catch (error) {
@@ -22,16 +26,13 @@ const assessmentURL = "https://murmuring-garden-88441.herokuapp.com/api/assessme
       }
       
 
-         Counter.Never = Assessment.filter(element => element.answers[0] == "never").length
-         Counter.Sometimes = Assessment.filter(element => element.answers[0] == "sometimes").length
-         Counter.Often = Assessment.filter(element => element.answers[0] == "often").length
-         Counter.Constantly = Assessment.filter(element => element.answers[0] == "constantly").length
+      
 
         
 
     const options = {
         title: {
-          text: "Assessment.questions[0]"
+          text: Question
         },
         data: [{				
                   type: "column",
@@ -48,7 +49,8 @@ const assessmentURL = "https://murmuring-garden-88441.herokuapp.com/api/assessme
      useEffect(()=>{
          FetchAssessment();
          
-     },[])
+         
+     })
 
     return(
 
