@@ -11,6 +11,7 @@ import Emergency from "./components/Emergency/Emergency";
 import Mood from "./components/moodTracker/Mood";
 import Assessment from "./components/assessment/Assessment";
 import Article from "./components/article/Article";
+import Home from "./components/Home/Home";
 import "./App.css";
 import "leaflet/dist/leaflet.css";
 import axios from 'axios'
@@ -104,7 +105,7 @@ function App() {
   return (
     <>
       <Navbar bg="primary" variant="dark" expand="lg">
-        <LinkContainer to="/">
+        <LinkContainer to="/"> 
           <Navbar.Brand>
             <b>MyStudentLife</b>
           </Navbar.Brand>
@@ -174,7 +175,7 @@ function App() {
 
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route exact path="/" />
+        <Route exact path="/" element={<Home/>}/>
         {Username && <Route path={'/userprofile/:username/:id/'} element={<UserProfile/>}/>}
         {Username && <Route path="/mood" element={<Mood />} />}
         {Username && <Route path="/articles" element={<Article />} />}
