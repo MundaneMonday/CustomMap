@@ -33,16 +33,22 @@ const assessmentURL = "https://murmuring-garden-88441.herokuapp.com/api/assessme
     const options = {
         title: {
           text: Question
-        },
+        },axisX: {
+            title:"Frequency"
+           },
+           axisY: {
+            title:"Total Frequency of all students"
+           },
         data: [{				
-                  type: "column",
+                  type: "bar",
                   dataPoints: [
                       { label: "never",  y: Counter.Never  },
                       { label: "sometimes", y: Counter.Sometime  },
                       { label: "often", y:  Counter.Often  },
                       { label: "constantly",  y: Counter.Constantly  }
                       
-                  ]
+                  ],
+                  
          }]
      }
 
