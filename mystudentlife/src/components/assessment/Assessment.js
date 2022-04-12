@@ -128,7 +128,7 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
             setUser()
             FetchAssessment()
             
-          })
+          },[])
   return (
     <>
     

@@ -24,6 +24,7 @@ function App() {
   const [Email,setEmail] = useState("")
   const [Name,setName] = useState("")
   const [ID,setID] = useState("")
+  const [Profile,setProfile] = useState([])
   function timeout(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
@@ -78,7 +79,8 @@ function App() {
       const response = await fetch(profileURL);
       const json = await response.json()
      setID(json._id)
-     console.log(ID)
+     setProfile(json)
+     
     }catch (error) {
      console.log(error);
     }
@@ -88,7 +90,11 @@ function App() {
   
     
     setUserInfo();
-    
+    if(Username){
+      FetchProfile();
+    }
+  
+    if(!Profile){
     axios(config)
     .then(function (response) {
       console.log(JSON.stringify(response.data));
@@ -96,11 +102,9 @@ function App() {
     .catch(function (error) {
       console.log(error);
     });
-    //get id
+  }
     
-   FetchProfile()
-    
-  });
+  },[Username]);
 
   return (
     <>
