@@ -3,10 +3,10 @@ const routes = express.Router();
 var axios = require('axios');
 
 
-routes.get("/api/map", (req,res,next)=>{
+routes.get("/api/map/:lat/:lng", (req,res,next)=>{
     var config = {
         method: 'get',
-        url: 'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522%2C151.1957362&radius=1500&type=restaurant&keyword=cruise&key=AIzaSyC2wMHrM8FI1xA8z-6VG2B6X-tzasCQShk',
+        url: `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${req.params.lat}%2C${req.params.lng}&radius=15000&type=clinic&keyword=doctor&key=AIzaSyC2wMHrM8FI1xA8z-6VG2B6X-tzasCQShk`,
         headers: { }
       };
       
