@@ -2,7 +2,7 @@ const express = require('express');
 const routes = express.Router();
 var axios = require('axios');
 
-
+//fetches nearby clinics according to the provided coordinates
 routes.get("/api/map/:lat/:lng", (req,res,next)=>{
     var config = {
         method: 'get',
