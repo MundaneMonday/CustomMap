@@ -23,7 +23,6 @@ function App() {
   const [Username, setUsername] = useState("");
   const [Email,setEmail] = useState("")
   const [Name,setName] = useState("")
-  const [ID,setID] = useState("")
   const [Profile,setProfile] = useState([])
   function timeout(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
@@ -57,7 +56,7 @@ function App() {
      
     }
   }
-
+//POST user data
   var data = qs.stringify({
     'username': Username,
     'email': Email,
@@ -72,13 +71,13 @@ function App() {
     },
     data: data
   };
-
+//GET user data
   const profileURL = `https://murmuring-garden-88441.herokuapp.com/api/profiles/${Username}`
     const FetchProfile = async() =>{
       try{
       const response = await fetch(profileURL);
       const json = await response.json()
-     setID(json._id)
+     
      setProfile(json)
      
     }catch (error) {
@@ -88,12 +87,13 @@ function App() {
 
   useEffect(() => {
   
-    
+    //first set the User's info according to the Authenticated status 
     setUserInfo();
+    //if User is authenticated, GET the user from the database
     if(Username){
       FetchProfile();
     }
-  
+  //if the Authenticated User doesn't have a profile in the database, then create one
     if(!Profile){
     axios(config)
     .then(function (response) {
@@ -118,7 +118,7 @@ function App() {
 
         <Nav className="container-fluid">
           {Username && (
-            <LinkContainer to={`/userprofile/${Username}/${ID}`}>
+            <LinkContainer to={`/userprofile`}>
               <Nav.Link>Your Profile {/* Links to User Profile*/}</Nav.Link>
             </LinkContainer>
           )}
@@ -180,7 +180,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route exact path="/" element={<Home/>}/>
-        {Username && <Route path={'/userprofile/:username/:id/'} element={<UserProfile/>}/>}
+        {Username && <Route path={'/userprofile'} element={<UserProfile/>}/>}
         {Username && <Route path="/mood" element={<Mood />} />}
         {Username && <Route path="/articles" element={<Article />} />}
         {Username && <Route path="/assessment" element={<Assessment />} />}
