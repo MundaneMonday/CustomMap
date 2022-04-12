@@ -21,8 +21,6 @@ const position13 = [43.753743, -79.448517]
 const position14 = [43.773275, -79.336065]
 
 
-var globalLat = 0;
-var globalLng = 0;
 const newicon = new Icon({
   iconUrl: MarkerIcon,
   iconSize: [30, 30]
@@ -31,25 +29,7 @@ const newicon2 = new Icon({
   iconUrl: MarkerIcon2,
   iconSize: [30, 30]
 });
-function LocationMarker() {
-  const [position, setPosition] = useState(null)
-  const map = useMapEvents({
-    
-    keydown(event) {
-      if(event.originalEvent.key === "Enter"){
-        map.locate()
-      }
-     
-     
-    },
-    locationfound(e) {
-      setPosition(latLng(globalLat,globalLng))
-      map.setView(latLng(globalLat,globalLng), 20)
-    },
-  })
 
-  return null
-}
 
 export default function GetMap(){
  
@@ -60,12 +40,27 @@ export default function GetMap(){
     const [searchString, setSearchString ] = useState("");
     const [Longitude,setLongitude] = useState(0);
     const [Latitude,setLatitude] = useState(0);
-    const [NearbyPlaces,setNearbyPlaces] = useState([]);
-
     
-
+    function LocationMarker() {
+      const [position, setPosition] = useState(null)
+      const map = useMapEvents({
+        
+        keydown(event) {
+          if(event.originalEvent.key === "Enter"){
+            map.locate()
+          }
+         
+         
+        },
+        locationfound() {
+          setPosition(latLng(Latitude,Longitude))
+          map.setView(latLng(Latitude,Longitude), 20)
+        },
+      })
     
-
+      return null
+    }
+  
     function handleChangePostalCode(e){
       
       setSearchString((e.target.value).replace(/ /g,''))
@@ -74,50 +69,27 @@ export default function GetMap(){
  }
 
 
-
-
-
     function handleSubmit(e){
   
   
       const postalCodeRegex = new RegExp(/^[K-P]\d[A-Z]\d[A-Z]\d$/i);
     
-     
+      //if postalcode matches the regex
       if(postalCodeRegex.test(searchString) ){
         console.log('regex successful')
 
-        /*Geocode.setRegion("ca");
-        Geocode.fromAddress(searchString).then(
-          (response) => {
-          const {lat, lng}  = response.results[0].geometry.location;
-            console.log(lat, lng);
-            setLatitude(lat);
-            setLongitude(lng);
-
-            globalLat = lat;
-            globalLng = lng;
-            
-           
-           
-          
-             
-          },
-          (error) => {
-            console.error(error);
-          }
-        );*/
+       //use Google geocoding api to convert the postalcode to coordinates
         const FetchLatlng = async() =>{
           const GeocodingURL = `https://maps.googleapis.com/maps/api/geocode/json?address=${searchString}&region=ca&key=AIzaSyC2wMHrM8FI1xA8z-6VG2B6X-tzasCQShk`
           try{
           const response = await fetch(GeocodingURL);
           const json = await response.json()
          
-         
+         //set the states for latitude and longitude
          setLatitude(json.results[0].geometry.location.lat)
          setLongitude(json.results[0].geometry.location.lng)
-
-         globalLat = json.results[0].geometry.location.lat;
-         globalLng = json.results[0].geometry.location.lng;
+            
+         
 
          console.log(`${json.results[0].geometry.location.lat},${json.results[0].geometry.location.lng}`)
         }catch (error) {

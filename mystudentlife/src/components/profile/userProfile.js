@@ -9,8 +9,6 @@ function UserProfile(){
     const [page,setPage] = useState(1)
     const MAXPERPAGE = 20;
     
-  
-   
     function PreviousPage(){
       if(page > 1)
   setPage(Page => Page - 1);
@@ -25,9 +23,6 @@ function UserProfile(){
   } 
   
     
-       
-
-      
     useEffect(()=>{
       async function setUserInfo() {
    
@@ -124,22 +119,15 @@ return(
 </Table>
   </Card.Body>
 </Card>
-    
-    
+   
 <Pagination>
                         <Pagination.Prev onClick={ PreviousPage} />
                         <Pagination.Item>{page}</Pagination.Item>
                         <Pagination.Next onClick={NextPage} />
             </Pagination>  
-    
- 
-    
-    
+   
     </>
 )
-
-
-
 
 }
 

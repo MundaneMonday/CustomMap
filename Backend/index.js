@@ -4,6 +4,7 @@ const journalsRoutes = require('./Routes/journalsRoutes');
 const profileRoutes = require('./Routes/profileRoutes');
 const assessmentRoutes = require('./Routes/assessmentRoutes')
 const moodRoutes = require('./Routes/moodRoutes')
+const mapRoutes = require('./Routes/mapRoutes')
 const cors = require('cors')
 const mongoose = require("mongoose");
 require('dotenv').config()
@@ -37,7 +38,7 @@ app.use(journalsRoutes);
 app.use(profileRoutes);
 app.use(assessmentRoutes);
 app.use(moodRoutes);
-
+app.use(mapRoutes);
 
 
 // Add error-handling middleware to deal with anything else
