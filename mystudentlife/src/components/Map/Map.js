@@ -6,20 +6,6 @@ import { latLng,Icon} from 'leaflet';
 import MarkerIcon from './marker.png'
 import MarkerIcon2 from './icons8-map-48.png'
 
-const position2 = [43.758683, -79.408785]
-const position3 = [43.725912, -79.402773]
-const position4 = [43.722097, -79.373811]
-const position5 = [43.708354, -79.397053]
-const position6 = [43.699511, -79.402773]
-const position7 = [43.676087, -79.401116]
-const position8 = [43.658851, -79.399111]
-const position9 = [43.655738, -79.386813]
-const position10 = [43.646291, -79.382598]
-const position11 = [43.670053, -79.390425]
-const position12 = [43.699376, -79.424576]
-const position13 = [43.753743, -79.448517]
-const position14 = [43.773275, -79.336065]
-
 
 const newicon = new Icon({
   iconUrl: MarkerIcon,
@@ -40,6 +26,7 @@ export default function GetMap(){
     const [searchString, setSearchString ] = useState("");
     const [Longitude,setLongitude] = useState(0);
     const [Latitude,setLatitude] = useState(0);
+    const [NearbyPlaces,setNearbyPlaces] = useState([])
     
     function LocationMarker() {
       const [position, setPosition] = useState(null)
@@ -67,7 +54,21 @@ export default function GetMap(){
       
    
  }
+ const FetchNearbyPlaces = async()=>{
+  const NearbySearchAPI = `https://murmuring-garden-88441.herokuapp.com/api/map/${Latitude}/${Longitude}`
+  try{
+    const response = await fetch(NearbySearchAPI);
+    const json = await response.json()
 
+
+      setNearbyPlaces(json)
+    
+    console.log(NearbyPlaces)
+   
+  }catch(error){
+    console.log(error);
+  }
+}
 
     function handleSubmit(e){
   
@@ -92,6 +93,8 @@ export default function GetMap(){
          
 
          console.log(`${json.results[0].geometry.location.lat},${json.results[0].geometry.location.lng}`)
+         
+         
         }catch (error) {
          console.log(error);
         }
@@ -115,6 +118,9 @@ export default function GetMap(){
      }
 
      
+     useEffect(()=>{
+      FetchNearbyPlaces()
+     },[Latitude,Longitude])
 
  
     return (
@@ -146,60 +152,15 @@ export default function GetMap(){
    <Popup>You are here</Popup>
       
     </Marker>
-
-    <Marker position={position2} icon = {newicon}>
-      <Popup>Reframe Psychology Clinic</Popup>
+{Object.keys(NearbyPlaces).map((index)=>{
+  return <Marker key={index} position={[NearbyPlaces[index].geometry.location.lat,NearbyPlaces[index].geometry.location.lng]} icon = {newicon}>
+      <Popup>{NearbyPlaces[index].name}</Popup>
     </Marker>
 
-    <Marker position={position3} icon = {newicon}>
-      <Popup>Mind Health Toronto</Popup>
-    </Marker>
-
-    <Marker position={position4} icon = {newicon}>
-      <Popup>Sunnybrook Health Sciences</Popup>
-    </Marker>
-
-    <Marker position={position5} icon = {newicon}>
-      <Popup> WMH Clinic <br></br> 647-343-4115</Popup>
-    </Marker>
+})}
+    
 
     
-    <Marker position={position6} icon = {newicon}>
-      <Popup> The Possibilities Clinic<br></br> 416-482-5558 </Popup>
-    </Marker>
-
-    <Marker position={position7} icon = {newicon}>
-      <Popup> The Clinic on Dupont<br></br> 416-515-2649 </Popup>
-    </Marker>
-
-    <Marker position={position8} icon = {newicon}>
-      <Popup> Psychosocial Rehabilitation<br></br> 416-535-8501 </Popup>
-    </Marker>
-
-    <Marker position={position9} icon = {newicon}>
-      <Popup>Toronto Psychology Clinic<br></br> 613-690-6259 </Popup>
-    </Marker>
-
-    <Marker position={position10} icon = {newicon}>
-      <Popup>BeWell Health Clinic<br></br> 416-367-8267 </Popup>
-    </Marker>
-
-    <Marker position={position11} icon = {newicon}>
-      <Popup>Dr. Sandra R. Palef<br></br> 647-735-4254 </Popup>
-    </Marker>
-
-    <Marker position={position12} icon = {newicon}>
-      <Popup>Whole Heart Mental Health & Wellness<br></br> 647-345-0661 </Popup>
-    </Marker>
-
-    <Marker position={position13} icon = {newicon}>
-      <Popup>Dynamic Health - North York<br></br> 647-735-4268 </Popup>
-    </Marker>
-
-    <Marker position={position14} icon = {newicon}>
-      <Popup>Dr. Joel Arthur Shapiro<br></br> 416-229-2399 </Popup>
-    </Marker>
-
    
   
     <LocationMarker />
