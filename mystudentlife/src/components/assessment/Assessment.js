@@ -1,8 +1,6 @@
 import {useState, useEffect} from "react";
 import { Form, Card, Button,Navbar,Toast,ToastContainer} from "react-bootstrap";
 import {Auth} from "./../login/auth"
-import qs from 'qs'
-import axios from 'axios'
 
 function Assessment() {
   const [Frequency,setFrequency] = useState({Question1 : "", Question2: "", Question3: "", Question4: "",Question5: ""});
@@ -54,19 +52,11 @@ const [Assess,setAssessment] = useState([])
           }
 
          //Check if Assessment is already done for the current month
-const assessmentURL = `https://murmuring-garden-88441.herokuapp.com/api/assessments/${username}`
 
 
 
-const FetchAssessment = async()=> {
-  try{
-    const response = await fetch(assessmentURL);
-    const json = await response.json()
-   setAssessment(json)
-  }catch (error) {
-   console.log(error);
-  }
-}
+
+
   
 //HandleSubmit
           function handleSubmit(e){
@@ -126,9 +116,19 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
           useEffect(()=>{
            
             setUser()
+            const FetchAssessment = async()=> {
+              const assessmentURL = `https://murmuring-garden-88441.herokuapp.com/api/assessments/${username}`
+              try{
+                const response = await fetch(assessmentURL);
+                const json = await response.json()
+               setAssessment(json)
+              }catch (error) {
+               console.log(error);
+              }
+            }
             FetchAssessment()
             
-          },[])
+          },[username])
   return (
     <>
     

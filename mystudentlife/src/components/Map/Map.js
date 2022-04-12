@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { MapContainer, TileLayer,Marker,Popup,useMapEvents} from 'react-leaflet';
 import {Form,FormControl,Button,Col } from 'react-bootstrap'
-import Geocode from "react-geocode";
 import './customLeaflet.css';
 import { latLng,Icon} from 'leaflet';
 import MarkerIcon from './marker.png'
@@ -64,7 +63,7 @@ export default function GetMap(){
     const [NearbyPlaces,setNearbyPlaces] = useState([]);
 
     
-    Geocode.setApiKey(process.env.REACT_APP_GOOGLE_MAP_API_KEY);
+
     
 
     function handleChangePostalCode(e){
@@ -87,7 +86,7 @@ export default function GetMap(){
       if(postalCodeRegex.test(searchString) ){
         console.log('regex successful')
 
-        Geocode.setRegion("ca");
+        /*Geocode.setRegion("ca");
         Geocode.fromAddress(searchString).then(
           (response) => {
           const {lat, lng}  = response.results[0].geometry.location;
@@ -106,7 +105,26 @@ export default function GetMap(){
           (error) => {
             console.error(error);
           }
-        );
+        );*/
+        const FetchLatlng = async() =>{
+          const GeocodingURL = `https://maps.googleapis.com/maps/api/geocode/json?address=${searchString}&region=ca&key=AIzaSyC2wMHrM8FI1xA8z-6VG2B6X-tzasCQShk`
+          try{
+          const response = await fetch(GeocodingURL);
+          const json = await response.json()
+         
+         
+         setLatitude(json.results[0].geometry.location.lat)
+         setLongitude(json.results[0].geometry.location.lng)
+
+         globalLat = json.results[0].geometry.location.lat;
+         globalLng = json.results[0].geometry.location.lng;
+
+         console.log(`${json.results[0].geometry.location.lat},${json.results[0].geometry.location.lng}`)
+        }catch (error) {
+         console.log(error);
+        }
+       }
+          FetchLatlng();
         
           
        
@@ -123,15 +141,6 @@ export default function GetMap(){
 
       
      }
-
-     
-     
-    
-    useEffect(() => {
-   
-      
-      
-      }, []);
 
      
 

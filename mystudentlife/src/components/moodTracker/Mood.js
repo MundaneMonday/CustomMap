@@ -36,12 +36,11 @@ async function setUser() {
    
     
    
-    return currentUser;
+    
    
   } catch (err) {
     console.log(err);
-    // Unable to get user, return `null` instead
-    return null;
+    
   }
 }
 //Handle Change in Mood Selection
@@ -90,7 +89,7 @@ function handleSubmit(e){
 useEffect(()=>{
  setUser()
 
-},[])
+})
   return (
     <>
       <Navbar bg="dark" class="text-center" variant="dark">
