@@ -42,7 +42,16 @@ function App() {
     },
     data: data
   };
-
+  //if the Authenticated User doesn't have a profile in the database, then create one
+  if(!Profile){
+    axios(config)
+    .then(function (response) {
+      console.log(JSON.stringify(response.data));
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
 
   useEffect(() => {
     async function setUserInfo() {
@@ -69,7 +78,7 @@ function App() {
         setEmail(email)
         setName(name)
         setRoles(userRoles);
-        console.log(Roles)
+        
        
       } catch (err) {
         console.log(err);
@@ -96,16 +105,7 @@ function App() {
    }
       FetchProfile();
     }
-  //if the Authenticated User doesn't have a profile in the database, then create one
-    if(!Profile){
-    axios(config)
-    .then(function (response) {
-      console.log(JSON.stringify(response.data));
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
+  
     
   },[Username]);
 
@@ -182,7 +182,7 @@ function App() {
 
       <Routes>
         <Route path="/login" element={<Login />} />
-        {Roles.some(element => element == "admin") ? <Route exact path="/" element={<Home/>}/> : <Route exact path="/"/>}
+        {Roles.some(element => element === "user" || element === "admin") ? <Route exact path="/" element={<Home/>}/> : <Route exact path="/"/>}
         {Username && <Route path={'/userprofile'} element={<UserProfile/>}/>}
         {Username && <Route path="/mood" element={<Mood />} />}
         {Username && <Route path="/articles" element={<Article />} />}
