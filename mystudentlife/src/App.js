@@ -68,8 +68,8 @@ function App() {
         setUsername(username);
         setEmail(email)
         setName(name)
-        setRoles(userRoles)
-        
+        setRoles(userRoles);
+        console.log(Roles)
        
       } catch (err) {
         console.log(err);
@@ -182,7 +182,7 @@ function App() {
 
       <Routes>
         <Route path="/login" element={<Login />} />
-        {Roles.includes("admin") && <Route exact path="/" element={<Home/>}/>}
+        {Roles.includes("Staff") && <Route exact path="/" element={<Home/>}/>}
         {Username && <Route path={'/userprofile'} element={<UserProfile/>}/>}
         {Username && <Route path="/mood" element={<Mood />} />}
         {Username && <Route path="/articles" element={<Article />} />}
