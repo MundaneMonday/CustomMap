@@ -182,7 +182,7 @@ function App() {
 
       <Routes>
         <Route path="/login" element={<Login />} />
-        {Roles.some(element => element == "admin" || element == "staff") ? <Route exact path="/" element={<Home/>}/> : <Route exact path="/"/>}
+        {Roles.some(element => element == "admin") ? <Route exact path="/" element={<Home/>}/> : <Route exact path="/"/>}
         {Username && <Route path={'/userprofile'} element={<UserProfile/>}/>}
         {Username && <Route path="/mood" element={<Mood />} />}
         {Username && <Route path="/articles" element={<Article />} />}
