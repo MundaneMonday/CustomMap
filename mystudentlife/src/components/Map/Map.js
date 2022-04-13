@@ -117,7 +117,7 @@ export default function GetMap(){
       
      }
 
-     
+     //only fetch nearby places API if the latitude or longitude state changes 
      useEffect(()=>{
       FetchNearbyPlaces()
      },[Latitude,Longitude])

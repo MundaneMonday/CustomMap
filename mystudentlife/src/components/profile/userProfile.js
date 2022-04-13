@@ -44,7 +44,7 @@ function UserProfile(){
           //set the user's infos
           setUsername(username);
           
-          return Username;
+          
          
         } catch (err) {
           console.log(err);
@@ -64,7 +64,7 @@ function UserProfile(){
           console.log(error);
          }
         }
-  
+        FetchProfile()
         const FetchMoodHistory = async()=>{
           const MoodHistoryURL = `https://murmuring-garden-88441.herokuapp.com/api/moods/${Username}`
           try{
@@ -76,7 +76,7 @@ function UserProfile(){
            console.log(error);
           }
         }  
-      FetchProfile()
+     
       FetchMoodHistory()
       }
       

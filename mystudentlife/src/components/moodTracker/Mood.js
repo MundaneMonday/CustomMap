@@ -12,37 +12,7 @@ const [showB, setShowB] = useState(false);
 const toggleShowB = () => setShowB(!showB);
 const [message,setMessage] = useState("")
 
-//sets the user name
 
-async function setUser() {
-  
-  try {
-    // Get the user's info, see:
-    // https://docs.amplify.aws/lib/auth/advanced/q/platform/js/#identity-pool-federation
-    
-    const currentUser = await Auth.currentSession()
-    // If that didn't throw, we have a user object, and the user is authenticated
-  
-          // Get the user's Identity Token, which we'll use later with our
-    // microservce. See discussion of various tokens:
-    // https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html
- 
-    
-    const username = currentUser.getIdToken().payload["cognito:username"]
-    
-
-    //set the user's infos
-    setUsername(username);
-   
-    
-   
-    
-   
-  } catch (err) {
-    console.log(err);
-    
-  }
-}
 //Handle Change in Mood Selection
 const handleChange = e =>{
   
@@ -87,9 +57,40 @@ function handleSubmit(e){
 
 
 useEffect(()=>{
+  //sets the user name
+
+async function setUser() {
+  
+  try {
+    // Get the user's info, see:
+    // https://docs.amplify.aws/lib/auth/advanced/q/platform/js/#identity-pool-federation
+    
+    const currentUser = await Auth.currentSession()
+    // If that didn't throw, we have a user object, and the user is authenticated
+  
+          // Get the user's Identity Token, which we'll use later with our
+    // microservce. See discussion of various tokens:
+    // https://docs.aws.amazon.com/cognito/latest/developerguide/amazon-cognito-user-pools-using-tokens-with-identity-providers.html
+ 
+    
+    const username = currentUser.getIdToken().payload["cognito:username"]
+    
+
+    //set the user's infos
+    setUsername(username);
+   
+    
+   
+    
+   
+  } catch (err) {
+    console.log(err);
+    
+  }
+}
  setUser()
 
-})
+},[username])
   return (
     <>
       <Navbar bg="dark" class="text-center" variant="dark">

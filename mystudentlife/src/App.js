@@ -24,6 +24,7 @@ function App() {
   const [Email,setEmail] = useState("")
   const [Name,setName] = useState("")
   const [Profile,setProfile] = useState([])
+  const [Role,setRole] = useState("")
   
   
 //POST user data
@@ -60,12 +61,14 @@ function App() {
         const email = currentUser.getIdToken().payload.email
         
         const username = currentUser.getIdToken().payload["cognito:username"]
+        const userRole = currentUser.getIdToken().payload["cognito:groups"];
         
-  
+        console.log(userRole)
         //set the user's infos
         setUsername(username);
         setEmail(email)
         setName(name)
+        setRole(userRole)
         
        
       } catch (err) {
@@ -104,7 +107,7 @@ function App() {
     });
   }
     
-  },[]);
+  },[Username]);
 
   return (
     <>
@@ -179,7 +182,7 @@ function App() {
 
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route exact path="/" element={<Home/>}/>
+        {Role == "admin" && <Route exact path="/" element={<Home/>}/>}
         {Username && <Route path={'/userprofile'} element={<UserProfile/>}/>}
         {Username && <Route path="/mood" element={<Mood />} />}
         {Username && <Route path="/articles" element={<Article />} />}
