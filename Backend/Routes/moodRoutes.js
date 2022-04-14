@@ -4,7 +4,7 @@ var Mood = require('../Model/Mood')
 //Get Route to fetch all moods
 routes.get('/api/moods', (req,res)=>{
     
-    Mood.find().exec().then((mood)=>{
+    Mood.find({username: 0}).exec().then((mood)=>{
         res.status(200).json(mood)
     }).catch((err)=>{
         res.status(500).json(err);
