@@ -11,7 +11,7 @@ import Emergency from "./components/Emergency/Emergency";
 import Mood from "./components/moodTracker/Mood";
 import Assessment from "./components/assessment/Assessment";
 import Article from "./components/article/Article";
-import Home from "./components/Home/Home";
+import AdminHome from "./components/Home/AdminHome";
 import "./App.css";
 import "leaflet/dist/leaflet.css";
 import axios from 'axios'
@@ -182,7 +182,7 @@ function App() {
 
       <Routes>
         <Route path="/login" element={<Login />} />
-        {Roles.some(element => element === "user" || element === "admin") ? <Route exact path="/" element={<Home/>}/> : <Route exact path="/"/>}
+        {Roles.some(element => element === "user" || element === "admin") ? <Route exact path="/" element={<AdminHome/>}/> : <Route exact path="/" />}
         {Username && <Route path={'/userprofile'} element={<UserProfile/>}/>}
         {Username && <Route path="/mood" element={<Mood />} />}
         {Username && <Route path="/articles" element={<Article />} />}

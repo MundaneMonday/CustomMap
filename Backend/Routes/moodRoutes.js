@@ -1,10 +1,15 @@
 const express = require('express');
 const routes = express.Router();
 var Mood = require('../Model/Mood')
-//Get Route to fetch all moods
+var startOfMonth = require('date-fns/startOfMonth')
+var endOfMonth = require('date-fns/endOfMonth')
+//Get Route to fetch all moods at the current month
 routes.get('/api/moods', (req,res)=>{
     
-    Mood.find({username: 0}).exec().then((mood)=>{
+    Mood.find({created_at: {
+        $gte: startOfMonth(new Date()),
+        $lt: endOfMonth(new Date())
+    }}).exec().then((mood)=>{
         res.status(200).json(mood)
     }).catch((err)=>{
         res.status(500).json(err);
