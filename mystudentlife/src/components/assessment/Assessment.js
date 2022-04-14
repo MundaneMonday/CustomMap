@@ -1,6 +1,7 @@
 import {useState, useEffect} from "react";
 import { Form, Card, Button,Navbar,Toast,ToastContainer} from "react-bootstrap";
 import {Auth} from "./../login/auth"
+import { useNavigate } from "react-router-dom";
 
 function Assessment() {
   const [Frequency,setFrequency] = useState({Question1 : "", Question2: "", Question3: "", Question4: "",Question5: ""});
@@ -11,7 +12,8 @@ function Assessment() {
 const toggleShowB = () => setShowB(!showB);
 const [message,setMessage] = useState("")
 const [Assess,setAssessment] = useState([])
-  
+const navigate = useNavigate();
+
   Questions[0] = "I was very anxious, worried or scared about a lot of things in my life."
   Questions[1] = "I had trouble sleeping - I could not fall or stay asleep, and/or didn't feel well-rested when I woke up."
   Questions[2] = "I felt restless, agitated, frantic, or tense."
@@ -111,6 +113,8 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
   setMessage(`Assessment has already been submitted for the current month of ${new Date().toLocaleString('en-us', { month: 'long' })};`)
            }
   
+  setTimeout(() => navigate("/articles"), 3000); ;
+
           }
 //useEffect after rendering page
           useEffect(()=>{
