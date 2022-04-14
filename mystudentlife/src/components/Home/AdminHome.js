@@ -72,14 +72,8 @@ const MoodURL = "https://murmuring-garden-88441.herokuapp.com/api/moods"
 
      const options2 = {
       title: {
-        text: ` Mood Swings for ${new Date().toLocaleString('en-us', { month: 'long' })} ${new Date().getFullYear()}`
-      },theme: "light1",
-      axisX: {
-          title:"Mood Swings"
-         },
-         axisY: {
-          title:"Total Mood Frequency of all students"
-         },
+        text: ` How are most Canadian Students Feeling in General during ${new Date().toLocaleString('en-us', { month: 'long' })} ${new Date().getFullYear()}?`
+      },theme: "light1", 
       data: [{				
                 type: "pie",
                 dataPoints: [
