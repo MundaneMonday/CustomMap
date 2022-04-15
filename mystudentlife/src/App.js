@@ -109,7 +109,7 @@ function App() {
     }
   
     
-  },[Username]);
+  },[Username,Email]);
 
   return (
     <>
