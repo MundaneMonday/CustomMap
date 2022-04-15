@@ -1,4 +1,4 @@
-import {useState, useEffect, Profiler} from "react";
+import {useState, useEffect} from "react";
 import {Card,ListGroup,Table,Pagination} from 'react-bootstrap'
 import { Auth } from "./../login/auth";
 

@@ -39,7 +39,7 @@ const MoodURL = "https://murmuring-garden-88441.herokuapp.com/api/moods"
          Good: json.filter(element => element.mood === "good").length,
          Ok: json.filter(element => element.mood === "ok").length,
          Awful: json.filter(element => element.mood === "awful").length })
-          console.log(MoodTally)
+         
         }catch (error) {
          console.log(error);
         }
@@ -91,7 +91,7 @@ const MoodURL = "https://murmuring-garden-88441.herokuapp.com/api/moods"
          FetchAssessment();
          FetchMoods();
          
-     },[MoodTally])
+     },[])
 
     return(
        <>
