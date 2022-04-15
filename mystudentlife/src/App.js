@@ -74,7 +74,7 @@ function App() {
   };
 
   const FetchProfile = async() =>{
-    const profileURL = `https://murmuring-garden-88441.herokuapp.com/api/profiles/${Username}`
+    const profileURL = `https://murmuring-garden-88441.herokuapp.com/api/profiles/${Username}/${Email}`
     try{
     const response = await fetch(profileURL);
     const json = await response.json()
