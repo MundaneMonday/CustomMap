@@ -152,7 +152,7 @@ export default function GetMap(){
    <Popup>You are here</Popup>
       
     </Marker>
-{Object.keys(NearbyPlaces).map((index)=>{
+{Object.keys(NearbyPlaces).forEach((index)=>{
   return <Marker key={index} position={[NearbyPlaces[index].geometry.location.lat,NearbyPlaces[index].geometry.location.lng]} icon = {newicon}>
       <Popup>{NearbyPlaces[index].name}</Popup>
     </Marker>

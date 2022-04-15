@@ -112,11 +112,15 @@ function App() {
   return (
     <>
       <Navbar bg="primary" variant="dark" expand="lg">
-        <LinkContainer to="/"> 
+
+        {Roles.some(element => element === "staff" || element === "admin") ? <LinkContainer to="/"> 
           <Navbar.Brand>
             <b>MyStudentLife</b>
           </Navbar.Brand>
-        </LinkContainer>
+        </LinkContainer> :
+        <Navbar.Brand>
+            <b>MyStudentLife</b>
+          </Navbar.Brand> }
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
         <Nav className="container-fluid">
@@ -143,21 +147,10 @@ function App() {
           )}
           {Username && (
             <LinkContainer to="/articles">
-              <Nav.Link>Articles{/* Links to Articles*/}</Nav.Link>
+              <Nav.Link>Resources{/* Links to Articles*/}</Nav.Link>
             </LinkContainer>
           )}
 
-          {Username && (
-            <LinkContainer to="/meditation">
-              <Nav.Link>Meditation {/*Links to Articles */}</Nav.Link>
-            </LinkContainer>
-          )}
-
-          {Username && (
-            <LinkContainer to="/favourites">
-              <Nav.Link>Favourites{/* Links to Favourites List */}</Nav.Link>
-            </LinkContainer>
-          )}
           {Username && (
             <LinkContainer to="/clinics">
               <Nav.Link> Search For Clinics</Nav.Link>
@@ -182,7 +175,7 @@ function App() {
 
       <Routes>
         <Route path="/login" element={<Login />} />
-        {Roles.some(element => element === "user" || element === "admin") ? <Route exact path="/" element={<AdminHome/>}/> : <Route exact path="/" />}
+        {Roles.some(element => element === "staff" || element === "admin") ? <Route exact path="/" element={<AdminHome/>}/> : <Route path={'/userprofile'} element={<UserProfile/>}/>}
         {Username && <Route path={'/userprofile'} element={<UserProfile/>}/>}
         {Username && <Route path="/mood" element={<Mood />} />}
         {Username && <Route path="/articles" element={<Article />} />}

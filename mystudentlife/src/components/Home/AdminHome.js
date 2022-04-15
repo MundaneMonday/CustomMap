@@ -91,7 +91,7 @@ const MoodURL = "https://murmuring-garden-88441.herokuapp.com/api/moods"
          FetchAssessment();
          FetchMoods();
          
-     },[])
+     },[MoodTally])
 
     return(
        <>
