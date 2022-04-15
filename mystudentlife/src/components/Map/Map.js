@@ -154,7 +154,12 @@ export default function GetMap(){
     </Marker>
 {Object.keys(NearbyPlaces).map((index)=>{
   return <Marker key={index} position={[NearbyPlaces[index].geometry.location.lat,NearbyPlaces[index].geometry.location.lng]} icon = {newicon}>
-      <Popup>{NearbyPlaces[index].name}</Popup>
+      <Popup><b>Place Name:</b> {NearbyPlaces[index].name}
+      <br></br>
+      <b>Address:</b>{NearbyPlaces[index].vicinity}
+      <br></br>
+      <b>Business Status:</b>{NearbyPlaces[index].business_status}
+      </Popup>
     </Marker>
 
 })}
