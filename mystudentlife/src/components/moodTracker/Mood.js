@@ -3,7 +3,7 @@ import {Auth} from './../login/auth'
 import { Form, Card, Navbar,Button,Toast,ToastContainer} from "react-bootstrap";
 import axios from 'axios'
 import qs from 'qs'
-
+import { useNavigate } from "react-router-dom";
 
 function Mood() {
 const [mood,setMood] = useState("");
@@ -11,7 +11,7 @@ const[username,setUsername] = useState("")
 const [showB, setShowB] = useState(false);
 const toggleShowB = () => setShowB(!showB);
 const [message,setMessage] = useState("")
-
+const navigate = useNavigate();
 
 //Handle Change in Mood Selection
 const handleChange = e =>{
@@ -50,7 +50,7 @@ function handleSubmit(e){
   });
   
  
-
+  setTimeout(() => navigate("/articles"), 3000); ;
   
 }
 
