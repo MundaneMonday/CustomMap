@@ -101,7 +101,7 @@ function App() {
     //first set the User's info according to the Authenticated status 
     setUserInfo();
     //if User is authenticated, GET the user from the database
-    if(Username){
+    if(Username && Email){
       //GET user data
   
     

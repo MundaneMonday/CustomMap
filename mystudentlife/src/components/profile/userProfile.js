@@ -5,6 +5,7 @@ import { Auth } from "./../login/auth";
 function UserProfile(){
     const [Username, setUsername] = useState("");
     const [Profile,setProfile] = useState([])
+    const [Email,setEmail] = useState("")
     const [MoodHistory,setMoodHistory] = useState([])
     const [page,setPage] = useState(1)
     const MAXPERPAGE = 20;
@@ -25,11 +26,11 @@ function UserProfile(){
       
       
       const username = currentUser.getIdToken().payload["cognito:username"]
-      
-
+      const email = currentUser.getIdToken().payload.email
+     
       //set the user's infos
       setUsername(username);
-      
+      setEmail(email)
       
      
     } catch (err) {
@@ -52,7 +53,7 @@ function UserProfile(){
   
     
        const FetchProfile = async() =>{
-        const profileURL = `https://murmuring-garden-88441.herokuapp.com/api/profiles/${Username}`
+        const profileURL = `https://murmuring-garden-88441.herokuapp.com/api/profiles/${Username}/${Email}`
          try{
          const response = await fetch(profileURL);
          const json = await response.json()
@@ -78,12 +79,12 @@ function UserProfile(){
       
     useEffect(()=>{
     setUserInfo()
-      if(Username){
+      if(Username && Email){
       FetchProfile()
       FetchMoodHistory()
       }
       
-    },[Username])
+    },[Username,Email])
         
 return(
 

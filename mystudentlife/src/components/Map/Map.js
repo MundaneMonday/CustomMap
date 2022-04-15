@@ -81,7 +81,7 @@ export default function GetMap(){
 
        //use Google geocoding api to convert the postalcode to coordinates
         const FetchLatlng = async() =>{
-          const GeocodingURL = `https://maps.googleapis.com/maps/api/geocode/json?address=${searchString}&region=ca&key=AIzaSyC2wMHrM8FI1xA8z-6VG2B6X-tzasCQShk`
+          const GeocodingURL = `https://maps.googleapis.com/maps/api/geocode/json?address=${searchString}&region=ca&key=${process.env.REACT_APP_GOOGLE_MAP_API_URL}`
           try{
           const response = await fetch(GeocodingURL);
           const json = await response.json()
@@ -100,7 +100,7 @@ export default function GetMap(){
         }
        }
           FetchLatlng();
-        
+        FetchNearbyPlaces()
           
        
       }else{
@@ -152,7 +152,7 @@ export default function GetMap(){
    <Popup>You are here</Popup>
       
     </Marker>
-{Object.keys(NearbyPlaces).forEach((index)=>{
+{Object.keys(NearbyPlaces).map((index)=>{
   return <Marker key={index} position={[NearbyPlaces[index].geometry.location.lat,NearbyPlaces[index].geometry.location.lng]} icon = {newicon}>
       <Popup>{NearbyPlaces[index].name}</Popup>
     </Marker>
