@@ -7,7 +7,7 @@ var profileData = require('../Model/profileData')
 
 // Get Route for Profile Details 
 routes.get('/api/profiles/:username',(req,res)=>{
-profileData.findOne({username: req.params.username}).exec().then((user)=>{
+profileData.findOne({username: req.params.username, email: req.params.email}).exec().then((user)=>{
     res.status(200).json(user)
 }).catch((err)=>{
     res.status(500).json(err);
