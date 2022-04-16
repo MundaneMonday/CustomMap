@@ -50,8 +50,7 @@ function UserProfile(){
   
     }
   } 
-  
-    
+      
        const FetchProfile = async() =>{
         const profileURL = `https://murmuring-garden-88441.herokuapp.com/api/profiles/${Username}/${Email}`
          try{
