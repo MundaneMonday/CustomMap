@@ -87,7 +87,7 @@ function UserProfile(){
         FetchMoodHistory()
       }
         
-    },[Username,Email,Profile])
+    },[Username,Email])
         
 return(
 
