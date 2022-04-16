@@ -95,9 +95,9 @@ return(
   <Card.Body>
     <Card.Title>User's Info</Card.Title>
     <ListGroup variant="flush">
-    <ListGroup.Item>Username: {Profile.username} <br></br></ListGroup.Item>
-    <ListGroup.Item>Email: {Profile.email} <br></br></ListGroup.Item>
-    <ListGroup.Item>Name: {Profile.name}</ListGroup.Item>
+    <ListGroup.Item>Username: {Profile?.username} <br></br></ListGroup.Item>
+    <ListGroup.Item>Email: {Profile?.email} <br></br></ListGroup.Item>
+    <ListGroup.Item>Name: {Profile?.name}</ListGroup.Item>
   </ListGroup>
   <Card.Title>Mood History</Card.Title>
   <Table striped bordered hover>
