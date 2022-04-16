@@ -107,7 +107,7 @@ return(
   <thead>
     <tr>
       
-      <th>Date/Time</th>
+      <th>Date/Time(UTC)</th>
       <th>Mood</th>
     </tr>
   </thead>
