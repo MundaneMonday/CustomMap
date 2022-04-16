@@ -23,7 +23,11 @@ const handleChange = e =>{
 function handleSubmit(e){
   e.preventDefault();
   
-  const date = new Date()
+  const date = new Date().toLocaleString('en-US', {
+    timeZone: 'America/New_York',
+    dateStyle: 'full',
+    timeStyle: 'full',
+  })
   const data = qs.stringify({
     'username': username,
     'email': email,
