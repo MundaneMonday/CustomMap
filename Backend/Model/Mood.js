@@ -8,6 +8,11 @@ var moodSchema = new Schema({
         required: true
         
     },
+    email: {
+        type: String,
+        required: true
+        
+    },
     date_time: {
         type: Date,
         required: true
