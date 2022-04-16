@@ -81,10 +81,13 @@ function UserProfile(){
     setUserInfo()
       if(Username && Email){
       FetchProfile()
-      FetchMoodHistory()
+    
       }
-      
-    },[Username,Email])
+      if(Profile){
+        FetchMoodHistory()
+      }
+        
+    },[Username,Email,Profile])
         
 return(
 

@@ -29,6 +29,7 @@ Mood.find({username: req.params.username, email: req.params.email}).exec().then(
 routes.post('/api/moods', async (req,res)=>{
 const newMoodEntry = new Mood({
     username: req.body.username,
+    email: req.body.email,
     mood: req.body.mood,
     date_time: req.body.date_time
 }
