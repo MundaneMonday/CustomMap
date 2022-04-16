@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 function Mood() {
 const [mood,setMood] = useState("");
 const[username,setUsername] = useState("")
+const[email,setEmail] = useState("")
 const [showB, setShowB] = useState(false);
 const toggleShowB = () => setShowB(!showB);
 const [message,setMessage] = useState("")
@@ -25,6 +26,7 @@ function handleSubmit(e){
   const date = new Date()
   const data = qs.stringify({
     'username': username,
+    'email': email,
     'mood': mood,
     'date_time': date
   });
@@ -74,11 +76,11 @@ async function setUser() {
  
     
     const username = currentUser.getIdToken().payload["cognito:username"]
-    
+    const email = currentUser.getIdToken().payload.email
 
     //set the user's infos
     setUsername(username);
-   
+    setEmail(email)
     
    
     
@@ -90,7 +92,7 @@ async function setUser() {
 }
  setUser()
 
-},[username])
+},[username,email])
   return (
     <>
       <Navbar bg="dark" class="text-center" variant="dark">

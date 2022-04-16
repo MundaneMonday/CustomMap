@@ -17,7 +17,7 @@ routes.get('/api/moods', (req,res)=>{
     });
 
 // Get Route to fetch modes of specific user with time and date 
-routes.get('/api/moods/:username:email',(req,res)=>{
+routes.get('/api/moods/:username/:email',(req,res)=>{
 Mood.find({username: req.params.username, email: req.params.email}).exec().then((moods)=>{
     res.status(200).json(moods)
 }).catch((err)=>{
