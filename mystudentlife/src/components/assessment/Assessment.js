@@ -40,12 +40,12 @@ const navigate = useNavigate();
            
               
               const username = currentUser.getIdToken().payload["cognito:username"]
-              
+              const email = currentUser.getIdToken().payload.email
           
               //set the user's infos
               setUsername(username);
               setEmail(email);
-              return currentUser;
+              
              
             } catch (err) {
               console.log(err);
