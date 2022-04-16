@@ -115,7 +115,7 @@ function App() {
     <>
       <Navbar bg="primary" variant="dark" expand="lg">
 
-        {Roles.some(element => element === "staff" || element === "admin") ? <LinkContainer to="/"> 
+        {Roles?.some(element => element === "staff" || element === "admin") ? <LinkContainer to="/"> 
           <Navbar.Brand>
             <b>MyStudentLife</b>
           </Navbar.Brand>
@@ -177,7 +177,7 @@ function App() {
 
       <Routes>
         <Route path="/login" element={<Login />} />
-        {Roles.some(element => element === "staff" || element === "admin") ? <Route exact path="/" element={<AdminHome/>}/> : <Route path={'/userprofile'} element={<UserProfile/>}/>}
+        {Roles?.some(element => element === "staff" || element === "admin") ? <Route exact path="/" element={<AdminHome/>}/> : <Route path={'/userprofile'} element={<UserProfile/>}/>}
         {Username && <Route path={'/userprofile'} element={<UserProfile/>}/>}
         {Username && <Route path="/mood" element={<Mood />} />}
         {Username && <Route path="/articles" element={<Article />} />}
