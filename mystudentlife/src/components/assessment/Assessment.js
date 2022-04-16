@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 function Assessment() {
   const [Frequency,setFrequency] = useState({Question1 : "", Question2: "", Question3: "", Question4: "",Question5: ""});
   const[username,setUsername] = useState("")
+  const[email,setEmail] = useState("")
   const[Questions,setQuestion] = useState([""])
   const [Disabled,setDisabled] = useState(false)
   const [showB, setShowB] = useState(false);
@@ -43,7 +44,7 @@ const navigate = useNavigate();
           
               //set the user's infos
               setUsername(username);
-             
+              setEmail(email);
               return currentUser;
              
             } catch (err) {
@@ -69,7 +70,7 @@ const navigate = useNavigate();
 myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
 var urlencoded = new URLSearchParams();
 urlencoded.append("username", username);
-
+urlencoded.append("email", email);
 Object.keys(Frequency).forEach( freq =>{
   
   urlencoded.append("answers", Frequency[freq] );
@@ -121,7 +122,7 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
            
             setUser()
             const FetchAssessment = async()=> {
-              const assessmentURL = `https://murmuring-garden-88441.herokuapp.com/api/assessments/${username}`
+              const assessmentURL = `https://murmuring-garden-88441.herokuapp.com/api/assessments/${username}/${email}`
               try{
                 const response = await fetch(assessmentURL);
                 const json = await response.json()
@@ -132,7 +133,7 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
             }
             FetchAssessment()
             
-          },[username])
+          },[username,email])
   return (
     <>
     

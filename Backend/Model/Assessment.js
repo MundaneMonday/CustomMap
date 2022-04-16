@@ -11,6 +11,11 @@ var assessmentSchema = new Schema({
         type: String,
         required: true
     },
+    email: {
+        type: String,
+        required: true,
+       
+    },
     created_at: {
         type: Date,
         default: new Date()

@@ -29,12 +29,12 @@ routes.get('/api/assessments', (req,res)=>{
 
 
 // Get Router to fetch all the Assesment of current loggedin user at Current Month
-routes.get('/api/assessments/:username', (req,res)=>{
+routes.get('/api/assessments/:username/:email', (req,res)=>{
     
     Assessment.findOne({created_at: {
         $gte: startOfMonth(new Date()),
         $lt: endOfMonth(new Date())
-    }, username: req.params.username
+    }, username: req.params.username, email: req.params.email
     }).exec().then((assessments)=>{
         res.status(200).json(assessments)
     }).catch((err)=>{
@@ -59,7 +59,8 @@ routes.post('/api/assessments', async (req,res)=>{
         
             questions: req.body.questions,
             answers: req.body.answers,
-        username: req.body.username
+        username: req.body.username,
+        email: req.body.email
     });
     
         await newAssessmentEntry.save((err) =>{

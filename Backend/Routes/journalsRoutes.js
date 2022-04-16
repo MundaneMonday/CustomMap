@@ -6,8 +6,8 @@ var Journal = require('../Model/Journal')
 
 
 // GET ROUTE to fetch the journals by User
-routes.get('/api/journals/:username', (req,res)=>{
-    Journal.find({username: req.params.username}).exec().then((journals)=>{
+routes.get('/api/journals/:username/:email', (req,res)=>{
+    Journal.find({username: req.params.username, email: req.params.email}).exec().then((journals)=>{
         res.status(200).json(journals)
     }).catch((err)=>{
         res.status(500).json(err);

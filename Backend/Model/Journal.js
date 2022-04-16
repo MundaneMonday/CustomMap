@@ -6,7 +6,11 @@ var journalSchema = new Schema({
     username: {
         type: String,
         required: true,
-        unique: true
+       
+    }, email: {
+        type: String,
+        required: true,
+        
     },
     date_time: {
         type: Date,
