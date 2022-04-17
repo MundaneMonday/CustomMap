@@ -175,7 +175,7 @@ const MoodURL = "https://murmuring-garden-88441.herokuapp.com/api/moods"
                 { label: "never",  y: Counter3.Never  },
                 { label: "sometimes", y: Counter3.Sometime  },
                 { label: "often", y:  Counter3.Often  },
-                { label: "constantly",  y: setCounter3.Constantly  }
+                { label: "constantly",  y: Counter3.Constantly  }
                 
             ],
             
