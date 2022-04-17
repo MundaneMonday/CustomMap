@@ -101,6 +101,7 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
         //otherwise,enable submit button and set toast message
         setDisabled(true)
         setMessage('Assessment has been successfully submitted')
+        setTimeout(() => navigate("/articles"), 3000); 
       }
   } 
   ).catch(error =>{
@@ -112,9 +113,11 @@ fetch("https://murmuring-garden-88441.herokuapp.com/api/assessments", requestOpt
   setDisabled(true)
   setShowB(true)
   setMessage(`Assessment has already been submitted for the current month of ${new Date().toLocaleString('en-us', { month: 'long' })};`)
-           }
+           
+  setTimeout(() => navigate("/articles"), 3000); 
+}
   
-  setTimeout(() => navigate("/articles"), 3000); ;
+ 
 
           }
 //useEffect after rendering page
