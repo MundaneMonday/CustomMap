@@ -17,6 +17,7 @@ import "leaflet/dist/leaflet.css";
 import axios from 'axios'
 import qs from 'qs'
 import UserProfile from "./components/profile/userProfile";
+import logo from "./unnamed.png"
 
 
 function App() {
@@ -117,11 +118,27 @@ function App() {
 
         {Roles?.some(element => element === "Staff" || element === "admin") ? <LinkContainer to="/"> 
           <Navbar.Brand>
-            <b>MyStudentLife</b>
+          <div className="img-wrapper">
+              <img
+        src= {logo}
+        width="120"
+        height="50"
+        className="hover-zoom"
+        alt="React Bootstrap logo" 
+      />
+      </div>
           </Navbar.Brand>
         </LinkContainer> :
-        <Navbar.Brand>
-            <b>MyStudentLife</b>
+        <Navbar.Brand >
+          <div className="img-wrapper">
+              <img
+        src= {logo}
+        width="120"
+        height="50"
+        className="hover-zoom"
+        alt="React Bootstrap logo" 
+      />
+      </div>  
           </Navbar.Brand> }
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
 

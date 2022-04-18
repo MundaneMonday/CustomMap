@@ -58,19 +58,19 @@ function UserProfile(){
          const response = await fetch(profileURL);
          const json = await response.json()
         setProfile(json)
-        return Profile;
+        
        }catch (error) {
         console.log(error);
        }
       }
 
       const FetchMoodHistory = async()=>{
-        const MoodHistoryURL = `https://murmuring-garden-88441.herokuapp.com/api/moods/${Username}`
+        const MoodHistoryURL = `https://murmuring-garden-88441.herokuapp.com/api/moods/${Username}/${Email}`
         try{
           const response = await fetch(MoodHistoryURL);
           const json = await response.json()
          setMoodHistory(json.reverse())
-         return MoodHistory;
+         
         }catch (error) {
          console.log(error);
         }
