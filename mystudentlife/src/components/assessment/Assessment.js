@@ -5,8 +5,8 @@ import { useNavigate } from "react-router-dom";
 
 function Assessment() {
   const [Frequency,setFrequency] = useState({Question1 : "", Question2: "", Question3: "", Question4: "",Question5: ""});
-  const[username,setUsername] = useState("")
-  const[email,setEmail] = useState("")
+  const[username,setUsername] = useState()
+  const[email,setEmail] = useState()
   const[Questions,setQuestion] = useState([""])
   const [Disabled,setDisabled] = useState(false)
   const [showB, setShowB] = useState(false);

@@ -3,9 +3,9 @@ import {Card,ListGroup,Table,Pagination} from 'react-bootstrap'
 import { Auth } from "./../login/auth";
 
 function UserProfile(){
-    const [Username, setUsername] = useState("");
+    const [Username, setUsername] = useState();
     const [Profile,setProfile] = useState([])
-    const [Email,setEmail] = useState("")
+    const [Email,setEmail] = useState()
     const [MoodHistory,setMoodHistory] = useState([])
     const [page,setPage] = useState(1)
     const MAXPERPAGE = 20;
@@ -83,7 +83,7 @@ function UserProfile(){
       FetchProfile()
     
       }
-      if(Profile){
+      if(Profile && Username && Email){
         FetchMoodHistory()
       }
         
