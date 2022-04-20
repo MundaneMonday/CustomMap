@@ -12,6 +12,7 @@ import Mood from "./components/moodTracker/Mood";
 import Assessment from "./components/assessment/Assessment";
 import Article from "./components/article/Article";
 import AdminHome from "./components/Home/AdminHome";
+import Journals from "./components/journal/Journals";
 import "./App.css";
 import "leaflet/dist/leaflet.css";
 import axios from 'axios'
@@ -208,7 +209,7 @@ function App() {
         {Username && <Route path="/articles" element={<Article />} />}
         {Username && <Route path="/assessment" element={<Assessment />} />}
         {/* Mood contains Monthly Assessment*/}
-        {Username && <Route path="/journals" />}
+        {Username && <Route path="/journals" element={<Journals />}/>}
         {Username && <Route path="/logout" element={<LogOut />} />}
         {Username && <Route path="/favourites" />}
         {Username && <Route path="/emergency" element={<Emergency />} />}
