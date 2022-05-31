@@ -30,7 +30,7 @@ export default function GetMap(){
     const postalCodeRegex = new RegExp(/^[K-P]\d[A-Z]\d[A-Z]\d$/i);
 
     function LocationMarker() {
-      const [position, setPosition] = useState(null)
+     
       const map = useMapEvents({
         
         keydown(event) {
@@ -41,7 +41,7 @@ export default function GetMap(){
          
         },
         locationfound() {
-          setPosition(latLng(Latitude,Longitude))
+          
           map.setView(latLng(Latitude,Longitude), 20)
         },
       })
@@ -136,7 +136,7 @@ export default function GetMap(){
            Hover Over The Map and Press Enter To Zoom Toward Postal Location
     </Form>  
         
-    <MapContainer center={[Latitude,Longitude]} zoom={defaultZoom} >
+    <MapContainer center={[Latitude,Longitude]}  zoom={defaultZoom} minZoom={defaultZoom} maxZoom={16}>
   <TileLayer
     
     url='https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}'
