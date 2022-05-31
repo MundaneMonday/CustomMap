@@ -27,7 +27,8 @@ export default function GetMap(){
     const [Longitude,setLongitude] = useState(0);
     const [Latitude,setLatitude] = useState(0);
     const [NearbyPlaces,setNearbyPlaces] = useState([])
-    
+    const postalCodeRegex = new RegExp(/^[K-P]\d[A-Z]\d[A-Z]\d$/i);
+
     function LocationMarker() {
       const [position, setPosition] = useState(null)
       const map = useMapEvents({
@@ -52,6 +53,7 @@ export default function GetMap(){
       
       setSearchString((e.target.value).replace(/ /g,''))
       
+      setValidated(false)
    
  }
  const FetchNearbyPlaces = async()=>{
@@ -73,7 +75,7 @@ export default function GetMap(){
     function handleSubmit(e){
   
   
-      const postalCodeRegex = new RegExp(/^[K-P]\d[A-Z]\d[A-Z]\d$/i);
+    
     
       //if postalcode matches the regex
       if(postalCodeRegex.test(searchString) ){
@@ -101,17 +103,12 @@ export default function GetMap(){
        }
           FetchLatlng();
         FetchNearbyPlaces()
-          
+        setValidated(true) 
        
-      }else{
-        
-        setSearchString("")
-        
-        console.log('regex fail')
       }
       
-      setValidated(true);
-
+     
+       
       e.preventDefault();
 
       
@@ -127,7 +124,7 @@ export default function GetMap(){
       <>
  <Form validated={validated} onSubmit={handleSubmit} className='d-flex'>
  <Form.Group as={Col} md="3" controlId="validationCustom05">
-    <FormControl type="text" placeholder="Enter Ontario Postal Code e.g L1A1A1" className="mr-sm-2" value={searchString}
+    <Form.Control type="text" placeholder="Enter Ontario Postal Code e.g L1A1A1" className="mr-sm-2" value={searchString} isInvalid={!postalCodeRegex.test(searchString)}
    onChange={handleChangePostalCode} required />
       
    <Form.Control.Feedback type="invalid"> 
@@ -144,7 +141,7 @@ export default function GetMap(){
     
     url='https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}'
     attribution='Tiles &copy; Esri &mdash; Source: Esri, DeLorme, NAVTEQ, USGS, Intermap, iPC, NRCAN, Esri Japan, METI, Esri China (Hong Kong), Esri (Thailand), TomTom, 2012'
-    apiKey= {process.env.REACT_APP_ARCGIS_API_KEY}
+    
   />
 
 
