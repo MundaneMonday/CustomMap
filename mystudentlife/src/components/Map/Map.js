@@ -124,7 +124,7 @@ export default function GetMap(){
       <>
  <Form validated={validated} onSubmit={handleSubmit} className='d-flex'>
  <Form.Group as={Col} md="3" controlId="validationCustom05">
-    <Form.Control type="text" placeholder="Enter Ontario Postal Code e.g L1A1A1" className="mr-sm-2" value={searchString} isInvalid={!postalCodeRegex.test(searchString)}
+    <Form.Control type="text" placeholder="Enter Ontario Postal Code e.g L1A1A1" className="mr-sm-2" value={searchString} isInvalid={!postalCodeRegex.test(searchString) && searchString != ""}
    onChange={handleChangePostalCode} required />
       
    <Form.Control.Feedback type="invalid"> 
