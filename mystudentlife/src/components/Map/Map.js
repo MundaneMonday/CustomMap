@@ -33,12 +33,8 @@ export default function GetMap(){
      
       const map = useMapEvents({
         
-        keydown(event) {
-          if(event.originalEvent.key === "Enter"){
-            map.locate()
-          }
-         
-         
+       dblclick(){
+          map.locate()
         },
         locationfound() {
           
