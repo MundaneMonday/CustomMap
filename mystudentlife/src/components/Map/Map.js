@@ -32,11 +32,11 @@ export default function GetMap(){
     function LocationMarker() {
      
       const map = useMapEvents({
-        keypress(event) {
-          if(event.originalEvent.type === "touchstart" || event.originalEvent.key === "Enter"){
+        preclick() {
+          
             map.locate()
-          }
-         
+          
+      
          
         },
         locationfound() {
@@ -103,7 +103,7 @@ export default function GetMap(){
           FetchLatlng();
         FetchNearbyPlaces()
         setValidated(true) 
-       
+     
       }
       
      
