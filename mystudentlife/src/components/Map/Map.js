@@ -32,9 +32,12 @@ export default function GetMap(){
     function LocationMarker() {
      
       const map = useMapEvents({
-        
-        click() {
-          map.locate()
+        keydown(event) {
+          if(event.originalEvent.key === "touchstart" || event.originalEvent.key === "Enter"){
+            map.locate()
+          }
+         
+         
         },
         locationfound() {
           
@@ -129,7 +132,7 @@ export default function GetMap(){
           
           </Form.Group>  
           <span ><Button type="submit" variant="success">Set Postal Code</Button></span>
-           Hover Over The Map and Click To Zoom Toward Postal Location
+           Hover Over The Map and Press Enter To Zoom Toward Postal Location
     </Form>  
         
     <MapContainer center={[Latitude,Longitude]}  zoom={defaultZoom} minZoom={defaultZoom} maxZoom={16}>
