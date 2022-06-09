@@ -33,7 +33,7 @@ export default function GetMap(){
      
       const map = useMapEvents({
         keydown(event) {
-          if(event.originalEvent.type === "touchstart" || event.originalEvent.key === "Enter"){
+          if(event.originalEvent.type === "submit" || event.originalEvent.key === "Enter"){
             map.locate()
           }
          
