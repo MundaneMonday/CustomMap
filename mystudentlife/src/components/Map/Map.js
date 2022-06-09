@@ -33,7 +33,7 @@ export default function GetMap(){
      
       const map = useMapEvents({
         
-       dblclick(){
+        click() {
           map.locate()
         },
         locationfound() {
