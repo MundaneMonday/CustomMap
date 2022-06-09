@@ -132,7 +132,7 @@ export default function GetMap(){
            Hover Over The Map and Click To Zoom Toward Postal Location
     </Form>  
         
-    <MapContainer dragging={false} tap={false} center={[Latitude,Longitude]}  zoom={defaultZoom} minZoom={defaultZoom} maxZoom={16}>
+    <MapContainer center={[Latitude,Longitude]}  zoom={defaultZoom} minZoom={defaultZoom} maxZoom={16}>
   <TileLayer
     
     url='https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}'
