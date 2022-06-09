@@ -32,7 +32,7 @@ export default function GetMap(){
     function LocationMarker() {
      
       const map = useMapEvents({
-        keydown(event) {
+        keypress(event) {
           if(event.originalEvent.type === "touchstart" || event.originalEvent.key === "Enter"){
             map.locate()
           }
