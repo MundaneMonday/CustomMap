@@ -32,9 +32,11 @@ export default function GetMap(){
     function LocationMarker() {
      
       const map = useMapEvents({
-        preclick() {
-          
+        keydown(event){
+          if(event.originalEvent.key === "Enter"){
             map.locate()
+          }
+           
           
       
          
